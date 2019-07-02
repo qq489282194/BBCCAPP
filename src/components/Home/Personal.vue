@@ -122,14 +122,14 @@
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
-          <li @click="MIXINToDetail('','39')">
+          <!-- <li @click="MIXINToDetail('','39')">
             <i class="icon icon-invite"></i>
             <p>邀请</p>
           </li>
           <li @click="MIXINToDetail('','40')">
             <i class="icon icon-deserve"></i>
             <p>值得推</p>
-          </li>
+          </li> -->
         </ul>
         <p class="clear"></p>
       </div>
@@ -352,7 +352,12 @@
       },
       // 好友
       loadSelectCount(){
-        let params = {"endDate":"", "startDate":"", "userId":this.userId,};
+        // let params = {"endDate":"", "startDate":"", "userId":this.userId,};
+        let params = {
+          "endDate": "",
+          "startDate": "",
+          "userId": "000059255d5f460aa7e27b0ae9065c52"
+        }
         USER_API.selectcount(params).then(data => {
           if(data){
             this.selectCount = data;

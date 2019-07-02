@@ -36,7 +36,6 @@ export function selectcount(params) {
   return request({
     url:"personal/saleorg/selectcount",
     method:"post",
-    headers: { 'Content-Type': 'application/json' },
     data:params
   })
 }
@@ -47,6 +46,66 @@ export function pageJump(params) {
     url:"/pageJump",
     method:"get",
     params
+  })
+}
+
+// 发现 线下商家详情
+export function serverDetail(params) {
+  return request4({
+    url:"/discover/server/detail",
+    method:"post",
+    params
+  })
+}
+
+// 发现 评论详情
+export function listServerComment(params) {
+  return request4({
+    url:"/discover/server/listServerComment",
+    method:"post",
+    params
+  })
+}
+
+// 发现 评论点赞
+export function serverCommentStar(commentId) {
+  return request4({
+    url:`/discover/server/commentStar/${commentId}`,
+    method:"post",
+  })
+}
+
+// 发现 服务收藏
+export function serverCollectServer(params) {
+  return request4({
+    url:`/discover/server/collectServer`,
+    method:"post",
+    params
+  })
+}
+
+// 发现 服务评论标签信息
+export function serverCommentLabelInfo(serverId) {
+  return request4({
+    url:`/discover/server/commentLabelInfo/${serverId}`,
+    method:"get",
+  })
+}
+
+// 发现 网友评论统计
+export function serverCommentInfo(serverId) {
+  return request4({
+    url:`/discover/server/serverCommentInfo/${serverId}`,
+    method:"get",
+  })
+}
+
+
+// 发现 总评论数和平均评分
+export function serverTotalCommentNum(serverId) {
+  return request4({
+    url:`/discover/server/totalCommentNum/${serverId}`,
+    method:"get",
   })
 }
 

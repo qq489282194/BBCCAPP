@@ -3,7 +3,9 @@ import axios from "axios"
 
 const service = axios.create({
   // baseURL:  "/cmi-other/",
-  baseURL:  "http://192.168.0.225:7002",
+  // baseURL:  "http://192.168.0.225:7002",
+  // 测试
+  baseURL:  "http://testxcxapibuyer.meibbc.com/",
   timeout: 15000,
 })
 

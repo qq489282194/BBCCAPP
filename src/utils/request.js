@@ -10,7 +10,6 @@ const service = axios.create({
 })
 
 axios.defaults.withCredentials = false;
-axios.defaults.headers.post["Content-type"]="application/json";
 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {

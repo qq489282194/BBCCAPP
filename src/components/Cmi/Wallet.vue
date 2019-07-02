@@ -249,6 +249,15 @@
     //   this.loadFindIntegralList()
       this.changTime(this.activeId)
     },
+    watch:{
+      postUserByUserid:{
+        deep:true,
+        immediate:true,
+        handler(val){
+          this.postUserByUserid = val
+        }
+      }
+    },
     methods:{
       loadCmi(){
         USER_API.queryCmShare(this.userId).then(data => {
@@ -321,6 +330,10 @@
         }
         this.loadFindIntegralList();
       },
+      // 客户端监听积分变化方法
+      changeIntegral(){
+        this.loadPostUserByUserid()
+      }
     },
   }
 </script>

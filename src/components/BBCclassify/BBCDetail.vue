@@ -79,6 +79,7 @@ export default {
     data(){
         return{
             userId:store.state.userId,
+            serverId:0,
             article:{
                 bigTypeId: "",
                 content: "",
@@ -92,12 +93,14 @@ export default {
         }
     },
     mounted(){
+        // 获取服务ID
+        this.getQueryVariable('serverId')
         this.loadPostUserByUserid()
     },
     methods:{
         // 获取文章
       loadPostUserByUserid(){
-        let params = { "id":this.userId, };
+        let params = { "id":this.serverId, };
         USER_API.getArticle(params).then(data => {
           
           if(data){
@@ -113,6 +116,17 @@ export default {
         let hostUrl = this.article.shareUrl
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
+      },
+      // 获取url参数
+      getQueryVariable(variable){
+          let query = window.location.search.substring(1);
+          let vars = query.split("&");
+          for (let i=0;i<vars.length;i++) {
+              let part = vars[i].split("=");
+              if(part[0] == variable){
+                  this.serverId = part[1]
+              }
+          }
       },
     }
 }

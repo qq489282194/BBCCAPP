@@ -18,7 +18,8 @@
 
     <div class="headbutton">
         <i class="icon icon-back" @click="closeHtml()"></i>
-        <i class="icon icon-collect"></i>
+        <i class="icon icon-collect" v-if="serverDetail.collection == 0" @click="serverCollectServer(serverDetail)"></i>
+        <i class="icon icon-collectOK" v-if="serverDetail.collection == 1" @click="serverCollectServer(serverDetail)"></i>
         <i class="icon icon-share"  @click="isShare = true"></i>
         <!-- <p class="backroute">&lt;</p>
         <p class="share">2</p>
@@ -30,8 +31,9 @@
             <i class="icon icon-backMenu"></i>
         </p>
         <p class="title">商家详情</p>
-        <p class="collect">
-            <i class="icon icon-collectMenu"></i>
+        <p class="collect" @click="serverCollectServer(serverDetail)">
+            <i class="icon icon-collectMenu" v-if="serverDetail.collection == 0"></i>
+            <i class="icon icon-collectOKMenu" v-if="serverDetail.collection == 1"></i>
         </p>
         <p class="share"  @click="isShare = true">
             <i class="icon icon-shareMenu"></i>
@@ -160,8 +162,8 @@
                         <p :class="content == 'NEW' ? 'optionclass' : ''" @click="commentContent('new')">最新</p>
                     </li>
                 </ul>
-                <div class="label">
-                    <!-- <p v-for="item in comment_label" :key="item.index" v-html="item"></p> -->
+                <!-- <div class="label">
+                    <p v-for="item in comment_label" :key="item.index" v-html="item"></p>
                     <p style="margin-top:.3rem;">高大上 18</p>
                     <p>高大上 18</p>
                     <p>交通便利 18</p>
@@ -173,7 +175,7 @@
                     <div>
                         <i class="icon icon-extend"></i>
                     </div>
-                </div>
+                </div> -->
                 <div class="content" v-for="item in listServerComment" :key="item.index">
                     <div class="chead">
                         <div class="cheadimg">
@@ -185,7 +187,7 @@
                                 <li class="nameTitle">
                                     <p v-html="item.nick_name">听不懂听不到</p>
                                     <p v-html="item.role == 1 ? '粉丝(普通用户)' : (item.role == 4 ? '部长(店长)' : (item.role == 2 ? 'VIP会员(贵宾)' : (item.role == 3 ? '云店创客(铂金)' : '')))">V1</p>
-                                    <p class="evaluateTime">{{item.create_time || unixToDate}}</p>
+                                    <p class="evaluateTime">{{formatDateTime(item.create_time)}}</p>
                                 </li>
                                 <li class="nameGrade">
                                     <p>打分</p>
@@ -434,6 +436,8 @@ export default {
             dataImgItem:[],
             img,
             bigimg,
+            serverId:0,
+            userId:store.state.userId,
             // 吸顶菜单
             menu:false,
             // 选项卡
@@ -464,6 +468,8 @@ export default {
         }
     },
     mounted(){
+        // 获取服务ID
+        this.getQueryVariable('serverId')
         // 商品详情
         this.loadServerDetail()
         // 评论详情
@@ -515,7 +521,7 @@ export default {
         },
         // 获取商家详情
         loadServerDetail(){
-            let params = {"serverId":'142', "longitude":'', "latitude":'',};
+            let params = {"serverId":this.serverId, "longitude":'', "latitude":'',};
             USER_API.serverDetail(params).then(data => {
                 if(data){
                     this.serverDetail = data
@@ -526,7 +532,7 @@ export default {
         },
         // 获取总评论数和平均评分
         loadServerTotalCommentNum(){
-            let params = '142'
+            let params = this.serverId
             USER_API.serverTotalCommentNum(params).then(data => {
                 if(data){
                     this.average = data
@@ -535,7 +541,7 @@ export default {
         },
         // 获取服务评论标签信息
         loadServerCommentLabelInfo(){
-            let params = '142'
+            let params = this.serverId
             USER_API.serverCommentLabelInfo(params).then(data => {
                 if(data){
                     this.serverCommentLabelInfo = data
@@ -544,7 +550,7 @@ export default {
         },
         // 获取网友评论统计
         loadServerCommentInfo(){
-            let params = '142'
+            let params = this.serverId
             USER_API.serverCommentInfo(params).then(data => {
                 if(data){
                     this.commentClassify = data
@@ -554,14 +560,15 @@ export default {
         // 获取评论详情
         loadListServerComment(){
             // this.listServerComment = []
-            let params = {"serverId":'142', "page":'', "pageSize":'', "key":this.content,};
+            let params = {"serverId":this.serverId, "page":'', "pageSize":'', "key":this.content,};
             USER_API.listServerComment(params).then(data => {
                 if(data){
                     this.listServerComment = data.data
                     this.allComment = data.data_total
                     for(let i in data.data){
-                        data.data[i].Imgs.push(data.data[i].imgs.split(','))
-                        this.comment_label.push(data.data[i].comment_label.split(','))
+                        // data.data[i].Imgs.push(data.data[i].imgs.split(','))
+                        // this.comment_label.push(data.data[i].comment_label.split(','))
+                        data.data[i].time = this.format(data.data[i].create_time)
                     }
                 }else{
                     this.listServerComment = []
@@ -571,15 +578,30 @@ export default {
         // 评论点赞
         ServerCommentStar(val){
             USER_API.serverCommentStar(val).then(data => {
-                if(data.code == 0){}
+                if(data.code == 0){
+                    this.$message.success(data.message)
+                }
             });
         },
         // 服务收藏
-        ServerCommentStar(val){
-            let params = {"serverId":'142', "serverName":'',};
-            USER_API.serverCollectServer(val).then(data => {
-                if(data.code == 0){}
+        serverCollectServer(val){
+            let params = {"serverId":val.id, "serverName":val.name,};
+            USER_API.serverCollectServer(params).then(data => {
+                if(data.code == 0){
+                    this.$message.success(data.message)
+                }
             });
+        },
+        // 获取url参数
+        getQueryVariable(variable){
+            let query = window.location.search.substring(1);
+            let vars = query.split("&");
+            for (let i=0;i<vars.length;i++) {
+                let part = vars[i].split("=");
+                if(part[0] == variable){
+                    this.serverId = part[1]
+                }
+            }
         },
     }
 }
@@ -639,7 +661,7 @@ export default {
 .botm .option li{float: left;text-align: center;width: calc(100% / 2);margin-top: .34rem;margin-bottom: .22rem;}
 .botm .active{font-size: .32rem;color: #F63B75;border-bottom: .06rem solid #F63B75;padding-bottom: .1rem;}
 /* 网友评价 */
-.botm .classify{height: .84rem;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;line-height: .84rem;clear: both;}
+.botm .classify{height: .84rem;border-top: 1px solid #E5E5E5;line-height: .84rem;clear: both;}
 .botm .classify li{float: left; width: calc(100% / 4);text-align: center;}
 .botm .classify li p{color: #333333;}
 .botm .classify li .optionclass{font-size: .26rem;color: #F63B75;font-weight: bold;}
@@ -763,5 +785,7 @@ background-color: #F6F6F6;text-align: center;color: #909090;font-size: .32rem}
 .icon-message { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/message.png");background-size: 100% 100% }
 .icon-user { width: .62rem; height: .62rem; background: url("../../assets/img/shopDetail/user.png");background-size: 100% 100% }
 .icon-dianzan { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/dianzan.png");background-size: 100% 100% }
+.icon-collectOK { width: .7rem; height: .7rem; background: url("../../assets/img/shopDetail/collectOK.png");background-size: 100% 100% }
+.icon-collectOKMenu { width: .42rem; height: .42rem; background: url("../../assets/img/shopDetail/collect1ok.png");background-size: 100% 100% }
 
 </style>

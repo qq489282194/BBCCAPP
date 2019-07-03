@@ -173,6 +173,16 @@
             <i class="icon icon-discounts"></i>
             <p>优惠券</p>
           </li> -->
+          <!-- <li @click="MixinToUrl('find-shop-detail','')">
+            <i class="icon icon-discounts"></i>
+            <p>测试跳线下服务</p>
+          </li> -->
+          <li>
+            <a href="http://192.168.0.55:8080/findshopdetail?serverId=142">
+              <i class="icon icon-discounts"></i>
+              <p>测试跳线下服务</p>
+            </a>
+          </li>
           <!--<li @click="MIXINToDetail('http://129.204.30.206:8011/bbc-personal/cmi/index','24')"><img style="width: .44rem" src="../../assets/img/home/check.png"/><p>签到领好礼</p></li>-->
           <li @click="MIXINToDetail('','24')">
             <i class="icon icon-activity"></i>

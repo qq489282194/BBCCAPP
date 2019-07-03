@@ -250,13 +250,13 @@
       this.changTime(this.activeId)
     },
     watch:{
-      postUserByUserid:{
-        deep:true,
-        immediate:true,
-        handler(val){
-          this.postUserByUserid = val
-        }
-      }
+      // postUserByUserid:{
+      //   deep:true,
+      //   immediate:true,
+      //   handler(val){
+      //     this.postUserByUserid = val
+      //   }
+      // }
     },
     methods:{
       loadCmi(){

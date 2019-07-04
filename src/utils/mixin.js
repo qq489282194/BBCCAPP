@@ -69,6 +69,42 @@ export default {
         window.webkit.messageHandlers.toDetail.postMessage(params)
       }
     },
+    MIXINCreateOrderType(id,type){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = {"modelId":id,"type":type};
+      if(isAndroid){
+        params = JSON.stringify(params)
+        window.JsToJava.createOrderType(params);
+      }else{
+        window.webkit.messageHandlers.createOrderType.postMessage(params)
+      }
+    },
+    MIXINGoToShopAppointment(type){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = type;
+      if(isAndroid){
+        params = JSON.stringify(params)
+        window.JsToJava.goToShopAppointment(params);
+      }else{
+        window.webkit.messageHandlers.goToShopAppointment.postMessage(params)
+      }
+    },
+    MIXINToTest(id,type){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = {"modelId":id,"type":type};
+      if(isAndroid){
+        params = JSON.stringify(params)
+        window.JsToJava.toTest(params);
+      }else{
+        window.webkit.messageHandlers.toTest.postMessage(params)
+      }
+    },
     _system_shareTo(title,description,imgSrc,url,groupRecordId,activityId,type)  {
       var u = navigator.userAgent, app = navigator.appVersion;
       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器

@@ -109,6 +109,24 @@ export function serverTotalCommentNum(serverId) {
   })
 }
 
+// 发现 店铺详情
+export function getShopDetail(params) {
+  return request4({
+    url:`/shops/shop-detail`,
+    method:"get",
+    params
+  })
+}
+
+// 发现 店铺关注
+export function getFocusSave(params) {
+  return request4({
+    url:`/shops/focus/save`,
+    method:"get",
+    params
+  })
+}
+
 
 export function countCollect(params) {
   return request({

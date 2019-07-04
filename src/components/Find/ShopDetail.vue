@@ -1,23 +1,18 @@
 <template>
   <div>
     <nut-swiper
-        :paginationVisible="true"
+        :paginationVisible="false"
         direction="horizontal"
         ref="demo1"
-        initPage='1'
-
+        :slideChangeEnd="changPage"
     >
         <div class="nut-swiper-slide" v-for="item in img_urls" :key="item.index">
-            <!-- <span>page{{item.name}}</span> -->
             <img :src="item" style="max-width:100%; max-height:100%" class="nut-img-lazyload"/>
         </div>
-        <!-- <div class="nut-swiper-slide">
-            <img src="../../assets/img/offline/swipe.png" style="max-width:100%; max-height:100%" class="nut-img-lazyload"/>
-        </div> -->
     </nut-swiper>
 
     <div class="headbutton">
-        <i class="icon icon-back" @click="closeHtml()"></i>
+        <i class="icon icon-back" @click="backRouter()"></i>
         <i class="icon icon-collect" v-if="serverDetail.collection == 0" @click="serverCollectServer(serverDetail)"></i>
         <i class="icon icon-collectOK" v-if="serverDetail.collection == 1" @click="serverCollectServer(serverDetail)"></i>
         <i class="icon icon-share"  @click="isShare = true"></i>
@@ -27,7 +22,7 @@
     </div>
 
     <div class="menu" :style="menu == false ? 'display:none' : 'display:block'">
-        <p class="backroute" @click="closeHtml()">
+        <p class="backroute" @click="backRouter()">
             <i class="icon icon-backMenu"></i>
         </p>
         <p class="title">商家详情</p>
@@ -40,7 +35,7 @@
         </p>
     </div>
 
-    <p class="imgNum">1/9</p>
+    <p class="imgNum">1/{{img_urls.length}}</p>
     
 
     <div class="shop">
@@ -53,14 +48,16 @@
           <img src="../../assets/img/offline/star.svg" alt="">
           <img src="../../assets/img/offline/star.svg" alt="">
           <img src="../../assets/img/offline/star.svg" alt=""> -->
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
+          <i class="icon icon-ystar" v-for="item in average.allRate" :key="item.index"></i>
+          <i class="icon icon-star" v-if="greyRate"></i>
+          <i class="icon icon-bstar" v-for="item in average.minusRate" :key="item.index"></i>
+          <!-- <i class="icon icon-ystar"></i>
+          <i class="icon icon-ystar"></i> -->
           <span class="grade" v-html="average.avg_score">5.0</span>
-          <div class="evaluate mr26">
-              <span>{{average.total_comment}}条评价 <i class="icon icon-right"></i></span>
+          <div class="evaluate mr26" @click="option('evaluate')">
+              <a href="#evaluate">
+                  <span>{{average.total_comment}}条评价 <i class="icon icon-right"></i></span>
+              </a>
               <i></i>
           </div>
         </div>
@@ -75,7 +72,7 @@
         <p class="wire"></p>
     </div>
 
-    <div class="all">
+    <div class="all" id="evaluate">
         <!-- <div class="time ml26 mr26">
             <span class="title">营业时间</span>
             <span class="hour">1周一至周日1:00-21:00</span>
@@ -85,7 +82,8 @@
                 <p class="shop" v-html="serverDetail.shop_name">肤俊堂皮肤修复中心</p>
                 <p class="site" v-html="serverDetail.address">中山大道西1138号合生骏景广场A座1527室</p>
                 <p class="rice" v-if="serverDetail.distance">
-                    <img src="../../assets/img/offline/site.png" alt="">
+                    <!-- <img src="../../assets/img/offline/site.png" alt=""> -->
+                    <i class="icon icon-site"></i>
                     <span>距离 {{serverDetail.distance}}m</span>
                 </p>
             </div>
@@ -94,7 +92,7 @@
                 <i class="icon icon-phone"></i>
             </div>
         </div>
-        <p class="wire"></p>
+        <p class="wire" ></p>
         <!-- <div class="appointmentmodule">
             <div class="time">
                 <span class="title">立即预约</span>
@@ -135,17 +133,19 @@
                     <p :class="style == 0 ? 'active' : ''" @click="option('introduce')">产品介绍</p>
                 </li>
                 <li>
-                    <p :class="style == 1 ? 'active' : ''" @click="option('evaluate')">网友评价</p>
+                    <a href="#evaluate">
+                        <p :class="style == 1 ? 'active' : ''" @click="option('evaluate')">网友评价</p>
+                    </a>
                 </li>
             </ul>
             <div class="introduce" :style="style == 0 ? '' : 'display:none'" v-html="serverDetail.details">
-                <p>广州市奈瑞儿塑身美颜连锁股份有限公司，成立于2001年，是广东省知名的专业提供女性美容、美体服务的大型连锁机构，旗下美容院遍布广东珠三角地区，总部设在广州</p>
+                <!-- <p>广州市奈瑞儿塑身美颜连锁股份有限公司，成立于2001年，是广东省知名的专业提供女性美容、美体服务的大型连锁机构，旗下美容院遍布广东珠三角地区，总部设在广州</p>
                 <img :src="bigimg" alt="">
                 <p>企业标志</p>
                 <p>"奈瑞儿"企业标志是"蝴蝶",寓意为: 蝴蝶的美丽来自蜕变. 奈瑞儿的顾客在这里,蜕变出自己的美丽形体；奈瑞儿的员工在这里,蜕变出自己的完美人生</p>
                 <p>企业规模</p>
                 <p>广州奈瑞儿拥有100多名国内外知名美容顾问、200多名具有国家颁发专业证书的营养师，近2000名专业美容技师。“奈瑞儿”塑身美颜连锁机构遍布广东省各中心城市，拥有上百家直营连锁店，全省营业面积超过40000平方米，每天服务顾客超3000人次，已成为广东省最具规模、最为专业的塑身美胸连锁机构。“奈瑞儿”就像标志中的蝴蝶一样，把美丽、幸福带给了所有爱美女性。</p>
-                <img :src="bigimg" alt="">
+                <img :src="bigimg" alt=""> -->
             </div>
             <div class="netfriend" :style="style == 1 ? '' : 'display:none'">
                 <ul class="classify">
@@ -187,7 +187,7 @@
                                 <li class="nameTitle">
                                     <p v-html="item.nick_name">听不懂听不到</p>
                                     <p v-html="item.role == 1 ? '粉丝(普通用户)' : (item.role == 4 ? '部长(店长)' : (item.role == 2 ? 'VIP会员(贵宾)' : (item.role == 3 ? '云店创客(铂金)' : '')))">V1</p>
-                                    <p class="evaluateTime">{{formatDateTime(item.create_time)}}</p>
+                                    <p class="evaluateTime">{{(item.time)}}</p>
                                 </li>
                                 <li class="nameGrade">
                                     <p>打分</p>
@@ -221,11 +221,11 @@
                         </div>
                         <ul class="evaluateLike">
                             <li>
-                                <p>浏览9万+</p>
+                                <!-- <p>浏览9万+</p> -->
                             </li>
                             <li>
-                                <i class="icon icon-message"></i>
-                                <p>5</p>
+                                <!-- <i class="icon icon-message"></i>
+                                <p>5</p> -->
                             </li>
                             <li @click="ServerCommentStar(item.comment_id)">
                                 <i class="icon icon-like" v-if="item.star == 1"></i>
@@ -252,6 +252,7 @@
                                 </li> -->
                             </ul>
                             <!-- <p class="hide">查看全部5条回复</p> -->
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -359,28 +360,29 @@
                 <p>团购券可以分2次体验，商家将提供凭证，凭证不可转借他人使用</p>
             </li>
         </ul>
+        <p style="margin-bottom:1.54rem;"></p>
     </div>
 
-    <div class="pay" v-if="serverDetail.trade_type == 1">
+    <div class="pay" v-if="serverDetail.trade_type == 1"  @click="MIXINCreateOrderType(serverId,'1')">
         <div class="price">
             <p><span>￥</span>{{serverDetail.price}}</p>
-            <p>预付{{serverDetail.price}}元，到店在付{{serverDetail.total_price}}-{{serverDetail.price}}元</p>
+            <p>预付{{serverDetail.price}}元，到店在付{{prepay}}元</p>
         </div>
         <div class="order">
-            <p>立即下单</p>
+            <p class="icon icon-littleBackground">立即下单</p>
         </div>
     </div>
 
-    <div class="pay" v-if="serverDetail.trade_type == 2">
+    <div class="pay" v-else  @click="MIXINCreateOrderType(serverId,'2')">
         <div class="price" style="line-height: .8rem;">
             <p><span>￥</span>{{serverDetail.total_price}}</p>
         </div>
         <div class="order">
-            <p>立即支付</p>
+            <p class="icon icon-littleBackground">立即支付</p>
         </div>
     </div>
 
-    <div class="allpay" v-if="serverDetail.trade_type == 3">
+    <!-- <div class="allpay" v-if="serverDetail.trade_type == 3">
         <div class="allprice">
             <p>预付款:￥{{serverDetail.price}}</p>
             <p>到店在付{{prepay}}元</p>
@@ -388,7 +390,7 @@
         <div class="allorder">
             <p>全款:￥{{serverDetail.total_price}}</p>
         </div>
-    </div>
+    </div> -->
 
     <!-- 分享 -->
     <div class="common-shadow-modules" @click="isShare = false"  v-show="isShare">
@@ -422,21 +424,15 @@
 </template>
 
 <script>
-import img from "../../assets/img/offline/img.png"
-import bigimg from "../../assets/img/offline/bigimg.png"
 import * as USER_API from '@/api/user'
 import store from "@/store/index"
+import { Swipe, SwipeItem } from "vant"
 
 export default {
     data(){
         return{
-            dataItem:[{
-                name:'../../assets/img/offline/swipe.png'
-            }],
-            dataImgItem:[],
-            img,
-            bigimg,
-            serverId:0,
+            serverId:142,
+            current:0,
             userId:store.state.userId,
             // 吸顶菜单
             menu:false,
@@ -458,6 +454,10 @@ export default {
             allComment:0,
             // 总评论数和平均评分
             average:{},
+            allRate:0,
+            minusRate:0,
+            halfRate:0,
+            greyRate:false,
             // 评论分类数量
             commentClassify:{},
             // 预付剩余
@@ -465,6 +465,7 @@ export default {
             // 分享
             serverCommentLabelInfo:[],
             isShare:false,
+            classList:'',
         }
     },
     mounted(){
@@ -481,7 +482,7 @@ export default {
         // 获取网友评论统计
         this.loadServerCommentInfo()
         // 监听滚动事件
-        window.addEventListener("scroll", this.menuShow); 
+        window.addEventListener("scroll", this.menuShow);
     },
     watch:{
         wheight:'someMethod'
@@ -535,6 +536,12 @@ export default {
             let params = this.serverId
             USER_API.serverTotalCommentNum(params).then(data => {
                 if(data){
+                    data.allRate = parseInt(data.avg_score)
+                    data.minusRate = parseInt(5 - data.avg_score)
+                    data.halfRate = data.avg_score - parseInt(data.avg_score)
+                    if(data.halfRate > 0){
+                        this.greyRate = true
+                    }
                     this.average = data
                 }
             });
@@ -568,7 +575,7 @@ export default {
                     for(let i in data.data){
                         // data.data[i].Imgs.push(data.data[i].imgs.split(','))
                         // this.comment_label.push(data.data[i].comment_label.split(','))
-                        data.data[i].time = this.format(data.data[i].create_time)
+                        data.data[i].time = this.getLocalTime(data.data[i].create_time)
                     }
                 }else{
                     this.listServerComment = []
@@ -603,6 +610,17 @@ export default {
                 }
             }
         },
+        format(time) {
+            // time = +new Date()
+            var date = new Date(time + 8 * 3600 * 1000);
+            return date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
+        },
+        getLocalTime(nS) {     
+            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
+        },
+        changPage(){
+            // debugger
+        }
     }
 }
 </script>
@@ -653,7 +671,7 @@ export default {
 .all .content .sales{font-size: .24rem;color: #999999;}
 .all .content .sales span:nth-child(2){float: right;}
 
-.botm{padding: 0 .26rem}
+.botm{padding: 0 .26rem;margin-bottom: 1.54rem;}
 .botm .title{font-size: .32rem;line-height: .38rem;color: #333333;margin: .3rem 0;}
 .botm .introduce{font-size: .3rem;color: #333333;line-height: .44rem; clear: both;}
 .botm .introduce img{margin: .3rem 0;}
@@ -709,11 +727,11 @@ export default {
 .notice .dot{display: inline-block;height: .12rem;width: .12rem;border-radius: 50%;background: black;}
 
 /* 立即下单 */
-.pay{border-top: 1px solid #E5E5E5;height: 1rem;margin-top: .64rem;}
+.pay{border-top: 1px solid #E5E5E5;height: 1rem;position: fixed;bottom: 0;left: 0;right: 0;background: white;}
 .pay .price{float: left;padding-left: .24rem;margin-top: .12rem;}
 .pay .price p:nth-child(1){font-size: .3rem;color: #F63B75;font-weight: bold;}
 .pay .price p:nth-child(2){font-size: .24rem;color: #FF163D;}
-.pay .order{float: right;text-align: center;width: 2.72rem;line-height: 1rem;background: linear-gradient(right,#F63B75,#FF8686);font-size: .3rem;color: white;}
+.pay .order{float: right;text-align: center;width: 2.72rem;line-height: 1rem;font-size: .3rem;color: white;}
 
 /* 预付、全款 */
 .allpay{height: 1rem;background: #FFEEF3;margin-top: .64rem;}
@@ -774,9 +792,9 @@ background-color: #F6F6F6;text-align: center;color: #909090;font-size: .32rem}
 .icon-collectMenu { width: .42rem; height: .42rem; background: url("../../assets/img/shopDetail/collect1.png");background-size: 100% 100% }
 .icon-shareMenu { width: .42rem; height: .42rem; background: url("../../assets/img/shopDetail/share1.png");background-size: 100% 100% }
 .icon-phone { width: .36rem; height: .34rem; background: url("../../assets/img/shopDetail/phone.png");background-size: 100% 100% }
-.icon-star { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/star.png");background-size: 100% 100% }
-.icon-ystar { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/ystar.png");background-size: 100% 100% }
-.icon-bstar { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/bstar.png");background-size: 100% 100% }
+.icon-star { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/star.png");background-size: 100% 100% }
+.icon-ystar { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/ystar.png");background-size: 100% 100% }
+.icon-bstar { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/bstar.png");background-size: 100% 100% }
 .icon-like { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/like.png");background-size: 100% 100% }
 .icon-extend { width: .22rem; height: .12rem; background: url("../../assets/img/shopDetail/extend.png");background-size: 100% 100% }
 .icon-grade { width: .22rem; height: .22rem; background: url("../../assets/img/shopDetail/grade.png");background-size: 100% 100% }
@@ -787,5 +805,7 @@ background-color: #F6F6F6;text-align: center;color: #909090;font-size: .32rem}
 .icon-dianzan { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/dianzan.png");background-size: 100% 100% }
 .icon-collectOK { width: .7rem; height: .7rem; background: url("../../assets/img/shopDetail/collectOK.png");background-size: 100% 100% }
 .icon-collectOKMenu { width: .42rem; height: .42rem; background: url("../../assets/img/shopDetail/collect1ok.png");background-size: 100% 100% }
+.icon-littleBackground { width: 2.72rem; height: 1rem; background: url("../../assets/img/shopDetail/littleBackground.png");background-size: 100% 100% }
+.icon-site { width: .2rem; height: .26rem; background: url("../../assets/img/shopDetail/site.png");background-size: 100% 100% }
 
 </style>

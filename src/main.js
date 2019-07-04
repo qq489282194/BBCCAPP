@@ -10,14 +10,16 @@ import Es6Promise from 'es6-promise'
 require('es6-promise').polyfill()
 Es6Promise.polyfill()
 import NutUI from '@nutui/nutui';
+import vant from 'vant'
 // import { ShortPassword } from '@nutui/nutui';
 import '@nutui/nutui/dist/nutui.css';
 
-
+Vue.use(vant)
 NutUI.install(Vue);
 // ShortPassword.install(Vue)
 /*全局混入方法*/
 Vue.mixin(mixin)
+
 
 Vue.config.productionTip = false
 

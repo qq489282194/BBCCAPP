@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nut-swiper
+    <!-- <nut-swiper
         :paginationVisible="true"
         direction="horizontal"
         ref="demo1"
@@ -8,14 +8,22 @@
 
     >
         <div class="nut-swiper-slide" v-for="banner in shopDetail.banner" :key="banner.index">
-            <!-- <span>page{{item.name}}</span> -->
             <img :src="banner" style="max-width:100%; max-height:100%" class="nut-img-lazyload"/>
         </div>
-        <!-- <div class="nut-swiper-slide">
-            <span>page{{item.name}}</span>
-            <img src="../../assets/img/offline/swipe.png" style="max-width:100%; max-height:100%" class="nut-img-lazyload"/>
-        </div> -->
-    </nut-swiper>
+    </nut-swiper> -->
+
+    <van-swipe @change="onChange" :width='375' style="overflow:hidden" :loop="false">
+        <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
+            <img :src="item" alt="" style="height:5rem;">
+        </van-swipe-item>
+        <!-- <van-swipe-item>2</van-swipe-item>
+        <van-swipe-item>3</van-swipe-item>
+        <van-swipe-item>4</van-swipe-item> -->
+
+        <div class="imgNum" slot="indicator">
+            {{ current + 1 }}/{{img_urls.length}}
+        </div>
+    </van-swipe>
     <!-- <p class="backroute">&lt;</p> -->
     <i class="icon-back backroute" @click="backRouter()"></i>
 
@@ -40,11 +48,9 @@
           <img src="../../assets/img/offline/star.svg" alt="">
           <img src="../../assets/img/offline/star.svg" alt="">
           <img src="../../assets/img/offline/star.svg" alt=""> -->
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
-          <i class="icon icon-ystar"></i>
+          <i class="icon icon-ystar" v-for="item in shopDetail.allRate" :key="item.index"></i>
+          <i class="icon icon-star" v-if="greyRate"></i>
+          <i class="icon icon-bstar" v-for="item in shopDetail.minusRate" :key="item.index"></i>
           <span class="grade">{{shopDetail.shop_score}}</span>
           <div class="evaluate mr26">
               <a href="#evaluate">
@@ -143,6 +149,7 @@
 import * as USER_API from '@/api/user'
 import img from "../../assets/img/offline/img.png"
 import bigimg from "../../assets/img/offline/bigimg.png"
+import { Swipe, SwipeItem } from "vant"
 
 export default {
     data(){
@@ -157,6 +164,10 @@ export default {
             shopDetail:{},
             classList:'',
             shop_id:0,
+            // 店铺评分半星
+            greyRate:false,
+            current:0,
+            img_urls:[]
         }
     },
     mounted(){
@@ -171,9 +182,16 @@ export default {
             let params = {"shop_id":this.shop_id, "longitude":'', "latitude":'',};
             USER_API.getShopDetail(params).then(data => {
                 if(data){
+                    data.allRate = parseInt(data.shop_score)
+                    data.minusRate = parseInt(5 - data.shop_score)
+                    data.halfRate = data.shop_score - parseInt(data.shop_score)
+                    if(data.halfRate > 0){
+                        this.greyRate = true
+                    }
                     data.imgs = data.shop_desc_img.split(',')
                     data.banner = data.shop_banner.split(',')
                     this.shopDetail = data
+                    this.img_urls = data.banner
                 }
             });
         },
@@ -199,7 +217,10 @@ export default {
                 }
             }
         },
-        classList(){}
+        classList(){},
+        onChange(index) {
+            this.current = index;
+        }
     }
 }
 </script>
@@ -259,6 +280,8 @@ export default {
 
 .app{position: relative;}
 .backroute{position: absolute;top: .5rem;left: .24rem;}
+.imgNum{background: rgba(0, 0, 0, 0.3);border-radius: .22rem;height: .44rem;padding: 0 .24rem;line-height: .44rem;color: white;font-size: .3rem;position: absolute;top: 4.36rem;right: .24rem;}
+
 
 /* 公共样式 */
 .wire{height: .14rem;background: #F2F2F2;}
@@ -269,9 +292,9 @@ export default {
 .icon { display:inline-block}
 .icon-phone { width: .36rem; height: .34rem; background: url("../../assets/img/shopDetail/phone.png");background-size: 100% 100% }
 .icon-subscription { width: .36rem; height: .36rem; background: url("../../assets/img/shopDetail/subscription.png");background-size: 100% 100% }
-.icon-star { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/star.png");background-size: 100% 100% }
-.icon-ystar { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/ystar.png");background-size: 100% 100% }
-.icon-bstar { width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/bstar.png");background-size: 100% 100% }
+.icon-star { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/star.png");background-size: 100% 100% }
+.icon-ystar { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/ystar.png");background-size: 100% 100% }
+.icon-bstar { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/bstar.png");background-size: 100% 100% }
 .icon-back { width: .7rem; height: .7rem; background: url("../../assets/img/shopDetail/back.png");background-size: 100% 100% }
 .icon-right { width: .12rem; height: .22rem; background: url("../../assets/img/shopDetail/right.png");background-size: 100% 100% }
 .icon-right1 { width: .08rem; height: .16rem; background: url("../../assets/img/shopDetail/right1.png");background-size: 100% 100% }

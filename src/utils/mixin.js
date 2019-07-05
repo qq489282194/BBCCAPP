@@ -87,7 +87,6 @@ export default {
       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
       let params = type;
       if(isAndroid){
-        params = JSON.stringify(params)
         window.JsToJava.goToShopAppointment(params);
       }else{
         window.webkit.messageHandlers.goToShopAppointment.postMessage(params)
@@ -103,6 +102,18 @@ export default {
         window.JsToJava.toTest(params);
       }else{
         window.webkit.messageHandlers.toTest.postMessage(params)
+      }
+    },
+    MIXINShareFun(url,type){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = {url,type};
+      if(isAndroid){
+        params = JSON.stringify(params)
+        window.JsToJava.shareFun(params);
+      }else{
+        window.webkit.messageHandlers.shareFun.postMessage(params)
       }
     },
     _system_shareTo(title,description,imgSrc,url,groupRecordId,activityId,type)  {

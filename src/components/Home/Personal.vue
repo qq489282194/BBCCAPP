@@ -74,7 +74,7 @@
             <i class="icon icon-after-sales"></i>
             <!--<img src="../../assets/img/home/after-sales.png"/>-->
             <p>预约</p></li>
-          <li @click="MixinToUrl('cmi-wallet')">
+          <li @click="wallet('')">
             <i class="icon icon-money"></i>
             <!--<img src="../../assets/img/home/integral.png"/>-->
             <p>钱包</p></li>
@@ -118,7 +118,7 @@
           </li>
         </ul> -->
         <ul class="invite">
-          <li @click="MixinToUrl('cmi-wallet','integral')">
+          <li @click="wallet('integral')">
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
@@ -223,6 +223,8 @@
     name: "personal",
     data(){
       return{
+        userId:store.state.userId,
+        token:store.state.token,
         userList:{
           integral:0,
         },
@@ -362,7 +364,7 @@
         let params = {
           "endDate": "",
           "startDate": "",
-          "userId": "000059255d5f460aa7e27b0ae9065c52"
+          "userId": this.userId
         }
         USER_API.selectcount(params).then(data => {
           if(data){
@@ -417,6 +419,17 @@
           this.page_jump_url = data[0].page_jump_url
           this.photo_url = data[0].photo_url
         })
+      },
+      // 跳转我的钱包
+      wallet(val){
+        if(this.userId){
+          if(val == 'integral'){
+            this.MixinToUrl('cmi-wallet','integral')
+          }
+          this.MixinToUrl('cmi-wallet','')
+        }else{
+          this.MIXINToDetail('','14')
+        }
       },
       // 未读消息
       loadUnReadData(){

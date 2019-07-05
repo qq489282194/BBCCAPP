@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nut-swiper
+    <!-- <nut-swiper
         :paginationVisible="false"
         direction="horizontal"
         ref="demo1"
@@ -9,12 +9,24 @@
         <div class="nut-swiper-slide" v-for="item in img_urls" :key="item.index">
             <img :src="item" style="max-width:100%; max-height:100%" class="nut-img-lazyload"/>
         </div>
-    </nut-swiper>
+    </nut-swiper> -->
+    <van-swipe @change="onChange" :width='375' style="overflow:hidden" :loop="false">
+        <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
+            <img :src="item" alt="" style="height:5rem;">
+        </van-swipe-item>
+        <!-- <van-swipe-item>2</van-swipe-item>
+        <van-swipe-item>3</van-swipe-item>
+        <van-swipe-item>4</van-swipe-item> -->
+
+        <div class="imgNum" slot="indicator">
+            {{ current + 1 }}/{{img_urls.length}}
+        </div>
+    </van-swipe>
 
     <div class="headbutton">
         <i class="icon icon-back" @click="backRouter()"></i>
         <i class="icon icon-collect" v-if="serverDetail.collection == 0" @click="serverCollectServer(serverDetail)"></i>
-        <i class="icon icon-collectOK" v-if="serverDetail.collection == 1" @click="serverCollectServer(serverDetail)"></i>
+        <i class="icon icon-collectOK" v-else @click="serverCollectServer(serverDetail)"></i>
         <i class="icon icon-share"  @click="isShare = true"></i>
         <!-- <p class="backroute">&lt;</p>
         <p class="share">2</p>
@@ -28,14 +40,14 @@
         <p class="title">商家详情</p>
         <p class="collect" @click="serverCollectServer(serverDetail)">
             <i class="icon icon-collectMenu" v-if="serverDetail.collection == 0"></i>
-            <i class="icon icon-collectOKMenu" v-if="serverDetail.collection == 1"></i>
+            <i class="icon icon-collectOKMenu" v-else></i>
         </p>
         <p class="share"  @click="isShare = true">
             <i class="icon icon-shareMenu"></i>
         </p>
     </div>
 
-    <p class="imgNum">1/{{img_urls.length}}</p>
+    <!-- <p class="imgNum">1/{{img_urls.length}}</p> -->
     
 
     <div class="shop">
@@ -192,11 +204,11 @@
                                 <li class="nameGrade">
                                     <p>打分</p>
                                     <p>
-                                        <i class="icon icon-grade"></i>
-                                        <i class="icon icon-grade"></i>
-                                        <i class="icon icon-grade"></i>
-                                        <i class="icon icon-grade"></i>
-                                        <i class="icon icon-grade"></i>
+                                        <i class="icon icon-serveystar" v-for="hide in item.allRate" :key="hide.index"></i>
+                                        <i class="icon icon-servestar" v-if="serveRate"></i>
+                                        <i class="icon icon-servebstar" v-for="hide in item.minusRate" :key="hide.index"></i>
+                                        <!-- <i class="icon icon-grade"></i>
+                                        <i class="icon icon-grade"></i> -->
                                     </p>
                                 </li>
                             </ul>
@@ -400,19 +412,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="shareFun('weChat',1)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,1)">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="shareFun('friendCircle',2)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,2)">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="shareFun('qq',3)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,3)">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="shareFun('sina',4)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,4)">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -431,7 +443,7 @@ import { Swipe, SwipeItem } from "vant"
 export default {
     data(){
         return{
-            serverId:142,
+            serverId:0,
             current:0,
             userId:store.state.userId,
             // 吸顶菜单
@@ -454,10 +466,10 @@ export default {
             allComment:0,
             // 总评论数和平均评分
             average:{},
-            allRate:0,
-            minusRate:0,
-            halfRate:0,
+            // 店铺评分半星
             greyRate:false,
+            // 评论评分半星
+            serveRate:false,
             // 评论分类数量
             commentClassify:{},
             // 预付剩余
@@ -566,7 +578,6 @@ export default {
         },
         // 获取评论详情
         loadListServerComment(){
-            // this.listServerComment = []
             let params = {"serverId":this.serverId, "page":'', "pageSize":'', "key":this.content,};
             USER_API.listServerComment(params).then(data => {
                 if(data){
@@ -575,6 +586,12 @@ export default {
                     for(let i in data.data){
                         // data.data[i].Imgs.push(data.data[i].imgs.split(','))
                         // this.comment_label.push(data.data[i].comment_label.split(','))
+                        data.data[i].allRate = parseInt(data.data[i].comment_score)
+                        data.data[i].minusRate = parseInt(5 - data.data[i].comment_score)
+                        data.data[i].halfRate = data.data[i].comment_score - parseInt(data.data[i].comment_score)
+                        if(data.data[i].halfRate > 0){
+                            this.serveRate = true
+                        }
                         data.data[i].time = this.getLocalTime(data.data[i].create_time)
                     }
                 }else{
@@ -589,6 +606,7 @@ export default {
                     this.$message.success(data.message)
                 }
             });
+            this.loadListServerComment()
         },
         // 服务收藏
         serverCollectServer(val){
@@ -598,6 +616,7 @@ export default {
                     this.$message.success(data.message)
                 }
             });
+            this.loadServerDetail()
         },
         // 获取url参数
         getQueryVariable(variable){
@@ -620,6 +639,9 @@ export default {
         },
         changPage(){
             // debugger
+        },
+        onChange(index) {
+            this.current = index;
         }
     }
 }
@@ -807,5 +829,8 @@ background-color: #F6F6F6;text-align: center;color: #909090;font-size: .32rem}
 .icon-collectOKMenu { width: .42rem; height: .42rem; background: url("../../assets/img/shopDetail/collect1ok.png");background-size: 100% 100% }
 .icon-littleBackground { width: 2.72rem; height: 1rem; background: url("../../assets/img/shopDetail/littleBackground.png");background-size: 100% 100% }
 .icon-site { width: .2rem; height: .26rem; background: url("../../assets/img/shopDetail/site.png");background-size: 100% 100% }
+.icon-servebstar { margin:0 .02rem;width: .22rem; height: .22rem; background: url("../../assets/img/shopDetail/servebstar.png");background-size: 100% 100% }
+.icon-servestar { margin:0 .02rem;width: .22rem; height: .22rem; background: url("../../assets/img/shopDetail/servestar.png");background-size: 100% 100% }
+.icon-serveystar { margin:0 .02rem;width: .22rem; height: .22rem; background: url("../../assets/img/shopDetail/serveystar.png");background-size: 100% 100% }
 
 </style>

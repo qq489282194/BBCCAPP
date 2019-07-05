@@ -16,17 +16,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/bbc':{
-      //   target:'http://user.meibbc.com/',
-      //   // target:'http://testuser.meibbc.com/dev/',
-      //   // target:'http://192.168.0.41:8081/dev/',
-      //   // test 以下
-      //   // target:'http://120.79.144.227:8081/dev/',
-      //   changeOrigin:true,
-      //   pathRewrite:{
-      //     '^/bbc': ''
-      //   }
-      // },
       '/bbc-information':{
         // target:'http://user.meibbc.com/',
         // target:'http://testuser.meibbc.com/dev/',
@@ -35,7 +24,18 @@ module.exports = {
         target:'http://nfz.meibbc.com',
         changeOrigin:true,
         pathRewrite:{
-          '^/bbc-information': '/bbc-information'
+          '^/bbc-information': ''
+        }
+      },
+      '/bbc':{
+        // target:'http://user.meibbc.com/',
+        target:'http://testuser.meibbc.com/dev/',
+        // target:'http://192.168.0.41:8081/dev/',
+        // test 以下
+        // target:'http://120.79.144.227:8081/dev/',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/bbc': ''
         }
       },
       '/meibbcapp':{

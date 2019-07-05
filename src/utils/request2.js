@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from "axios"
+import store from "@/store/index"
 
 const service = axios.create({
   baseURL:  "/meibbcapp",
@@ -9,7 +10,8 @@ const service = axios.create({
 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
-  let token = sessionStorage.getItem("token");
+  // let token = sessionStorage.getItem("token");
+  let token = store.state.token
   config.headers.common['Authorization'] = token;
   // 在发送请求之前做些什么
   return config;

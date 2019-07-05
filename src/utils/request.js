@@ -4,8 +4,8 @@ import store from "@/store/index"
 // import $ from "jquery";
 
 const service = axios.create({
-  // baseURL:  '/bbc/',
-  baseURL:  "http://testuser.meibbc.com/dev",
+  baseURL:  '/bbc',
+  // baseURL:  "http://testuser.meibbc.com/dev",
   timeout: 15000,
 })
 

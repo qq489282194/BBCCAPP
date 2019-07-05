@@ -47,19 +47,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="shareFun('weChat',1)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,1)">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="shareFun('friendCircle',2)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,2)">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="shareFun('qq',3)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,3)">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="shareFun('sina',4)">
+        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,4)">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -79,7 +79,7 @@ export default {
     data(){
         return{
             userId:store.state.userId,
-            serverId:0,
+            id:0,
             article:{
                 bigTypeId: "",
                 content: "",
@@ -94,7 +94,7 @@ export default {
     },
     mounted(){
         // 获取服务ID
-        this.getQueryVariable('serverId')
+        this.getQueryVariable('id')
         this.loadPostUserByUserid()
     },
     methods:{
@@ -124,7 +124,7 @@ export default {
           for (let i=0;i<vars.length;i++) {
               let part = vars[i].split("=");
               if(part[0] == variable){
-                  this.serverId = part[1]
+                  this.id = part[1]
               }
           }
       },

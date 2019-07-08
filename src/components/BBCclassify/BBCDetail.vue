@@ -100,11 +100,12 @@ export default {
       loadPostUserByUserid(){
         let params = { "id":this.serveId, };
         USER_API.getArticle(params).then(data => {
-          
+          debugger
           if(data){
+            let str = data.content
             let reg = new RegExp( 'embed' , "g" )
-            let newstr = data.replace( reg , 'video' )
-            this.article = newstr;
+            data.content = str.replace( reg , 'video' )
+            this.article = data;
           }
         });
       },

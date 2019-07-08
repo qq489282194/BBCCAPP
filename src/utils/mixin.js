@@ -165,7 +165,8 @@ export default {
       if(isAndroid){
         window.JsToJava.back();
       }else{
-        this.$router.back(-1)
+        // this.$router.back(-1)
+        window.webkit.messageHandlers.back.postMessage({});
       }
       // this.$router.go(-1)
     },

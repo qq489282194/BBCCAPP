@@ -52,7 +52,7 @@
                         <p>总积分</p>
                     </li>
                 </ul>
-                <div class="signcmi" @click="MIXINToDetail('','48')">
+                <div class="signcmi" @click="MIXINToDetail(postUserByUserid.actAalance,'48')">
                     <i class="icon-integral"></i>
                     <p>积分兑换</p>
                 </div>

@@ -4,7 +4,7 @@
         :paginationVisible="false"
         direction="horizontal"
         ref="demo1"
-        :slideChangeEnd="changPage"
+        :slideChangeEnd=""
     >
         <div class="nut-swiper-slide" v-for="item in img_urls" :key="item.index">
             <img :src="item" style="max-width:100%; max-height:100%" class="nut-img-lazyload"/>
@@ -412,19 +412,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,1)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,1)">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,2)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,2)">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,3)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,3)">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,4)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,4)">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -443,7 +443,7 @@ import { Swipe, SwipeItem } from "vant"
 export default {
     data(){
         return{
-            serverId:0,
+            serverId:142,
             current:0,
             userId:store.state.userId,
             // 吸顶菜单
@@ -629,6 +629,14 @@ export default {
                 }
             }
         },
+          // 分享模块
+        shareFun(typeNumber,type){
+            let description = "";
+            let imgSrc = "";
+            let activityId = "";
+            this._system_shareTo(title,description,imgSrc,typeNumber,"",activityId,type);
+        },
+        // 时间格式
         format(time) {
             // time = +new Date()
             var date = new Date(time + 8 * 3600 * 1000);
@@ -637,9 +645,7 @@ export default {
         getLocalTime(nS) {     
             return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
         },
-        changPage(){
-            // debugger
-        },
+        // 轮播图下标
         onChange(index) {
             this.current = index;
         }

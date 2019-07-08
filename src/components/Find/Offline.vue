@@ -162,12 +162,11 @@ export default {
             bigimg,
             // 店铺详情
             shopDetail:{},
-            classList:'',
-            shop_id:0,
+            shop_id:'',
             // 店铺评分半星
             greyRate:false,
             current:0,
-            img_urls:[]
+            img_urls:[],
         }
     },
     mounted(){
@@ -182,12 +181,23 @@ export default {
             let params = {"shop_id":this.shop_id, "longitude":'', "latitude":'',};
             USER_API.getShopDetail(params).then(data => {
                 if(data){
-                    data.allRate = parseInt(data.shop_score)
-                    data.minusRate = parseInt(5 - data.shop_score)
-                    data.halfRate = data.shop_score - parseInt(data.shop_score)
-                    if(data.halfRate > 0){
-                        this.greyRate = true
+                    if(data.shop_score){
+                        data.allRate = parseInt(data.shop_score)
+                        data.minusRate = parseInt(5 - data.shop_score)
+                        data.halfRate = data.shop_score - parseInt(data.shop_score)
+                        if(data.halfRate > 0){
+                            this.greyRate = true
+                        }
+                    }else{
+                        data.shop_score = 0
+                        data.allRate = parseInt(data.shop_score)
+                        data.minusRate = parseInt(5 - data.shop_score)
+                        data.halfRate = data.shop_score - parseInt(data.shop_score)
+                        if(data.halfRate > 0){
+                            this.greyRate = true
+                        }
                     }
+                    
                     data.imgs = data.shop_desc_img.split(',')
                     data.banner = data.shop_banner.split(',')
                     this.shopDetail = data
@@ -217,7 +227,6 @@ export default {
                 }
             }
         },
-        classList(){},
         onChange(index) {
             this.current = index;
         }

@@ -24,7 +24,7 @@ module.exports = {
         target:'http://nfz.meibbc.com',
         changeOrigin:true,
         pathRewrite:{
-          '^/bbc-information': ''
+          '^/bbc-information': '/bbc-information'
         }
       },
       '/bbc':{

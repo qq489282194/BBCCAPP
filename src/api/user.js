@@ -156,6 +156,15 @@ export function personalPage(params) {
   })
 }
 
+// 获取用户粉丝数量及用户日记数量
+export function getDiaryFans(params) {
+  return request({
+    url:"/personal/sys/diary/fans/num",
+    method:"get",
+    params
+  })
+}
+
   // 关注
 export function countCare(params) {
   return request({
@@ -167,7 +176,7 @@ export function countCare(params) {
 
   // 获取首页文章
   export function getArticle(params) {
-    return request2({
+    return request5({
       url:"/bbc-information/type-article/get-article",
       method:"get",
       params

@@ -4,7 +4,7 @@
       <div class="header-modules">
         <div class="header">
           <div>
-            <a @click="MIXINToDetail('','3')" :class="this.messageNumber >0 ? 'active' : ''">
+            <a @click="MIXINToDetail('','3')">
               <i class="icon icon-message"></i>
             </a>
             <a @click="MIXINToDetail('','7')">
@@ -38,7 +38,7 @@
             </div> -->
             
           </div>
-          <div class="sign" @click="MixinToUrl('cmi-index')">
+          <div class="sign" @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/index','24')">
             <p><i class="icon icon-gift"></i></p>
             <p>签到有礼</p>
           </div>
@@ -46,12 +46,12 @@
         </div>
         <ul class="header-bottom clear-both">
           <li @click="MIXINToDetail('','35')" >
-            <p v-if="diaryCount != 0" v-html="diaryCount">0</p>
-            <p v-if="diaryCount == 0">0</p>
+            <p v-if="personalPage.diaryNum != 0" v-html="personalPage.diaryNum">0</p>
+            <p v-if="personalPage.diaryNum == 0">0</p>
             <p>帖子</p></li>
           <li @click="MIXINToDetail('','36')">
-            <p v-if="personalPage.funs != 0" v-html="personalPage.funs">0</p>
-            <p v-if="personalPage.funs == 0">0</p>
+            <p v-if="personalPage.fansNum != 0" v-html="personalPage.fansNum">0</p>
+            <p v-if="personalPage.fansNum == 0">0</p>
             <p>粉丝</p></li>
           <li @click="MIXINToDetail('','5')">
             <p v-if="countCare != 0" v-html="countCare">9814</p>
@@ -74,7 +74,7 @@
             <i class="icon icon-after-sales"></i>
             <!--<img src="../../assets/img/home/after-sales.png"/>-->
             <p>预约</p></li>
-          <li @click="wallet('')">
+          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/wallet','24')">
             <i class="icon icon-money"></i>
             <!--<img src="../../assets/img/home/integral.png"/>-->
             <p>钱包</p></li>
@@ -100,7 +100,8 @@
       </div>
       
       <div class="banner-modules">
-        <a :href="page_jump_url"><img :src="photo_url" alt=""></a>
+        <a @click="MIXINToDetail(page_jump_url,'24')"><img :src="photo_url" alt=""></a>
+        <!-- <a :href="page_jump_url" @click="MIXINToDetail(page_jump_url,'24')"><img :src="photo_url" alt=""></a> -->
       </div>
 
       <div class="integral-modules frame">
@@ -118,7 +119,7 @@
           </li>
         </ul> -->
         <ul class="invite">
-          <li @click="wallet('integral')">
+          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/wallet', '24')">
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
@@ -143,7 +144,7 @@
           </li>
         </ul> -->
         <ul class="member nav">
-          <li @click="MIXINToDetail('','41')">
+          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/cmimymember','24')">
             <i class="icon icon-member"></i>
             <p>我的会员</p>
           </li>
@@ -223,8 +224,6 @@
     name: "personal",
     data(){
       return{
-        userId:store.state.userId,
-        token:store.state.token,
         userList:{
           integral:0,
         },
@@ -232,9 +231,10 @@
         selectCount:{
           count:0,
         },
-        // 粉丝
+        // 帖子粉丝未读消息
         personalPage:{
-          funs:0
+          diaryNum:0,
+          fansNum:0
         },
         // 日记
         diaryCount:0,
@@ -261,9 +261,6 @@
         photo_url:'',
         // 未读消息显隐
         message:0,
-        // 未读消息
-        UnReadData:{},
-        messageNumber:0,
       }
     },
     computed:{
@@ -279,7 +276,6 @@
         if(val != '' && val != "(null)" ){
           this.loadUser();
           this.loadSelectCount();
-          this.loadMessage();
         }
       },
       token(val){
@@ -295,7 +291,7 @@
         if(self.userId != '' && self.userId != "(null)" ){
           self.loadUser();
           self.loadSelectCount();
-          self.loadMessage();
+          self.loadgetDiaryFans()
         }
         if(self.token != ""){
           self.loadCountCollect();
@@ -304,37 +300,19 @@
       };
     },
     mounted(){
-      console.log(this.MIXINGETHost())
+      // 获取用户信息
       if(this.userId != '' && this.userId != "(null)" ){
         this.loadUser();
         this.loadSelectCount();
-        this.loadMessage();
       }
-      if(this.token != ""){
-        this.loadCountCollect();
-        this.loadCountCare();
-      }
+      // 帖子粉丝未读消息
+      this.loadgetDiaryFans(this.userId)
       // banner图
       this.loadPageJump()
-      // 我的积分
-      this.loadPostUserByUserid()
       // 关注
       this.loadCountCare()
-      // 粉丝
-      this.loadPersonalPage()
-      // 日记
-      this.loadDiaryCount()
-      //未读消息
-      this.loadUnReadData()
     },
     methods:{
-      loadMessage(){
-        TAPP_API.messageList(this.userId).then(data => {
-          if(data){
-            this.messageNumber = data.totalUnRead
-          }
-        })
-      },
       loadUser(){
         let userId = this.userId;
         USER_API.findUserByUserid(userId).then(data => {
@@ -360,55 +338,48 @@
       },
       // 好友
       loadSelectCount(){
-        // let params = {"endDate":"", "startDate":"", "userId":this.userId,};
         let params = {
           "endDate": "",
           "startDate": "",
           "userId": this.userId
         }
+        this.loadgetDiaryFans(this.userId)
         USER_API.selectcount(params).then(data => {
           if(data){
             this.selectCount = data;
           }
         });
       },
-      // 粉丝
-      loadPersonalPage(){
-        let params = {"userId":this.userId, "lookUserId":this.userId,};
-        USER_API.personalPage(params).then(data => {
+
+      // 获取用户粉丝数量及用户日记数量
+      loadgetDiaryFans(val){
+        let params = {"userid":val,};
+        USER_API.getDiaryFans(params).then(data => {
           if(data){
-              this.personalPage = data.data
+              this.personalPage = data
+              if(data.sysJson.focusNotify > 0){
+                this.message = 1
+              }
+              if(data.sysJson.notification > 0){
+                this.message = 1
+              }
+              if(data.sysJson.clicklikeNotify > 0){
+                this.message = 1
+              }
+              if(data.sysJson.commentNotify > 0){
+                this.message = 1
+              }
           }
         });
       },
       // 关注
       loadCountCare(){
+        this.loadgetDiaryFans(this.userId)
         let params = {"token":this.token, "userid":this.userId,};
         USER_API.countCare(params).then(data => {
           if(data){
             this.countCare = data;
           }
-        });
-      },
-      // 日记
-      loadDiaryCount(){
-        let params = {"userId":this.userId,};
-        USER_API.diaryCount(params).then(data => {
-          // debugger
-          if(data){
-            this.diaryCount = data;
-          }
-        });
-      },
-      // 我的积分
-      loadPostUserByUserid(){
-        let params = {"token":this.token, "userid":this.userId,};
-        USER_API.postUserByUserid(params).then(data => {
-          
-          if(data){
-            this.postUserByUserid = data;
-          }
-          // debugger
         });
       },
       // banner图
@@ -418,36 +389,6 @@
           this.pageJump = data
           this.page_jump_url = data[0].page_jump_url
           this.photo_url = data[0].photo_url
-        })
-      },
-      // 跳转我的钱包
-      wallet(val){
-        if(this.userId){
-          if(val == 'integral'){
-            this.MixinToUrl('cmi-wallet','integral')
-          }
-          this.MixinToUrl('cmi-wallet','')
-        }else{
-          this.MIXINToDetail('','14')
-        }
-      },
-      // 未读消息
-      loadUnReadData(){
-        let params = { "receiver":this.userId, };
-        USER_API.UnReadData(params).then(data => {
-          this.UnReadData = data
-          if(data.focusNotify > 0){
-            this.message = 1
-          }
-          if(data.notification > 0){
-            this.message = 1
-          }
-          if(data.clicklikeNotify > 0){
-            this.message = 1
-          }
-          if(data.commentNotify > 0){
-            this.message = 1
-          }
         })
       },
     },

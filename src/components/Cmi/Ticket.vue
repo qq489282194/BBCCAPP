@@ -153,8 +153,7 @@
         //1、cmi任务进来的，跳转至梦想官主页
         if(this.path == 'cmi-index'){
           // window.location.href = 'http://bbccmxgshop.meibbc.com/#/Featuredgood'
-          // window.location.href ='http://appmini.meibbc.com/bbccmxgshop/#/Featuredgood'
-          window.location.href ='http://testappmini.meibbc.com/bbccmxgshop/#/Featuredgood'
+          window.location.href ='http://appmini.meibbc.com/bbccmxgshop/#/Featuredgood'
           // window.location.href = "http://testh5shop.meibbc.com/#/Featuredgood"
         } else{
           this.$router.go(-1)

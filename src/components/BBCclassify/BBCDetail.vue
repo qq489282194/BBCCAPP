@@ -11,12 +11,12 @@
         </ul>
     </div>
     <div class="detail-header">
-      <p class="title" v-html="article.title">别浪费你的护肤品了，去买个美容仪吧</p>
+      <p class="title" v-html="article.title"></p>
     </div>
     <div class="look">
       <!-- <img src="../../assets/img/bbcdetail/u838.svg" /> -->
       <i class="icon-browse"></i>
-      <span v-html="article.readCount">5000</span>
+      <span v-html="article.readCount">0</span>
     </div>
     <div class="detail-main" v-html="article.content">
       <!-- <p>💢说到美容仪，现在家里至少十几个了吧，但都不是自己买的，你们猜猜都是哪来的？😎哈哈，认真看今天的贴子，老规矩在互动里抽一个宝宝送个美容仪🎁给你！我这么喜欢送东西，上辈子肯定是个男人，宠死我家女人的那种，愿嫁的举手🙋，</p>
@@ -47,19 +47,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,1)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,1)">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,2)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,2)">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,3)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,3)">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="MIXINShareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${id}`,4)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,4)">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -72,14 +72,12 @@
 <script>
 
 import * as USER_API from '@/api/user'
-import store from "@/store/index"
 import { debug } from 'util';
 
 export default {
     data(){
         return{
-            userId:store.state.userId,
-            id:0,
+            serveId:'',
             article:{
                 bigTypeId: "",
                 content: "",
@@ -94,28 +92,30 @@ export default {
     },
     mounted(){
         // 获取服务ID
-        this.getQueryVariable('id')
+        this.getQueryVariable('serveId')
         this.loadPostUserByUserid()
     },
     methods:{
         // 获取文章
       loadPostUserByUserid(){
-        let params = { "id":this.serverId, };
+        let params = { "id":this.serveId, };
         USER_API.getArticle(params).then(data => {
           
           if(data){
-            this.article = data;
+            let reg = new RegExp( 'embed' , "g" )
+            let newstr = data.replace( reg , 'video' )
+            this.article = newstr;
           }
         });
       },
         // 分享模块
-      shareFun(type,typeNumber){
+      shareFun(typeNumber,type){
         let title = this.article.title
         let description = "";
         let imgSrc = "";
         let hostUrl = this.article.shareUrl
         let activityId = "";
-        this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
+        this._system_shareTo(title,description,imgSrc,typeNumber,"",activityId,type);
       },
       // 获取url参数
       getQueryVariable(variable){
@@ -124,7 +124,7 @@ export default {
           for (let i=0;i<vars.length;i++) {
               let part = vars[i].split("=");
               if(part[0] == variable){
-                  this.id = part[1]
+                  this.serveId = part[1]
               }
           }
       },

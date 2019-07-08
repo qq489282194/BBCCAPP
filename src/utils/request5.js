@@ -4,6 +4,7 @@ import store from "@/store/index"
 
 const service = axios.create({
   baseURL:  "/message",
+  // baseURL:  "http://tapp.meibbc.com/",
   // baseURL:  "http://39.108.143.243:8787",
   timeout: 15000,
 })

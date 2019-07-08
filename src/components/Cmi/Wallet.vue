@@ -5,8 +5,8 @@
             <img src="../../assets/img/wallet/xiantiao@3x.png" alt="">
         </div>
         <div class="header-div">
-                <a @click="backRouter()" class="icon-left-a">
-            <i class="icon-left"></i>
+            <a class="icon-left-a">
+              <i class="icon-left" @click="backRouter()" ></i>
             </a>
             <span class="header-titles">我的钱包</span>
             <!-- <a @click="isShare = true" class="icon-right-a">
@@ -24,7 +24,7 @@
             <div class="mycmi"  v-if="style == 0">
                 <!-- <p>5869</p> -->
                 <p v-if="postUserByUserid.integral != 0" v-html="postUserByUserid.integral">0.00</p>
-                <p v-if="postUserByUserid.integral == 0">0.00</p>
+                <p v-if="postUserByUserid.integral == 0">0</p>
                 <span>可用C米</span>
                 <div class="signcmi" @click="MixinToUrl('cmi-index')">
                     <i class="icon-signcmi"></i>
@@ -194,7 +194,7 @@
     name: "invite",
     data(){
       return{
-        userId:store.state.userId,
+        // userId:store.state.userId,
         isShare:false,
         style:0,
         dataList:{
@@ -249,14 +249,27 @@
     //   this.loadFindIntegralList()
       this.changTime(this.activeId)
     },
+    computed:{
+      userId(){
+        return store.state.userId
+      },
+      token(){
+        return store.state.token
+      },
+    },
     watch:{
-      // postUserByUserid:{
-      //   deep:true,
-      //   immediate:true,
-      //   handler(val){
-      //     this.postUserByUserid = val
-      //   }
-      // }
+      userId (val) {
+        if(val != '' && val != "(null)" ){
+          this.loadPostUserByUserid();
+          this.loadFindIntegralList();
+        }
+      },
+      token(val){
+        if(val != ""){
+          this.loadPostUserByUserid();
+          this.loadFindIntegralList();
+        }
+      },
     },
     methods:{
       loadCmi(){
@@ -341,8 +354,8 @@
 <style scoped>
   .body{background: #f2f2f2;}
   header{background: linear-gradient(#F63B75,#FFEDF3);position: relative;}
-  .headerback{height: 2.72rem;width: 100%;position: absolute;top: .13rem;z-index: -1;}
-  .header-div{height: .36rem;line-height: .36rem;}
+  .headerback{height: 2.72rem;width: 100%;position: absolute;top: .43rem;z-index: -1;}
+  .header-div{height: .36rem;line-height: .36rem;margin-top: .3rem;}
   .header-div .header-titles{color: white;font-size: .36rem;margin-right: 1.6rem;}
   .icon-share{position: relative;z-index: 9}
   header span{color: black}

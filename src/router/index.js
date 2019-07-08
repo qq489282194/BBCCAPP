@@ -10,6 +10,7 @@ import CmiMission from '@/components/Cmi/Mission'
 import CmiRule from '@/components/Cmi/Rule'
 import CmiDetail from '@/components/Cmi/Detail'
 import CmiTicket from '@/components/Cmi/Ticket'
+import CmiMyMember from '@/components/Cmi/MyMember'
 import CmiTicketDetail from '@/components/Cmi/TicketDetail'
 import CmiGive from '@/components/Cmi/Give'
 import CmiGiveSuccess from '@/components/Cmi/GiveSuccess'
@@ -46,9 +47,10 @@ export default new Router({
           {path: 'giveSuccess', name: 'cmi-give-success', component:CmiGiveSuccess,},
           {path: 'giveDetail', name: 'cmi-give-detail', component:CmiGiveDetail,},
           {path: 'wallet', name: 'cmi-wallet', component:CmiWallet,},
+          {path: 'cmimymember', name: 'cmi-my-member', component:CmiMyMember},
         ]},
         {path: 'offline', name: 'find-offline', component:FindOffline},
-        {path: 'bbcdetail', name: 'bbc-detail', component:BBCDetail},
+        {path: 'abbcdetail', name: 'bbc-detail', component:BBCDetail},
         {path: 'answersdetail', name: 'answers-detail', component:AnswersDetail},
         {path: 'findshopdetail', name: 'find-shop-detail', component:FindShopDetail},
       ]

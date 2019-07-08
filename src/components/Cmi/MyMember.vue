@@ -8,11 +8,23 @@
         </div>
       </div>
 
-    <van-swipe @change="onChange" :width='swipeWidth' style="overflow:hidden;margin-top:-2.2rem;" :loop="false">
+    <!-- <van-swipe @change="onChange" :width='swipeWidth' style="overflow:hidden;margin-top:-2.2rem;" :loop="false">
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
             <img :src="item" >
         </van-swipe-item>
-    </van-swipe>
+    </van-swipe> -->
+
+    <swiper :options="swiperOption" ref="mySwiper" @slideChange="onChange" style="overflow: hidden; margin-top: -2.2rem;">
+        <!-- slides -->
+        <swiper-slide v-for="item in img_urls" :key="item.index">
+            <img :src="item" />
+        </swiper-slide>
+        <!-- Optional controls -->
+        <!-- <div class="swiper-pagination"  slot="pagination"></div>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-scrollbar"   slot="scrollbar"></div> -->
+    </swiper>
 
     <div class="label" v-if="current == 1">
         <ul>
@@ -122,7 +134,8 @@
 import { Swipe, SwipeItem } from "vant"
 import platina from "../../assets/img/mymember/swiper-one.png"
 import guest  from "../../assets/img/mymember/swiper-two.png"
-
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
     data(){
         return{
@@ -132,20 +145,39 @@ export default {
                 platina,
             ],
             isShare:false,
+            swiperOption: {
+                loop: false,
+                centeredSlides: true,
+                // spaceBetween: 20,
+                direction: 'horizontal',
+                slidesPerView: 1.3,
+            }
         }
     },
     computed: {
         swipeWidth() {
             return window.screen.width * 0.9
+        },
+        swiper() {
+            return this.$refs.mySwiper.swiper
         }
+    },
+    components: {
+        swiper,
+        swiperSlide
     },
     mounted(){
         // console.log(document.body.clientWidth)
+        // console.log(window.screen.width)
+        console.log(this.swiper)
     },
     methods:{
         // 轮播图下标
         onChange(index) {
-            this.current = index;
+            var that = this.swiper;
+            console.log(that.activeIndex)
+            // this.current = index;
+            this.current = that.activeIndex;
         },
           // 分享模块
         shareFun(typeNumber,type){

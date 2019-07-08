@@ -134,7 +134,13 @@ export default {
             isShare:false,
         }
     },
+    computed: {
+        swipeWidth() {
+            return window.screen.width * 0.9
+        }
+    },
     mounted(){
+        // console.log(document.body.clientWidth)
     },
     computed: {
         swipeWidth() {

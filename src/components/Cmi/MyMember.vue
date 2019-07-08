@@ -10,7 +10,7 @@
 
     <!-- <van-swipe @change="onChange" :width='swipeWidth' style="overflow:hidden;margin-top:-2.2rem;" :loop="false">
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
-            <img :src="item" >
+            <img :src="item" style="background-size: 100% 100%;" />
         </van-swipe-item>
     </van-swipe> -->
 
@@ -170,6 +170,11 @@ export default {
         // console.log(document.body.clientWidth)
         // console.log(window.screen.width)
         console.log(this.swiper)
+    },
+    computed: {
+        swipeWidth() {
+            return window.screen.width * 0.9
+        }
     },
     methods:{
         // 轮播图下标

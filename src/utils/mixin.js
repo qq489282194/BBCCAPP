@@ -166,7 +166,7 @@ export default {
         window.JsToJava.back();
       }else{
         // this.$router.back(-1)
-        window.webkit.messageHandlers.back.postMessage({});
+        window.webkit.messageHandlers.finishWeb.postMessage({});
       }
       // this.$router.go(-1)
     },

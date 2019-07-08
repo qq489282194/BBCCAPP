@@ -359,7 +359,7 @@
   .header-div .header-titles{color: white;font-size: .36rem;margin-right: 1.6rem;}
   .icon-share{position: relative;z-index: 9}
   header span{color: black}
-  header .icon-left{background: url("../../assets/img/left.png");background-size: 100% 100%;margin-top: 0;width: .16rem;height: .26rem;margin-left: .32rem;}
+  header .icon-left{background: url("../../assets/img/left.png");background-size: 100% 100%;margin-top: 0;width: .18rem;height: .33rem;margin-left: .32rem;}
   .invite-bg{width: 7.3rem;height: 1.8rem;margin: auto}
   .invite-ul{padding-bottom: .47rem;border-bottom: 10px solid #F2F2F2}
   .invite-ul li{float: left;width: calc(100% / 3);text-align: center;margin-top: .46rem}

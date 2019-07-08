@@ -8,7 +8,7 @@
         </div>
       </div>
 
-    <van-swipe @change="onChange" :width='swipeWidth' style="overflow:hidden;margin-top:-2.2rem;" :loop="false">
+    <van-swipe @change="onChange" :width="swipeWidth" style="overflow:hidden; margin-top:-2.2rem;" :loop="false">
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
             <img :src="item" style="background-size: 100% 100%;" />
         </van-swipe-item>
@@ -141,11 +141,7 @@ export default {
     },
     mounted(){
         // console.log(document.body.clientWidth)
-    },
-    computed: {
-        swipeWidth() {
-            return window.screen.width * 0.9
-        }
+        // console.log(window.screen.width)
     },
     methods:{
         // 轮播图下标

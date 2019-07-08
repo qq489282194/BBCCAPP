@@ -8,7 +8,7 @@
         </div>
       </div>
 
-    <van-swipe @change="onChange" :width='375' style="overflow:hidden;margin-top:-2.2rem;">
+    <van-swipe @change="onChange" :width='375' style="overflow:hidden;margin-top:-2.2rem;" :loop="false">
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
             <img :src="item" >
         </van-swipe-item>

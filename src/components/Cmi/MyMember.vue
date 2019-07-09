@@ -25,7 +25,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
         <div class="swiper-scrollbar"   slot="scrollbar"></div> -->
     </swiper>
-
+    
     <div class="label" v-if="current == 1">
         <ul>
             <li>
@@ -148,18 +148,9 @@ export default {
             swiperOption: {
                 loop: false,
                 centeredSlides: true,
-                // spaceBetween: 20,
                 direction: 'horizontal',
-                slidesPerView: 1.3,
+                slidesPerView: 1.2,
             }
-        }
-    },
-    computed: {
-        swipeWidth() {
-            return window.screen.width * 0.9
-        },
-        swiper() {
-            return this.$refs.mySwiper.swiper
         }
     },
     components: {
@@ -169,17 +160,12 @@ export default {
     mounted(){
         // console.log(document.body.clientWidth)
         // console.log(window.screen.width)
-        console.log(this.swiper)
-    },
-    computed: {
-        swipeWidth() {
-            return window.screen.width * 0.9
-        }
+        // console.log(this.$refs.mySwiper.swiper)
     },
     methods:{
         // 轮播图下标
         onChange(index) {
-            var that = this.swiper;
+            var that = this.$refs.mySwiper.swiper;
             console.log(that.activeIndex)
             // this.current = index;
             this.current = that.activeIndex;

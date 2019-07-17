@@ -32,7 +32,7 @@ export default new Router({
     {
       path: '/',
       name: 'admin',
-      component:Index,
+      component: Index,
       redirect: '/personal',
       children:[
         {path: 'personal', name: 'personal', component:HomePersonal,},
@@ -57,6 +57,12 @@ export default new Router({
         {path: 'answersdetail', name: 'answers-detail', component:AnswersDetail},
         {path: 'findshopdetail', name: 'find-shop-detail', component:FindShopDetail},
         {path: 'findissuedetail', name: 'find-issue-detail', component:FindIssueDetail},
+        {path: 'actindex', name: 'actindex', component: () => import('@/components/Activity/Aindex'), children: [
+          {path: 'asharer', name: 'asharer', component: () => import('@/components/Activity/Asharer')},
+          {path: 'abysharer', name: 'abysharer', component: () => import('@/components/Activity/Abysharer')},
+          {path: 'abysharersuccess', name: 'abysharersuccess', component: () => import('@/components/Activity/Abysharersuccess')},
+          {path: 'alogin', name: 'alogin', component: () => import('@/components/Activity/Alogin')}
+        ]}
       ]
     }
   ]

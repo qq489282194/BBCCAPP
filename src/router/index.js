@@ -18,8 +18,10 @@ import CmiGiveDetail from '@/components/Cmi/GiveDetail'
 import CmiWallet from '@/components/Cmi/Wallet'
 import FindOffline from '@/components/Find/Offline'
 import BBCDetail from '@/components/BBCclassify/BBCDetail'
+import BBCCDetail from '@/components/BBCclassify/BBCCDetail'
 import AnswersDetail from '@/components/Answers/Detail'
 import FindShopDetail from '@/components/Find/ShopDetail'
+import FindIssueDetail from '@/components/Find/IssueDetail'
 
 Vue.use(Router)
 
@@ -51,8 +53,10 @@ export default new Router({
         ]},
         {path: 'offline', name: 'find-offline', component:FindOffline},
         {path: 'abbcdetail', name: 'bbc-detail', component:BBCDetail},
+        {path: 'abbccdetail', name: 'bbcc-detail', component:BBCCDetail},
         {path: 'answersdetail', name: 'answers-detail', component:AnswersDetail},
         {path: 'findshopdetail', name: 'find-shop-detail', component:FindShopDetail},
+        {path: 'findissuedetail', name: 'find-issue-detail', component:FindIssueDetail},
       ]
     }
   ]

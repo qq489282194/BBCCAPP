@@ -138,7 +138,7 @@
       loadIsSigned(){
         let time = this.MIXINYearMonthDate();
         let params={"userId":this.userId,"time":time}
-        USER_API1.isSigned(params).then(data=>{
+        USER_API1.isSigned(params).then(data => {
           console.log(data)
           this.dateList = []
           if(data.status == 1){

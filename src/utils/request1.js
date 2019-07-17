@@ -3,7 +3,7 @@ import axios from "axios"
 import store from "@/store/index"
 
 const service = axios.create({
-  baseURL:  "/bbc-information",
+  baseURL:  "/bbc",
   // baseURL:  "http://nfz.meibbc.com/bbc-information",
   // baseURL:  "http://192.168.0.225:8081/dev/",
   timeout: 15000,

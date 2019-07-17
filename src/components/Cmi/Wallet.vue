@@ -18,10 +18,10 @@
 
         <div class="option">
             <ul class="option-nav">
-                <li><p :class="style == 0 ? 'active' : ''" @click="option('cmi')">我的C米</p></li>
-                <li><p :class="style == 1 ? 'active' : ''" @click="option('integral')">我的积分</p></li>
+                <li><p :class="switchover == 0 ? 'active' : ''" @click="option('cmi')">我的C米</p></li>
+                <li><p :class="switchover == 1 ? 'active' : ''" @click="option('integral')">我的积分</p></li>
             </ul>
-            <div class="mycmi"  v-if="style == 0">
+            <div class="mycmi"  v-if="switchover == 0">
                 <!-- <p>5869</p> -->
                 <p v-if="postUserByUserid.integral != 0" v-html="postUserByUserid.integral">0.00</p>
                 <p v-if="postUserByUserid.integral == 0">0</p>
@@ -63,7 +63,7 @@
     
     <div class="shade" v-if="alltimeShow" @click="timeShow"></div>
 
-    <div class="integral-bottom" v-if="style == 1">
+    <div class="integral-bottom" v-if="switchover == 1">
         <ul class="integral">
             <li @click="MIXINToDetail('','45')">
                 <p>积分明细</p>
@@ -82,7 +82,7 @@
         <!-- <button>积分兑换</button> -->
     </div>
     
-    <div class="cmi-bottom" v-else-if="style == 0">
+    <div class="cmi-bottom" v-else-if="switchover == 0">
         <div class="make">
             <ul class="make-one">
                 <li class="make-title">
@@ -147,7 +147,7 @@
                     </div>
                     <div class="addnum">
                         <p v-html="item.getintegraltime">2019-05-26 10:20:25</p>
-                        <p>+{{item.integral}}</p>
+                        <p><span v-if="item.isvalid == 0">+</span><span v-else>-</span>{{item.integral}}</p>
                     </div>
                 </li>
                 <!-- <li>
@@ -196,7 +196,7 @@
       return{
         // userId:store.state.userId,
         isShare:false,
-        style:0,
+        switchover:0,
         dataList:{
           shareNum:0,
           isValidNum:0,
@@ -227,7 +227,6 @@
         // C米筛选
         searchForm:{
           userId:store.state.userId,
-          // userId:'fff04119e87d40ef8297bb715649bd86',
           startTime:this.MIXINYearMonthDate(-31),
           endTime:this.MIXINYearMonthDate(0),
           pagesize:200,
@@ -238,12 +237,9 @@
       }
     },
     mounted(){
+      // switchover
+      this.getQueryVariable('switchover')
       this.loadCmi();
-      if(this.$route.query == 'integral'){
-          this.style = 1
-      }else{
-          this.style = 0
-      }
       this.loadPostUserByUserid()
       // C米明细
     //   this.loadFindIntegralList()
@@ -290,9 +286,9 @@
       // 积分C米切换
       option(val){
         if(val == 'cmi'){
-            this.style = 0
+            this.switchover = 0
         }else if(val == 'integral'){
-            this.style = 1
+            this.switchover = 1
         }
       },
       // 时间切换
@@ -313,17 +309,30 @@
       // 我的积分
       loadPostUserByUserid(){
         let params = { "token":this.token, "userid":this.userId, };
+        // this.loadFindIntegralList()
         USER_API.postUserByUserid(params).then(data => {
-          
           if(data){
             this.postUserByUserid = data;
             this.allalance = data.actAalance + data.frozonaalance
           }
-          
         });
       },
       // C米明细
       loadFindIntegralList(){
+        let params = {
+          userId:this.userId,
+          startTime:this.MIXINYearMonthDate(-31),
+          endTime:this.MIXINYearMonthDate(0),
+          pagesize:200,
+          page:1,
+        }
+        USER_API.findIntegralList(params).then(data => {
+          if(data){
+            this.findIntegralList = data.data
+          }
+        });
+      },
+      FindIntegralList(){
         USER_API.findIntegralList(this.searchForm).then(data => {
           if(data){
             this.findIntegralList = data.data
@@ -333,20 +342,33 @@
       // C米筛选
       changTime(active,text){
         this.activeText = text
-        this.active = active;
+        this.active = active
         if(active == 0){
-          this.searchForm.startTime = "";
-          this.searchForm.endTime = "";
+          this.searchForm.userId = this.userId
+          this.searchForm.startTime = ""
+          this.searchForm.endTime = ""
         }else{
-          this.searchForm.endTime = this.MIXINYearMonthDate(0);
-          this.searchForm.startTime = this.MIXINYearMonthDate(-active);
+          this.searchForm.userId = this.userId
+          this.searchForm.endTime = this.MIXINYearMonthDate(0)
+          this.searchForm.startTime = this.MIXINYearMonthDate(-active)
         }
-        this.loadFindIntegralList();
+        this.FindIntegralList()
+      },
+      // 获取url参数
+      getQueryVariable(variable){
+        let query = window.location.search.substring(1);
+        let vars = query.split("&");
+        for (let i=0;i<vars.length;i++) {
+            let part = vars[i].split("=");
+            if(part[0] == variable){
+              this.switchover = 1
+            }
+        }
       },
       // 客户端监听积分变化方法
-      changeIntegral(){
-        this.loadPostUserByUserid()
-      }
+      // changeIntegral(){
+      //   this.loadPostUserByUserid()
+      // }
     },
   }
 </script>

@@ -47,19 +47,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,1)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'weChat')">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,2)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'friendCircle')">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,3)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'qq')">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/bbcdetail?id=${serveId}`,4)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'sina')">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -100,21 +100,22 @@ export default {
       loadPostUserByUserid(){
         let params = { "id":this.serveId, };
         USER_API.getArticle(params).then(data => {
-          debugger
           if(data){
             let str = data.content
             let reg = new RegExp( 'embed' , "g" )
             data.content = str.replace( reg , 'video' )
             this.article = data;
           }
+          // debugger
+          console.log(data)
         });
       },
         // 分享模块
       shareFun(typeNumber,type){
         let title = this.article.title
-        let description = "";
-        let imgSrc = "";
-        let hostUrl = this.article.shareUrl
+        let description = "一起分享吧！";
+        let imgSrc = "http://app.meibbc.com/BeautifyBreast/app/share-modules/image/draw/share.png";
+        let hostUrl = "http://testuser.meibbc.com/bbc-personal/bbcdetail?id="+this.serveId;
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,typeNumber,"",activityId,type);
       },
@@ -135,10 +136,10 @@ export default {
 
 
 <style type="text/scss" scoped>
-.nav{height: 1rem;margin-top: .28rem;border-bottom: .01rem solid #CFCFCF}
-.nav ul li:nth-child(1){float: left;margin-left: .32rem;margin-top: .44rem;}
-.nav ul li:nth-child(2){float: right;margin-right: .24rem;margin-top: .34rem;}
-.detail-header{}
+.nav{height: 1.28rem;border-bottom: .01rem solid #CFCFCF;position: fixed;top: 0;left: 0;right: 0;background: white;z-index: 9;}
+.nav ul li:nth-child(1){float: left;margin-left: .32rem;margin-top: .72rem;}
+.nav ul li:nth-child(2){float: right;margin-right: .24rem;margin-top: .62rem;}
+.detail-header{margin-top: 1.52rem;}
 .detail-header .title{font-size: .36rem;color: #333333;margin-left: .24rem;margin-top: .26rem;}
 .look{font-size: .26rem;color: #999999;position: relative; margin: .04rem 0 .04rem .24rem;}
 .look img{width: .32rem;height: .32rem;display: inline-block;}

@@ -20,6 +20,8 @@ NutUI.install(Vue);
 /*全局混入方法*/
 Vue.mixin(mixin)
 
+// import VConsole from 'vconsole/dist/vconsole.min.js'
+// let vConsole = new VConsole()
 
 Vue.config.productionTip = false
 

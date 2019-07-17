@@ -21,7 +21,8 @@ module.exports = {
         // target:'http://testuser.meibbc.com/dev/',
         // target:'http://192.168.0.41:8081/dev/',
         // test 以下
-        target:'http://nfz.meibbc.com',
+        // target:'http://nfz.meibbc.com',
+        target:'http://papp.meibbc.com/',
         changeOrigin:true,
         pathRewrite:{
           '^/bbc-information': '/bbc-information'
@@ -29,6 +30,9 @@ module.exports = {
       },
       '/bbc':{
         // target:'http://user.meibbc.com/',
+        // 预发布
+        // target:'http://papp.meibbc.com/dev/',
+        // 测试
         target:'http://testuser.meibbc.com/dev/',
         // target:'http://192.168.0.41:8081/dev/',
         // test 以下
@@ -40,9 +44,11 @@ module.exports = {
       },
       '/meibbcapp':{
         // 以下test
-        // target:'http://tapp.meibbc.com/',
-        // target:'http://appmini.meibbc.com/',
+        // 预发布
+        // target:'http://papp.meibbc.com/',
+        // 测试
         target:'http://tapp.meibbc.com/',
+        // target:'http://appmini.meibbc.com/',
         changeOrigin:true,
         pathRewrite:{
           '^/meibbcapp':''
@@ -50,6 +56,9 @@ module.exports = {
       },
       '/message':{
         // 以下test
+        // 预发布
+        // target:'http://papp.meibbc.com/',
+        // 测试
         target:'http://tapp.meibbc.com/',
         // target:'http://appmini.meibbc.com/',
         // target:'http://39.108.143.243:8787',
@@ -61,8 +70,12 @@ module.exports = {
       '/cmi-other':{
         // test以下
         // target:'http://120.79.144.227:8050/',
-        target:'http://tapp.meibbc.com/',
+        // target:'http://papp.meibbc.com/',
         // target:'http://appmini.meibbc.com/',
+        // 预发布
+        // target:'http://user.meibbc.com/',
+        // 测试
+        target:'http://testuser.meibbc.com/',
         changeOrigin:true,
         pathRewrite:{
           '^/cmi-other':''
@@ -71,7 +84,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '192.168.0.40', // can be overwritten by process.env.HOST
+    host: '192.168.0.55', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

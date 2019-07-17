@@ -5,6 +5,7 @@ import store from "@/store/index"
 const service = axios.create({
   // baseURL:  "/cmi-other/",
   // baseURL:  "http://192.168.0.225:7002",
+  // baseURL:  "http://xcxapibuyer.meibbc.com/",
   // 测试
   baseURL:  "http://testxcxapibuyer.meibbc.com/",
   timeout: 15000,

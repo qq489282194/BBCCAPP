@@ -38,7 +38,7 @@
             </div> -->
             
           </div>
-          <div class="sign" @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/index','24')">
+          <div class="sign" @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/index','24','1')">
             <p><i class="icon icon-gift"></i></p>
             <p>签到有礼</p>
           </div>
@@ -74,7 +74,7 @@
             <i class="icon icon-after-sales"></i>
             <!--<img src="../../assets/img/home/after-sales.png"/>-->
             <p>预约</p></li>
-          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/wallet','24')">
+          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/wallet','24','1')">
             <i class="icon icon-money"></i>
             <!--<img src="../../assets/img/home/integral.png"/>-->
             <p>钱包</p></li>
@@ -119,7 +119,7 @@
           </li>
         </ul> -->
         <ul class="invite">
-          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/wallet', '24')">
+          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/wallet?switchover=1', '24','1')">
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
@@ -144,7 +144,7 @@
           </li>
         </ul> -->
         <ul class="member nav">
-          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/cmimymember','24')">
+          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/cmimymember','24','1')">
             <i class="icon icon-member"></i>
             <p>我的会员</p>
           </li>
@@ -181,7 +181,7 @@
             </a>
           </li> -->
           <!--<li @click="MIXINToDetail('http://129.204.30.206:8011/bbc-personal/cmi/index','24')"><img style="width: .44rem" src="../../assets/img/home/check.png"/><p>签到领好礼</p></li>-->
-          <li @click="MIXINToDetail('','24')">
+          <li @click="MIXINToDetails('','24','1')">
             <i class="icon icon-activity"></i>
             <!--<img style="width: .42rem" src="../../assets/img/home/gift.png"/>-->
             <p>精彩活动</p></li>
@@ -261,6 +261,7 @@
         photo_url:'',
         // 未读消息显隐
         message:0,
+        register:0,
       }
     },
     computed:{
@@ -276,6 +277,7 @@
         if(val != '' && val != "(null)" ){
           this.loadUser();
           this.loadSelectCount();
+          this.register = 1
         }
       },
       token(val){
@@ -291,7 +293,7 @@
         if(self.userId != '' && self.userId != "(null)" ){
           self.loadUser();
           self.loadSelectCount();
-          self.loadgetDiaryFans()
+          // self.loadgetDiaryFans()
         }
         if(self.token != ""){
           self.loadCountCollect();
@@ -306,7 +308,7 @@
         this.loadSelectCount();
       }
       // 帖子粉丝未读消息
-      this.loadgetDiaryFans(this.userId)
+      // this.loadgetDiaryFans(this.userId)
       // banner图
       this.loadPageJump()
       // 关注
@@ -374,7 +376,7 @@
       },
       // 关注
       loadCountCare(){
-        this.loadgetDiaryFans(this.userId)
+        // this.loadgetDiaryFans(this.userId)
         let params = {"token":this.token, "userid":this.userId,};
         USER_API.countCare(params).then(data => {
           if(data){

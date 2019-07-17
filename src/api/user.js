@@ -147,20 +147,38 @@ export function diaryCount(params) {
 }
 
   // 粉丝
-export function personalPage(params) {
-  return request1({
-    url:"/information/personal/personalPage",
-    method:"get",
-    headers: { 'Content-Type': 'application/json' },
-    params
-  })
-}
+// export function personalPage(params) {
+//   return request1({
+//     url:"/information/personal/personalPage",
+//     method:"get",
+//     headers: { 'Content-Type': 'application/json' },
+//     params
+//   })
+// }
 
 // 获取用户粉丝数量及用户日记数量
 export function getDiaryFans(params) {
   return request({
     url:"/personal/sys/diary/fans/num",
     method:"get",
+    params
+  })
+}
+
+// 发现 提问详情
+export function newQuestionDetail(params) {
+  return request5({
+    url:"/bbc-information/information/newQuestion/detail",
+    method:"post",
+    params
+  })
+}
+
+// 发现 评论详情
+export function qAnswerComment(params) {
+  return request5({
+    url:"/bbc-information/information/qAnswerComment/findCommentAll",
+    method:"post",
     params
   })
 }

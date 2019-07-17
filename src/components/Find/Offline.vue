@@ -12,7 +12,7 @@
         </div>
     </nut-swiper> -->
 
-    <van-swipe @change="onChange" :width='375' style="overflow:hidden" :loop="false">
+    <van-swipe @change="onChange" :width='375' style="overflow:hidden;height:5rem;" :loop="false">
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
             <img :src="item" alt="" style="height:5rem;">
         </van-swipe-item>
@@ -20,7 +20,7 @@
         <van-swipe-item>3</van-swipe-item>
         <van-swipe-item>4</van-swipe-item> -->
 
-        <div class="imgNum" slot="indicator">
+        <div class="imgNum" slot="indicator" v-if="img_urls">
             {{ current + 1 }}/{{img_urls.length}}
         </div>
     </van-swipe>
@@ -30,24 +30,20 @@
     <div class="shop">
         <div class="shop-title">
             <div class="head">
-                <img :src="shopDetail.shop_logo" alt="">
+                <img v-if="shopDetail.shop_logo" :src="shopDetail.shop_logo" alt="">
             </div>
-            <div style="margin-top:-.08rem;">
-                <p class="title" v-html="shopDetail.shop_name">奈瑞儿美颜顶级豪华塑身旗舰店（东圃店）</p>
-                <ul>
+            <div>
+                <p class="title" v-if="shopDetail.shop_name" v-html="shopDetail.shop_name">奈瑞儿美颜顶级豪华塑身旗舰店（东圃店）</p>
+                <!-- <ul>
                     <li style="margin-bottom:.3rem;">{{shopDetail.fans}}万粉丝</li>
                     <li>共{{shopDetail.recomment_count}}位网友推荐</li>
-                </ul>
+                </ul> -->
             </div>
-            <p class="attention" v-if="shopDetail.is_attention == 0" @click="getFocusSave()">+关注</p>
-            <p class="oldattention" v-else>已关注</p>
+            <!-- <p class="attention" v-if="shopDetail.is_attention == 0" @click="getFocusSave()">+关注</p>
+            <p class="oldattention" v-else>已关注</p> -->
             <p style="clear:both"></p>
         </div>
-        <div class="rate ml26">
-          <!-- <img src="../../assets/img/offline/star.svg" alt="">
-          <img src="../../assets/img/offline/star.svg" alt="">
-          <img src="../../assets/img/offline/star.svg" alt="">
-          <img src="../../assets/img/offline/star.svg" alt=""> -->
+        <!-- <div class="rate ml26">
           <i class="icon icon-ystar" v-for="item in shopDetail.allRate" :key="item.index"></i>
           <i class="icon icon-star" v-if="greyRate"></i>
           <i class="icon icon-bstar" v-for="item in shopDetail.minusRate" :key="item.index"></i>
@@ -58,40 +54,36 @@
               </a>
               <i></i>
           </div>
-        </div>
+        </div> -->
         <div class="alltap ml26">
-            <span class="tap" v-for="item in shopDetail.service_labels" :key="item.index" v-html="item">高大上 18</span>
-            <!-- <span class="tap">交通便利 3</span>
-            <span class="tap">技师专业 40</span><br />
-            <span class="tap">无推销 28</span>
-            <span class="tap">环境优雅 30</span>
-            <span class="tap mb32">服务热情 36</span> -->
+            <!-- <span class="tap" v-for="item in shopDetail.service_labels" :key="item.index" v-html="item">高大上 18</span> -->
         </div>
         <p class="wire"></p>
     </div>
 
     <div class="all">
         <div class="time ml26 mr26">
-            <span class="title">营业时间</span>
+            <span class="title" v-if="shopDetail.shop_type == 0">营业时间</span>
+            <span class="title" v-if="shopDetail.shop_type == 1">门店地址</span>
             <!-- <span class="hour">1周一至周日1:00-21:00</span> -->
-            <span class="hour">{{shopDetail.business_begtime}}-{{shopDetail.business_endtime}}</span>
+            <span class="hour" v-if="shopDetail.shop_type == 0">{{shopDetail.business_begtime}}-{{shopDetail.business_endtime}}</span>
         </div>
         <div class="message ml26 mr26">
             <div>
                 <!-- <p class="shop" v-html="shopDetail.shop_name">肤俊堂皮肤修复中心</p> -->
-                <p class="site" v-html="shopDetail.address">中山大道西1138号合生骏景广场A座1527室</p>
+                <p class="site" v-if="shopDetail.address" v-html="shopDetail.address">中山大道西1138号合生骏景广场A座1527室</p>
                 <p class="rice" v-if="shopDetail.distance">
                     <!-- <img src="../../assets/img/offline/site.png" alt=""> -->
                     <i class="icon icon-site"></i>
                     <span>距离 {{shopDetail.distance}}m</span>
                 </p>
             </div>
-            <div class="phone">
+            <div class="phone" @click="MIXINSendCallPhone(phone)">
                 <!-- <img src="../../assets/img/offline/phone.png" alt=""> -->
                 <i class="icon icon-phone"></i>
             </div>
         </div>
-        <p class="wire"></p>
+        <!-- <p class="wire"></p>
         <div class="appointmentmodule">
             <div class="time">
                 <i class="icon icon-subscription"></i>
@@ -113,26 +105,15 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="content">
-                <img :src="img" alt>
-                <div class="message mr26">
-                    <p>隆胸丰胸一举两得 活细胞脂肪丰富高存活率近三十年临床经验教授亲诊</p>
-                    <p class="price">￥800</p>
-                    <div class="sales">
-                        <span>门市价：1599元</span>
-                        <span class="appointment">已下单2 <i class="icon icon-right1"></i></span>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <p class="wire"></p>
+        </div> -->
+        <p class="wire" v-if="shopDetail.shop_type == 0"></p>
     </div>
 
-    <div class="botm">
+    <div class="botm" v-if="shopDetail.shop_type == 0">
         <div class="shop">
             <p class="title">门店介绍</p>
             <div class="introduce">
-                <p v-html="shopDetail.shop_notice">广州市奈瑞儿塑身美颜连锁股份有限公司，成立于2001年，是广东省知名的专业提供女性美容、美体服务的大型连锁机构，旗下美容院遍布广东珠三角地区，总部设在广州</p>
+                <p v-html="shopDetail.shop_desc">广州市奈瑞儿塑身美颜连锁股份有限公司，成立于2001年，是广东省知名的专业提供女性美容、美体服务的大型连锁机构，旗下美容院遍布广东珠三角地区，总部设在广州</p>
                 <img v-for="img in shopDetail.imgs" :key="img.index" :src="img" alt="">
                 <!-- <p>企业标志</p>
                 <p>"奈瑞儿"企业标志是"蝴蝶",寓意为: 蝴蝶的美丽来自蜕变. 奈瑞儿的顾客在这里,蜕变出自己的美丽形体；奈瑞儿的员工在这里,蜕变出自己的完美人生</p>
@@ -167,13 +148,14 @@ export default {
             greyRate:false,
             current:0,
             img_urls:[],
+            phone:'',
         }
     },
     mounted(){
         // 获取店铺ID
         this.getQueryVariable("shop_id")
         // 店铺详情
-        this.getShopDetail()
+        // this.getShopDetail()
     },
     methods:{
         // 获取店铺详情
@@ -181,27 +163,33 @@ export default {
             let params = {"shop_id":this.shop_id, "longitude":'', "latitude":'',};
             USER_API.getShopDetail(params).then(data => {
                 if(data){
-                    if(data.shop_score){
-                        data.allRate = parseInt(data.shop_score)
-                        data.minusRate = parseInt(5 - data.shop_score)
-                        data.halfRate = data.shop_score - parseInt(data.shop_score)
-                        if(data.halfRate > 0){
-                            this.greyRate = true
-                        }
-                    }else{
-                        data.shop_score = 0
-                        data.allRate = parseInt(data.shop_score)
-                        data.minusRate = parseInt(5 - data.shop_score)
-                        data.halfRate = data.shop_score - parseInt(data.shop_score)
-                        if(data.halfRate > 0){
-                            this.greyRate = true
-                        }
+                    // if(data.shop_score){
+                    //     data.allRate = parseInt(data.shop_score)
+                    //     data.minusRate = parseInt(5 - data.shop_score)
+                    //     data.halfRate = data.shop_score - parseInt(data.shop_score)
+                    //     if(data.halfRate > 0){
+                    //         this.greyRate = true
+                    //     }
+                    // }else{
+                    //     data.shop_score = 0
+                    //     data.allRate = parseInt(data.shop_score)
+                    //     data.minusRate = parseInt(5 - data.shop_score)
+                    //     data.halfRate = data.shop_score - parseInt(data.shop_score)
+                    //     if(data.halfRate > 0){
+                    //         this.greyRate = true
+                    //     }
+                    // }
+                    if(data.shop_desc_img){
+                        data.imgs = data.shop_desc_img.split(',')
                     }
-                    
-                    data.imgs = data.shop_desc_img.split(',')
-                    data.banner = data.shop_banner.split(',')
+                    if(data.shop_banner){
+                        data.banner = data.shop_banner.split(',')
+                    }
                     this.shopDetail = data
                     this.img_urls = data.banner
+                    this.phone = this.shopDetail.mobile
+                    // debugger
+                    // console.log(this.phone)
                 }
             });
         },
@@ -226,6 +214,7 @@ export default {
                     this.shop_id = part[1]
                 }
             }
+            this.getShopDetail()
         },
         onChange(index) {
             this.current = index;
@@ -237,13 +226,13 @@ export default {
 <style scoped>
 .nut-swiper{height: 5rem;}
 /* 店名模块 */
-.shop{margin-top: .54rem;}
-.shop .shop-title{border-bottom: .01rem solid #f2f2f2;margin: 0 .26rem;}
+.shop{margin-top: .28rem;}
+.shop .shop-title{margin: 0 .26rem;}
 .shop .shop-title .head{height: .88rem;width: .88rem;margin-right: .18rem;display: inline-block;border-radius: .44rem;}
-/* .shop .shop-title img{display: none;} */
+.shop .shop-title img{width: .88rem;height: .88rem;border-radius: 50%;}
 .shop .shop-title .title{font-size: .3rem;color: #2B2B2B;font-weight: bold;display: inline-block;}
 .shop .shop-title div{float: left;}
-.shop .shop-title p:nth-child(1){width: 4.5rem;}
+.shop .shop-title p:nth-child(1){width: 5.8rem;}
 .shop .shop-title .attention{height: .46rem;background: #F63B75;border-radius: .24rem;float: right;padding: 0 .2rem;color: white;line-height: .46rem;margin-top: .2rem}
 .shop .shop-title .oldattention{height: .46rem;border-radius: .24rem;float: right;padding: 0 .2rem;color: #999999;line-height: .46rem;margin-top: .2rem;border: 1px solid #999999;}
 .shop .shop-title ul{margin-top: .03rem;}
@@ -252,7 +241,7 @@ export default {
 .shop .rate{margin-top: .24rem;margin-bottom: .26rem;}
 .shop .rate img{height: .32rem;width: .32rem;float: left;}
 .shop .rate .evaluate{float: right;}
-.shop .alltap{clear: both;margin-bottom: .31rem;}
+.shop .alltap{clear: both;margin-bottom: .28rem;}
 .shop .tap{height: .45rem;font-size: .26rem;color: #333333;padding: 0 .25rem;background: rgba(246, 59, 117, 0.1);border-radius: .22rem;line-height: .45rem;display: inline-block;margin-right: .2rem;}
 .shop .grade{display: inline-block;font-size: .32rem;color: #FF5858;font-weight: bold;margin-left: .06rem;}
 
@@ -263,7 +252,7 @@ export default {
 .all .time>i{position: absolute;top: .2rem;}
 .all .message{position: relative;}
 .all .message .shop{font-size: .3rem;color: #333333;font-weight: bold;margin-top: .26rem;}
-.all .message .site{font-size: .26rem;margin:.18rem 0;}
+.all .message .site{font-size: .26rem;margin:.18rem 0;width: 5.5rem;}
 .all .message .rice{margin-bottom: .32rem;}
 .all .message .rice img{height: .26rem;width: .2rem;display: inline-block;}
 .all .message .rice span{color: #999999;}

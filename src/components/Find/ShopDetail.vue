@@ -412,19 +412,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,1)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'weChat')">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,2)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'friendCircle')">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,3)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'qq')">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,4)">
+        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'sina')">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -443,7 +443,7 @@ import { Swipe, SwipeItem } from "vant"
 export default {
     data(){
         return{
-            serverId:142,
+            serverId:'',
             current:0,
             userId:store.state.userId,
             // 吸顶菜单

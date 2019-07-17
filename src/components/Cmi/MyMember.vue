@@ -13,6 +13,8 @@
             <img :src="item" style="background-size: 100% 100%;" />
         </van-swipe-item>
     </van-swipe> -->
+
+
     <swiper :options="swiperOption" ref="mySwiper" @slideChange="onChange" style="overflow: hidden; margin-top: -2.2rem;">
         <!-- slides -->
         <swiper-slide v-for="item in img_urls" :key="item.index">
@@ -24,8 +26,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
         <div class="swiper-scrollbar"   slot="scrollbar"></div> -->
     </swiper>
-
-
+    
     <div class="label" v-if="current == 1">
         <ul>
             <li>
@@ -154,10 +155,9 @@ export default {
             }
         }
     },
-    computed: {
-        swipeWidth() {
-            return window.screen.width * 0.9
-        }
+    components: {
+        swiper,
+        swiperSlide
     },
     components: {
         swiper,

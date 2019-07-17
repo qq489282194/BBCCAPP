@@ -39,7 +39,6 @@
                     <span v-html="reply.content">好好看！好喜欢</span>
                 </div>
             </div>
-            
         </div>
     </div>
 

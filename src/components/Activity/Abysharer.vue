@@ -6,8 +6,8 @@
     </div>
     <!-- 我要参与 -->
     <div class="join">
-      <el-button type="primary" plain @click="wejoin" size="small">我要参与</el-button>
-      <el-button type="primary" plain @click="wejoin" size="small">我要分享</el-button>
+      <van-button type="primary" size="small">我要参与</van-button>
+      <van-button type="primary" size="small">我要分享</van-button>
     </div>
     <!-- 活动细则 -->
     <div class="actrules">

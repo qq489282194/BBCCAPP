@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">
-      <i class="el-icon-arrow-left" @click="goBack"></i>
+      <van-icon name="arrow-left" @click="goBack" />
       <span v-text="title"></span>
     </div>
   </div>

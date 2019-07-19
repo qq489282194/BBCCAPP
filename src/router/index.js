@@ -61,7 +61,8 @@ export default new Router({
           {path: 'asharer', name: 'asharer', component: () => import('@/components/Activity/Asharer')},
           {path: 'abysharer', name: 'abysharer', component: () => import('@/components/Activity/Abysharer')},
           {path: 'abysharersuccess', name: 'abysharersuccess', component: () => import('@/components/Activity/Abysharersuccess')},
-          {path: 'alogin', name: 'alogin', component: () => import('@/components/Activity/Alogin')}
+          {path: 'alogin', name: 'alogin', component: () => import('@/components/Activity/Alogin')},
+          {path: 'abeforelogin', name: 'abeforelogin', component: () => import('@/components/Activity/AbeforeLogin')}
         ]}
       ]
     }

@@ -6,35 +6,23 @@
     </div>
     <!-- 我要参与 -->
     <div class="join">
-      <van-button type="primary" size="small" @click="isShare = true">我要参与</van-button>
+      <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button>
     </div>
     <!-- 我的商家 -->
     <div class="business">
       <div class="bustit">我的商家</div>
       <div class="bus_con">
         <dl>
-          <dd>
+          <dd v-for="item in businessList" :key="item.phone">
             <ul>
-              <li><img src="" alt=""/><p>用户名字</p><span>成为下线时间</span></li>
-              <li>12345678911</li>
-            </ul>
-          </dd>
-          <dd>
-            <ul>
-              <li><img src="" alt=""/><p>用户名字</p><span>成为下线时间</span></li>
-              <li>12345678911</li>
-            </ul>
-          </dd>
-          <dd>
-            <ul>
-              <li><img src="" alt=""/><p>用户名字</p><span>成为下线时间</span></li>
-              <li>12345678911</li>
+              <li><img :src="item.icon" alt=""/><p>{{ item.username }}</p><span>{{ item.createDate }}</span></li>
+              <li>{{ item.phone }}</li>
             </ul>
           </dd>
         </dl>
       </div>
       <div class="loadmore">
-        <van-button type="primary" size="small">点击展开更多</van-button>
+        <van-button type="primary" size="small" @click="loadMore" :loading="isLoading" :disabled="isDisabled">点击展开更多</van-button>
       </div>
     </div>
     <!-- 活动细则 -->
@@ -47,7 +35,7 @@
       </ul>
     </div>
     <!-- 分享 -->
-    <div class="common-shadow-modules" @click="isShare = false"  v-show="isShare">
+    <!-- <div class="common-shadow-modules" @click="isShare = false"  v-show="isShare">
     </div>
     <div class="footer-share-modules" v-show="isShare">
       <div class="footer-title-modules">
@@ -71,32 +59,75 @@
           <p>微博分享</p>
         </li>
       </ul>
-      <button @click="isShare = false" class="share-footer-button">取消</button>
-    </div>
+      <button @click="isShare = false" class="share-footer-button">取消</button> 
+    </div> -->
   </div>
 </template>
 <script>
-import store from '../../store'
-// import * as ACT_API from '@/'
+import store from '@/store'
+import * as ACT_API from '@/api/activity'
 export default {
   data() {
     return {
-      isShare: false
+      businessList: [],
+      isLoading: false,
+      isDisabled: false,
+      isShare: false,
+      shareUrl: '',
+      saleOrglistParams: {
+        name: "",
+        pageNum: 1,
+        pageSize: 3,
+        role: "",
+        userId: ""
+      }
     }
   },
   mounted() {
+    this.getJoinUrl()
     this.getBusinessData()
   },
   methods: {
-    getBusinessData() {
-      let userId = store.state.userId;
-      this.$axios.get(`${this.host}/api/v1/user/findByUserId`, {
-        params: {
-          userId
-        }
-      }).then(res => {
-        console.log(res)
+    // 得到分享地址
+    getJoinUrl() {
+      let params = store.state.userId
+      ACT_API.getJoinUrl(params).then(response => {
+        console.log(response)
+        this.shareUrl = response.data
       })
+    },
+    // 得到商家列表
+    getBusinessData() {
+      this.isLoading = true
+      let params = {
+        ...this.saleOrglistParams,
+        userId: store.state.userId
+      }
+      ACT_API.getBusinessData(params).then(response => {
+        console.log(response)
+        response.data.map((item) => {
+          this.businessList.push(item)
+          this.isLoading = false
+        })
+        if (response.data.length < 3) {
+          this.isDisabled = true
+        }
+      })
+    },
+    //点击加载更多
+    loadMore() {
+      this.saleOrglistParams.pageNum += 1
+      this.getBusinessData()
+    },
+    // 分享模块
+    shareFun(type,typeNumber) {
+      let title = ''
+      let description = "";
+      let imgSrc = "";
+      let hostUrl = window.location.href.replace('asharer', 'abysharer') + '?oldUrl=' + this.shareUrl
+      // let hostUrl = this.article.shareUrl
+      let activityId = "";
+      this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
     },
     wejoin() {
       console.log(1)

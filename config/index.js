@@ -80,13 +80,14 @@ module.exports = {
         pathRewrite:{
           '^/cmi-other':''
         },
-        '/api':{
-          target: 'http://192.168.0.26:8081/api',
-          changeOrigin: true,
-          pathRewrite:{
-            '^/api': ''
-          }
       },
+      // '/dev':{
+      //   target: 'http://192.168.0.26:8081/dev',
+      //   changeOrigin: true,
+      //   pathRewrite:{
+      //     '^/dev': ''
+      //   }
+      // },
     },
 
     // Various Dev Server settings

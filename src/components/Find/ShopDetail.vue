@@ -412,19 +412,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'weChat')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'weChat')">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'friendCircle')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'friendCircle')">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'qq')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'qq')">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'sina')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/findshopdetail?serverId=${serverId}`,'sina')">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -439,6 +439,7 @@
 import * as USER_API from '@/api/user'
 import store from "@/store/index"
 import { Swipe, SwipeItem } from "vant"
+import imgSrcLogo from '../../assets/img/logo.png';
 
 export default {
     data(){
@@ -632,7 +633,7 @@ export default {
           // 分享模块
         shareFun(typeNumber,type){
             let description = "";
-            let imgSrc = "";
+            let imgSrc = imgSrcLogo;
             let activityId = "";
             this._system_shareTo(title,description,imgSrc,typeNumber,"",activityId,type);
         },

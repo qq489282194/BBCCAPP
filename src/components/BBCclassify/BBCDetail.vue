@@ -47,19 +47,19 @@
         <p>分享</p>
       </div>
       <ul class="clear-both">
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'weChat')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'weChat')">
           <img src="../../assets/img/WeChat@2x.png"/>
           <p>微信分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'friendCircle')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'friendCircle')">
           <img src="../../assets/img/CircleofFriends@2x.png"/>
           <p>朋友圈分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'qq')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'qq')">
           <img src="../../assets/img/QQ@2x.png"/>
           <p>QQ分享</p>
         </li>
-        <li @click="shareFun(`http://testuser.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'sina')">
+        <li @click="shareFun(`http://papp.meibbc.com/bbc-personal/abbccdetail?serveId=${serveId}`,'sina')">
           <img src="../../assets/img/weibo@2x.png"/>
           <p>微博分享</p>
         </li>
@@ -73,6 +73,7 @@
 
 import * as USER_API from '@/api/user'
 import { debug } from 'util';
+import imgSrcLogo from '../../assets/img/logo.png';
 
 export default {
     data(){
@@ -107,15 +108,15 @@ export default {
             this.article = data;
           }
           // debugger
-          console.log(data)
+          // console.log(data)
         });
       },
         // 分享模块
       shareFun(typeNumber,type){
         let title = this.article.title
         let description = "一起分享吧！";
-        let imgSrc = "http://app.meibbc.com/BeautifyBreast/app/share-modules/image/draw/share.png";
-        let hostUrl = "http://testuser.meibbc.com/bbc-personal/bbcdetail?id="+this.serveId;
+        let imgSrc = imgSrcLogo;
+        let hostUrl = "http://papp.meibbc.com/bbc-personal/bbcdetail?id="+this.serveId;
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,typeNumber,"",activityId,type);
       },

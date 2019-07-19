@@ -12,18 +12,37 @@
         </div>
     </nut-swiper> -->
 
-    <van-swipe @change="onChange" :width='375' style="overflow:hidden;height:5rem;" :loop="false">
+    <van-swipe 
+    @change="onChange" 
+    :width='375' 
+    :autoplay="2000" 
+    style="overflow:hidden;height:5rem;" 
+    :loop="true" 
+    v-if="shopDetail.shop_banner"
+    >
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
             <img :src="item" alt="" style="height:5rem;">
         </van-swipe-item>
-        <!-- <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item> -->
-
         <div class="imgNum" slot="indicator" v-if="img_urls">
             {{ current + 1 }}/{{img_urls.length}}
         </div>
     </van-swipe>
+
+    <van-swipe 
+    @change="onChange" 
+    :width='375' 
+    style="overflow:hidden;height:5rem;" 
+    :loop="false" 
+    v-else
+    >
+        <van-swipe-item style="display:inline-block;">
+            <img src="../../assets/img/perch.png" alt="" style="height:5rem;">
+        </van-swipe-item>
+        <div class="imgNum" slot="indicator">
+            {{ current + 1 }}/{{1}}
+        </div>
+    </van-swipe>
+    
     <!-- <p class="backroute">&lt;</p> -->
     <i class="icon-back backroute" @click="backRouter()"></i>
 
@@ -31,6 +50,7 @@
         <div class="shop-title">
             <div class="head">
                 <img v-if="shopDetail.shop_logo" :src="shopDetail.shop_logo" alt="">
+                <i v-else class="icon icon-user"></i>
             </div>
             <div>
                 <p class="title" v-if="shopDetail.shop_name" v-html="shopDetail.shop_name">奈瑞儿美颜顶级豪华塑身旗舰店（东圃店）</p>
@@ -75,7 +95,8 @@
                 <p class="rice" v-if="shopDetail.distance">
                     <!-- <img src="../../assets/img/offline/site.png" alt=""> -->
                     <i class="icon icon-site"></i>
-                    <span>距离 {{shopDetail.distance}}m</span>
+                    <span v-if="shopDetail.distance < 1000">距离 {{shopDetail.distance}}m</span>
+                    <span v-else>距离 {{shopDetail.distances}}km</span>
                 </p>
             </div>
             <div class="phone" @click="MIXINSendCallPhone(phone)">
@@ -149,9 +170,12 @@ export default {
             current:0,
             img_urls:[],
             phone:'',
+            site:{},
         }
     },
     mounted(){
+        window.setLocation = this.setLocation
+        this.MIXINGetLocation()
         // 获取店铺ID
         this.getQueryVariable("shop_id")
         // 店铺详情
@@ -160,8 +184,9 @@ export default {
     methods:{
         // 获取店铺详情
         getShopDetail(){
-            let params = {"shop_id":this.shop_id, "longitude":'', "latitude":'',};
+            let params = {"shop_id":this.shop_id, "longitude":this.site.lon, "latitude":this.site.lat,};
             USER_API.getShopDetail(params).then(data => {
+                // debugger
                 if(data){
                     // if(data.shop_score){
                     //     data.allRate = parseInt(data.shop_score)
@@ -184,6 +209,11 @@ export default {
                     }
                     if(data.shop_banner){
                         data.banner = data.shop_banner.split(',')
+                    }
+                    if(data.distance){
+                        if(data.distance > 999){
+                            data.distances = (data.distance / 1000).toFixed(1)
+                        }
                     }
                     this.shopDetail = data
                     this.img_urls = data.banner
@@ -214,6 +244,14 @@ export default {
                     this.shop_id = part[1]
                 }
             }
+            this.getShopDetail()
+        },
+        // 获取经纬度坐标
+        setLocation(location) {
+            // console.log('iso---location')
+            // console.log(location)
+            // console.log(typeof location)
+            this.site = JSON.parse(location)
             this.getShopDetail()
         },
         onChange(index) {
@@ -288,7 +326,7 @@ export default {
 .mb32{margin-bottom: .32rem;}
 
 .icon { display:inline-block}
-.icon-phone { width: .36rem; height: .34rem; background: url("../../assets/img/shopDetail/phone.png");background-size: 100% 100% }
+.icon-phone { width: .36rem; height: .34rem; background: url("../../assets/img/shopDetail/shopphone.png");background-size: 100% 100% }
 .icon-subscription { width: .36rem; height: .36rem; background: url("../../assets/img/shopDetail/subscription.png");background-size: 100% 100% }
 .icon-star { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/star.png");background-size: 100% 100% }
 .icon-ystar { margin:0 .02rem;width: .32rem; height: .32rem; background: url("../../assets/img/shopDetail/ystar.png");background-size: 100% 100% }
@@ -298,5 +336,6 @@ export default {
 .icon-right1 { width: .08rem; height: .16rem; background: url("../../assets/img/shopDetail/right1.png");background-size: 100% 100% }
 .icon-site { width: .2rem; height: .26rem; background: url("../../assets/img/shopDetail/site.png");background-size: 100% 100% }
 .icon-redright { width: .22rem; height: .22rem; background: url("../../assets/img/shopDetail/redright.png");background-size: 100% 100% }
+.icon-user { width: .88rem; height: .88rem; background: url("../../assets/img/user.png");background-size: 100% 100% }
 
 </style>

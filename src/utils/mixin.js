@@ -81,14 +81,23 @@ export default {
         window.webkit.messageHandlers.toDetail.postMessage(params)
       }
     },
+    MIXINGetLocation(){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      // let params = phone
+      if(isAndroid){
+        window.JsToJava.getLocation();
+      }else{
+        window.webkit.messageHandlers.getLocation.postMessage()
+      }
+    },
     MIXINSendCallPhone(phone){
       var u = navigator.userAgent, app = navigator.appVersion;
       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
       let params = phone
-      // debugger
       if(isAndroid){
-        // params = JSON.stringify(params)
         window.JsToJava.callPhone(params);
       }else{
         window.webkit.messageHandlers.callPhone.postMessage(params)

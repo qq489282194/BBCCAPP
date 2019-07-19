@@ -79,12 +79,19 @@ module.exports = {
         changeOrigin:true,
         pathRewrite:{
           '^/cmi-other':''
-        }
+        },
+        '/api':{
+          target: 'http://192.168.0.26:8081/api',
+          changeOrigin: true,
+          pathRewrite:{
+            '^/api': ''
+          }
       },
     },
 
     // Various Dev Server settings
-    host: '192.168.0.55', // can be overwritten by process.env.HOST
+    // host: '192.168.0.55', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

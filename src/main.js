@@ -10,7 +10,9 @@ import Es6Promise from 'es6-promise'
 require('es6-promise').polyfill()
 Es6Promise.polyfill()
 import NutUI from '@nutui/nutui';
+import axios from 'axios'
 import vant from 'vant'
+import 'vant/lib/index.css';
 // import { ShortPassword } from '@nutui/nutui';
 import '@nutui/nutui/dist/nutui.css';
 
@@ -26,6 +28,8 @@ let vConsole = new VConsole()
 Vue.config.productionTip = false
 
 Vue.prototype.$md5 = md5;
+Vue.prototype.$axios = axios;
+Vue.prototype.host = 'http://192.168.0.26:8081';
 
 //调原生
 Vue.prototype.$system_details = function(id, type) {

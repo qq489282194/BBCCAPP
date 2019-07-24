@@ -3,7 +3,7 @@ import axios from "axios"
 import store from "@/store/index"
 
 const service = axios.create({
-  baseURL:  "http://192.168.0.26:8081",
+  baseURL:  "http://testuser.meibbc.com/dev",
   // 预发布
   // baseURL:  "http://papp.meibbc.com/",
   // 测试
@@ -28,7 +28,7 @@ service.interceptors.request.use(function (config) {
 // 添加响应拦截器
 service.interceptors.response.use(function (response) {
   let status = response.data.code;
-  let row = response.data.data;
+  let row = response.data;
   if(status == 200){
     if(row === "" || row == null){
       row = true;

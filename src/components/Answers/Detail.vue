@@ -70,7 +70,7 @@ export default {
         this.loadPostUserByUserid()
     },
     methods:{
-        // 获取文章
+      // 获取文章
       loadPostUserByUserid(){
         let params = { "id":this.userId, };
         USER_API.getArticle(params).then(data => {
@@ -80,7 +80,7 @@ export default {
           }
         });
       },
-        // 分享模块
+      // 分享模块
       shareFun(type,typeNumber){
         let title = this.article.title
         let description = "";

@@ -30,7 +30,7 @@
     <div class="label" v-if="current == 1">
         <ul>
             <li>
-                <i class="icon-customer"></i>
+                <i class="icon-gift"></i>
                 <p>超值大礼包</p>
             </li>
             <li>
@@ -181,7 +181,7 @@ export default {
             let title = "快来开通会员吧！"
             let description = "一起分享吧！";
             let imgSrc = imgSrcLogo;
-            let hostUrl = "http://papp.meibbc.com/bbc-personal/cmi/cmimymember"
+            let hostUrl = "http://testuser.meibbc.com/bbc-personal/cmi/cmimymember"
             let activityId = "";
             this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,typeNumber);
         },

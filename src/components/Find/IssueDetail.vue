@@ -112,7 +112,7 @@ export default {
             let title = "快来开通会员吧！"
             let description = "一起分享吧！";
             let imgSrc = "http://app.meibbc.com/BeautifyBreast/app/share-modules/image/draw/share.png";
-            let hostUrl = "http://papp.meibbc.com/bbc-personal/cmi/cmimymember"
+            let hostUrl = "http://testuser.meibbc.com/bbc-personal/cmi/cmimymember"
             let activityId = "";
             this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
         },

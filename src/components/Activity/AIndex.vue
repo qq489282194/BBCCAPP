@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="aindex">
     <Aheader></Aheader>
     <router-view></router-view>
   </div>
@@ -15,4 +15,7 @@ export default {
   }
 }
 </script>
+<style lang="css" scoped>
+.aindex { padding-top: 1.1rem; }
+</style>
 

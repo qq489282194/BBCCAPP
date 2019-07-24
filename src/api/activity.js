@@ -52,3 +52,12 @@ export function bindUserRelation(leaderId, subordinateId) {
     method: 'get'
   })
 }
+
+// 第三方登录
+export function threeLogin(params) {
+  return request({
+    url: '/api/v1/user/threeLogin',
+    method: 'post',
+    data: params
+  })
+}

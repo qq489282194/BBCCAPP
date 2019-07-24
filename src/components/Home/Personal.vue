@@ -38,7 +38,7 @@
             </div> -->
             
           </div>
-          <div class="sign" @click="MIXINToDetails('http://papp.meibbc.com/bbc-personal/cmi/index','24','1')">
+          <div class="sign" @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/index','24','1')">
             <p><i class="icon icon-gift"></i></p>
             <p>签到有礼</p>
           </div>
@@ -74,7 +74,7 @@
             <i class="icon icon-after-sales"></i>
             <!--<img src="../../assets/img/home/after-sales.png"/>-->
             <p>预约</p></li>
-          <li @click="MIXINToDetails('http://papp.meibbc.com/bbc-personal/cmi/wallet','24','1')">
+          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/wallet','24','1')">
             <i class="icon icon-money"></i>
             <!--<img src="../../assets/img/home/integral.png"/>-->
             <p>钱包</p></li>
@@ -86,10 +86,9 @@
             <i class="icon icon-praise"></i>
             <!--<img src="../../assets/img/home/information.png"/>-->
             <p>赞过</p></li>
-          <li @click="MIXINToDetail('','4')">
+          <!-- <li @click="MIXINToDetail('','4')">
             <i class="icon icon-answers"></i>
-            <!--<img src="../../assets/img/home/information.png"/>-->
-            <p style="margin-bottom:0;">问答</p></li>
+            <p style="margin-bottom:0;">问答</p></li> -->
           <li @click="MIXINToDetail('','38')">
             <i class="icon icon-footprint"></i>
             <!--<img src="../../assets/img/home/information.png"/>-->
@@ -119,7 +118,7 @@
           </li>
         </ul> -->
         <ul class="invite">
-          <li @click="MIXINToDetails('http://papp.meibbc.com/bbc-personal/cmi/wallet?switchover=1', '24','1')">
+          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/wallet?switchover=1', '24','1')">
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
@@ -144,7 +143,7 @@
           </li>
         </ul> -->
         <ul class="member nav">
-          <li @click="MIXINToDetails('http://papp.meibbc.com/bbc-personal/cmi/cmimymember','24','1')">
+          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/cmimymember','24','1')">
             <i class="icon icon-member"></i>
             <p>我的会员</p>
           </li>

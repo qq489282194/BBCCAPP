@@ -131,9 +131,9 @@
       let type = this.GetUrlParam("type");
       this.type = type;
       this.loadMission();
-      this.timer=setInterval(data => {
-        this.loadMission();
-      },2000)
+      // this.timer=setInterval(data => {
+      //   this.loadMission();
+      // },2000)
     },
     methods:{
       loadMission(){

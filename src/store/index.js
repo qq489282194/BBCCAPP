@@ -5,7 +5,7 @@ vue.use(Vuex);
 
 
 const state = {
-  userId:"00002bdec93744fca2bdduue948867",
+  userId:"",
   token:"",
   giveForm:{
     cmNum:0,

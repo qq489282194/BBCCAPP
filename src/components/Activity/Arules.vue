@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div class="rulesLogo"></div>
-    <div class="shade" v-show="rulesShow">
+  <div class="arules">
+    <div class="rulesLogo" @click="showRules"></div>
+    <div class="shade" ref="shade" @click="showRules">
       <div class="actrules">
         <div class="rulestit">活动细则</div>
         <ul class="rulescon">
@@ -15,13 +15,29 @@
 </template>
 <script>
 export default {
-  props: ['rulesShow']
+  // props: ['rulesShow']
+  data() {
+    return {
+      rulesShow: false
+    }
+  },
+  methods: {
+    // 显示隐藏规则内容
+    showRules() {
+      if (!this.rulesShow) {
+        this.$(this.$refs.shade).fadeIn()
+      } else {
+        this.$(this.$refs.shade).fadeOut()
+      }
+      this.rulesShow = !this.rulesShow
+    }
+  }
 }
 </script>
 <style lang="css" scoped>
-.rulesLogo {width: .9rem; height: .72rem; background: url()}
-.shade {width: 100%; height: 100%; background: rgba(0,0,0,.4); position: fixed; top: 0; left: 0;}
-.actrules {width: 5.9rem; height: 5.76rem; border-radius: .2rem; background: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);}
+.rulesLogo {width: .9rem; height: .72rem; background: url('../../assets/img/activity/rules.png') no-repeat center; background-size: cover; position: absolute;; top: 9.43rem; right: 0;}
+.shade {width: 100%; height: 100%; background: rgba(0,0,0,.4); position: absolute; top: 0; left: 0; display: none;}
+.actrules {width: 5.9rem; height: 5.76rem; border-radius: .2rem; background: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);}
 .rulestit {font-size: .32rem; line-height: .35rem; text-align: center; margin-bottom: .60rem; margin-top: .35rem;}
 .rulescon {font-size: .28rem; line-height: .42rem; color: #333;}
 .rulescon li {margin-bottom: .38rem; padding-left: .61rem; padding-right: .37rem;}

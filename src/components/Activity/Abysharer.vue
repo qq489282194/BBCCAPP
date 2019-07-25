@@ -6,6 +6,7 @@
         <!-- slides -->
         <swiper-slide>
           <div class="slide slide1">
+            <Amusic></Amusic>
             <div class="nvxing"></div>
             <div class="joinus">加入我们</div>
             <div class="loading"></div>
@@ -24,10 +25,12 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide2">
+            <Amusic></Amusic>
             <div class="biaoti"></div>
             <div class="wenzi">
               为女性网友提供一站式的曲线美产品及服务的专业垂直平台，以标准化的服务体系，口碑的消费参考为支撑。好玩、有趣、实用的女性平台。
@@ -44,10 +47,12 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide3">
+            <Amusic></Amusic>
             <div class="biaoti"></div>
             <div class="wenzi">
               <dl>
@@ -84,10 +89,12 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide4">
+            <Amusic></Amusic>
             <div class="biaoti"></div>
             <div class="zhaomu"><span>招募</span>“五美”商家</div>
             <div class="jieshao">
@@ -96,7 +103,7 @@
             <div class="wenzi">
               <div class="tit">加入我们，你将获得</div>
               <div class="tit2">前100家入驻政策扶持</div>
-              <ul>
+              <ul class="con1">
                 <li>1、免入驻费用</li>
                 <li>2、提供品牌页免费设计服务</li>
                 <li>3、提供商品及服务快速审核通道</li>
@@ -113,10 +120,12 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide5">
+            <Amusic></Amusic>
             <div class="biaoti"></div>
             <div class="wenzi">
               <ul>
@@ -142,19 +151,14 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
+      <AquickMark></AquickMark>
     </div>
-    <!-- 我要参与 -->
-    <div class="join">
-      <!-- <van-button type="primary" size="small" @click="show = true">我要参与</van-button>
-      <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要分享</van-button> -->
-    </div>
-    <!-- 活动细则 -->
-    <Arules :rulesShow="false"></Arules>
     <!-- 电话弹窗 -->
     <div class="shade" v-show="show" @click="show = false">
       <div class="popup">
@@ -164,25 +168,18 @@
         <a href="javascript:;" class="confirm">确定</a>
       </div>
     </div>
-    <!-- <van-popup v-model="show" :style="{ width: '60%', padding: '10px' }">
-      <p class="phonetit">为了更好的服务您我们需要获取您的电话，输入电话参与活动。</p>
-      <van-cell-group>
-        <van-field v-model="phone" placeholder="请输入手机号" :error-message="errorMsg" @blur="errorMsg = phone.length == 11 ? '' : '手机号码格式错误'"/>
-        <van-field v-model="sms" center clearable placeholder="请输入短信验证码" :error-message="errorSms">
-          <van-button slot="button" size="mini" type="primary" @click="sendSms">发送验证码</van-button>
-        </van-field>
-      </van-cell-group>
-      <p class="confirm"><van-button type="primary" size="small" @click="confirmMsg">确定</van-button></p>
-    </van-popup> -->
   </div>
 </template>
 <script>
 import * as ACT_API from '@/api/activity'
-import Arules from '@/components/Activity/Arules'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import Amusic from '@/components/Activity/Amusic'
+import Arules from '@/components/Activity/Arules'
+import AquickMark from '@/components/Activity/AquickMark'
 export default {
   data() {
+    let $ = this.$
     return {
       show: false,
       rulesShow: false,
@@ -202,14 +199,109 @@ export default {
           el: '.swiper-pagination',
           bulletClass : 'my-bullet',
           bulletActiveClass: 'my-bullet-active'
+        },
+        on: {
+          // 轮播内容设置
+          slideChangeTransitionStart() {
+            $('.slide').eq(this.activeIndex).children().css('display', 'none')
+          },
+          slideChangeTransitionEnd() {
+            $('.amusic').fadeIn()
+            $('.amusic .logo').fadeIn()
+            $('.biaoyu').fadeIn()
+            $('.join').fadeIn()
+            $('.arules').fadeIn()
+            $('.renmai').removeClass('renmai_transform')
+            $('.pingtai').removeClass('pingtai_transform')
+            if (this.activeIndex == 0) {
+              $('.nvxing').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '6.45rem', height: '1.12rem', left: '.53rem', top: '.94rem'})
+              $('.joinus').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '1.9rem', height: '.76rem', left: '2.78rem', top: '2.92rem'})
+              $('.zuobian').stop()
+              .css({left: '-3rem', top: '5rem', display: 'block'})
+              .animate({left: '.26rem', top: '4.54rem'})
+              $('.youbian').stop()
+              .css({left: '100%', top: '3.2rem', display: 'block'})
+              .animate({left: '4.24rem', top: '3.58rem'})
+              $('.renmai').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '1.78rem', height: '1.16rem', left: '1.46rem', top: '3.3rem'})
+              .addClass('renmai_transform')
+              $('.pingtai').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '1.71rem', height: '1.17rem', left: '4.16rem', top: '4.84rem'})
+              .addClass('pingtai_transform')
+              $('.loading').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '4.75rem', height: '4.92rem', left: '1.34rem', top: '2.18rem'})
+              $('.logo').eq(1).stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '.75rem', height: '.75rem', left: '3.38rem', top: '4.21rem'})
+              $('.ruzhu').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '4.97rem', height: '.36rem', left: '1.27rem', top: '7.53rem'})
+            } else if (this.activeIndex == 1) {
+              $('.biaoti').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '5.09rem', height: '1.35rem', left: '1.34rem', top: '.93rem'}, () => {
+                $('.wenzi').fadeIn()
+              })
+            } else if (this.activeIndex == 2) {
+              $('.biaoti').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '3.38rem', height: '1.22rem', left: '2.26rem', top: '.85rem'}, () => {
+                $('.wenzi').stop().css({display: 'block', overflow: 'hidden'})
+                $('.wenzi dl').stop().css({marginLeft: '8rem', whiteSpce: 'nowrap', overflow: 'hidden'})
+                $('.wenzi dl').eq(0).animate({marginLeft: 0}).delay(300)
+                $('.wenzi dl').eq(1).animate({marginLeft: 0}).delay(500)
+                $('.wenzi dl').eq(2).animate({marginLeft: 0}).delay(700)
+                $('.wenzi dl').eq(3).animate({marginLeft: 0}).delay(900)
+                $('.wenzi dl').eq(4).animate({marginLeft: 0}).delay(1100)
+                $('.wenzi dl').eq(5).animate({marginLeft: 0}).delay(1300)
+              })
+            } else if (this.activeIndex == 3) {
+              $('.biaoti').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '3.51rem', height: '1.23rem', left: '2rem', top: '.58rem'})
+              $('.zhaomu').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '4.2rem', height: '.8rem', left: '1.65rem', top: '2.28rem'}, () => {
+                $('.jieshao').fadeIn(() => {
+                  $('.wenzi').css({display: 'block'})
+                  $('.con1 li').css({marginLeft: '5.68rem'})
+                  $('.con1 li').stop().css({marginLeft: '5.68rem'})
+                  $('.con1 li').eq(0).animate({marginLeft: 0}, () => {
+                    $('.con1 li').eq(1).animate({marginLeft: 0}, () => {
+                      $('.con1 li').eq(2).animate({marginLeft: 0}, () => {
+                        $('.con1 li').eq(3).animate({marginLeft: 0}, () => {
+                          $('.con1 li').eq(4).animate({marginLeft: 0})
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            } else if (this.activeIndex == 4) {
+              $('.biaoti').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '2.29rem', height: '0.55rem', left: '2.62rem', top: '.66rem'}, () => {
+                $('.wenzi').fadeIn()
+              })
+            }
+          }
         }
       }
     }
   },
   components: {
-    Arules,
     swiper,
-    swiperSlide
+    swiperSlide,
+    Amusic,
+    Arules,
+    AquickMark
   },
   mounted() {
     // if (!localStorage.getItem('openid') && !localStorage.getItem('unionId')) {
@@ -285,6 +377,8 @@ export default {
 .swiper-container {width: 100%; height: 100%;}
 .swiper-slide {width: 100%; height: 100%;}
 .slide {width: 100%; height: 10.98rem; background: url('../../assets/img/activity/back.png') no-repeat center; background-size: cover; position: relative;}
+.renmai_transform {transform: rotate(360deg); transform-origin: 3.2rem 1.3rem; transition: all 2s linear;}
+.pingtai_transform {transform: rotate(360deg); transform-origin: -1.2rem -1.3rem; transition: all 2s linear;}
 /* slide1 */ 
 .slide1 .nvxing {position: absolute; background: url('../../assets/img/activity/banner1/zu12.png') no-repeat center; background-size: cover; width: 6.45rem; height: 1.12rem; left: .53rem; top: .94rem;}
 .slide1 .joinus {position: absolute; width: 1.9rem; height: .76rem; background: url('../../assets/img/activity/banner1/juxing.png') no-repeat center; background-size: cover; text-align: center; line-height: .76rem; left: 2.78rem; top: 2.92rem; font-size: .23rem; color: #fff;}
@@ -292,7 +386,7 @@ export default {
 .slide1 .youbian {position: absolute; width: 3.26rem; height: 2.29rem; background: url('../../assets/img/activity/banner1/youbian.png') no-repeat center; background-size: cover; left: 4.24rem; top: 3.58rem;}
 .slide1 .renmai {position: absolute; width: 1.78rem; height: 1.16rem; background: url('../../assets/img/activity/banner1/renmai.png') no-repeat center; background-size: cover; left: 1.46rem; top: 3.3rem;}
 .slide1 .pingtai {position: absolute; width: 1.71rem; height: 1.17rem; background: url('../../assets/img/activity/banner1/pingtai.png') no-repeat center; background-size: cover; left: 4.16rem; top: 4.84rem;}
-.slide1 .loading {position: absolute; width: 4.75rem; height: 4.92rem; background: url('../../assets/img/activity/banner1/loading.png') no-repeat center; background-size: cover; left: 1.34rem; top: 2.18rem;}
+.slide1 .loading {position: absolute; width: 4.75rem; height: 4.92rem; background: url('../../assets/img/activity/banner1/loading.png') no-repeat center; background-size: cover; left: 1.34rem; top: 2.18rem; animation: xuanzhuan 3s linear infinite;}
 .slide1 .logo {position: absolute; width: .75rem; height: .75rem; background: url('../../assets/img/activity/banner1/logo.png') no-repeat center; background-size: cover; left: 3.38rem; top: 4.21rem;}
 .slide1 .ruzhu {position: absolute; width: 4.97rem; height: .36rem; background: url('../../assets/img/activity/banner1/ruzhu.png') no-repeat center; background-size: cover; left: 1.27rem; top: 7.53rem;}
 .biaoyu {position: absolute; top: 8.31rem; color: #50C7FF; text-align: center; width: 100%;}

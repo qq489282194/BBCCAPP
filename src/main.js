@@ -14,6 +14,7 @@ import vant from 'vant'
 import 'vant/lib/index.css';
 // import { ShortPassword } from '@nutui/nutui';
 import '@nutui/nutui/dist/nutui.css';
+import $ from 'jquery'
 
 Vue.use(vant)
 NutUI.install(Vue);
@@ -27,6 +28,7 @@ Vue.mixin(mixin)
 Vue.config.productionTip = false
 
 Vue.prototype.$md5 = md5;
+Vue.prototype.$ = $;
 
 //调原生
 Vue.prototype.$system_details = function(id, type) {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="amusic">
     <div class="logo"></div>
     <div class="music">
       <audio src=""></audio>

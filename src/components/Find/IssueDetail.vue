@@ -111,7 +111,7 @@ export default {
         shareFun(typeNumber,type){
             let title = "快来开通会员吧！"
             let description = "一起分享吧！";
-            let imgSrc = "http://app.meibbc.com/BeautifyBreast/app/share-modules/image/draw/share.png";
+            let imgSrc = 'https://oss.meibbc.com/BeautifyBreast/logo/logo.png';
             let hostUrl = "http://testuser.meibbc.com/bbc-personal/cmi/cmimymember"
             let activityId = "";
             this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);

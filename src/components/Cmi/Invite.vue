@@ -62,7 +62,6 @@
 
   import * as USER_API from '@/api/user'
   import store from "@/store/index"
-  import imgSrcLogo from '../../assets/img/logo.png';
 
   export default {
     name: "invite",
@@ -91,7 +90,7 @@
       shareFun(type,typeNumber){
         let title = "分享赚C米！大家都在玩！";
         let description = "一起分享吧！";
-        let imgSrc = imgSrcLogo;
+        let imgSrc = 'https://oss.meibbc.com/BeautifyBreast/logo/logo.png';
         let hostUrl ="http://app.meibbc.com/BeautifyBreast/app/registerv2/register.html?userId="+this.userId;
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);

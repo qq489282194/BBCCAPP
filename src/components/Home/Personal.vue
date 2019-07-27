@@ -143,7 +143,7 @@
           </li>
         </ul> -->
         <ul class="member nav">
-          <li @click="MIXINToDetails('http://testuser.meibbc.com/bbc-personal/cmi/cmimymember','24','1')">
+          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/cmi/cmimymember','24')">
             <i class="icon icon-member"></i>
             <p>我的会员</p>
           </li>

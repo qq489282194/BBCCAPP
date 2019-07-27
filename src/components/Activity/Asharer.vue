@@ -76,7 +76,7 @@
             </div>
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
-              <a href="javascript:;" class="joinBtn">我要参与</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要参与</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -143,6 +143,8 @@ export default {
       swiperOption: {
         effect: 'fade',
         direction: 'vertical',
+        preventInteractionOnTransition : true,
+        speed: 1000,
         pagination: {
           el: '.swiper-pagination',
           bulletClass : 'my-bullet',
@@ -365,8 +367,8 @@ export default {
 .swiper-container {width: 100%; height: 100%;}
 .swiper-slide {width: 100%; height: 100%;}
 .slide {width: 100%; height: 10.98rem; background: url('../../assets/img/activity/back.png') no-repeat center; background-size: cover; position: relative;}
-.renmai_transform {transform: rotate(360deg); transform-origin: 3.2rem 1.3rem; transition: all 2s linear;}
-.pingtai_transform {transform: rotate(360deg); transform-origin: -1.2rem -1.3rem; transition: all 2s linear;}
+.renmai_transform {transform: rotate(360deg); transform-origin: 3.2rem 1.3rem; transition: all 1s linear;}
+.pingtai_transform {transform: rotate(360deg); transform-origin: -1.2rem -1.3rem; transition: all 1s linear;}
 /* slide1 */ 
 .slide1 .nvxing {position: absolute; background: url('../../assets/img/activity/banner1/zu12.png') no-repeat center; background-size: cover; width: 6.45rem; height: 1.12rem; left: .53rem; top: .94rem;}
 .slide1 .joinus {position: absolute; width: 1.9rem; height: .76rem; background: url('../../assets/img/activity/banner1/juxing.png') no-repeat center; background-size: cover; text-align: center; line-height: .76rem; left: 2.78rem; top: 2.92rem; font-size: .23rem; color: #fff;}

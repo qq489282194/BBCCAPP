@@ -137,7 +137,6 @@ import platina from "../../assets/img/mymember/swiper-one.png"
 import guest  from "../../assets/img/mymember/swiper-two.png"
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import imgSrcLogo from '../../assets/img/logo.png';
 export default {
     data(){
         return{
@@ -180,7 +179,7 @@ export default {
         shareFun(typeNumber,type){
             let title = "快来开通会员吧！"
             let description = "一起分享吧！";
-            let imgSrc = imgSrcLogo;
+            let imgSrc = 'https://oss.meibbc.com/BeautifyBreast/logo/logo.png';
             let hostUrl = "http://testuser.meibbc.com/bbc-personal/cmi/cmimymember"
             let activityId = "";
             this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,typeNumber);

@@ -336,6 +336,6 @@ export default {
 .icon-right1 { width: .08rem; height: .16rem; background: url("../../assets/img/shopDetail/right1.png");background-size: 100% 100% }
 .icon-site { width: .2rem; height: .26rem; background: url("../../assets/img/shopDetail/site.png");background-size: 100% 100% }
 .icon-redright { width: .22rem; height: .22rem; background: url("../../assets/img/shopDetail/redright.png");background-size: 100% 100% }
-.icon-user { width: .88rem; height: .88rem; background: url("../../assets/img/user.png");background-size: 100% 100% }
+.icon-user { width: .88rem; height: .88rem; background: url("../../assets/img/user1.png");background-size: 100% 100%;border-radius: 50% }
 
 </style>

@@ -48,7 +48,6 @@
 import * as USER_API from '@/api/user'
 import store from "@/store/index"
 import { debug } from 'util';
-import imgSrcLogo from '../../assets/img/logo.png';
 
 export default {
     data(){
@@ -84,7 +83,7 @@ export default {
       shareFun(type,typeNumber){
         let title = this.article.title
         let description = "";
-        let imgSrc = imgSrcLogo;
+        let imgSrc = 'https://oss.meibbc.com/BeautifyBreast/logo/logo.png';
         let hostUrl = this.article.shareUrl
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);

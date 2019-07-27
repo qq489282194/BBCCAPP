@@ -72,8 +72,7 @@
 <script>
 
 import * as USER_API from '@/api/user'
-import { debug } from 'util';
-import imgSrcLogo from '../../assets/img/logo.png';
+import { debug } from 'util'
 
 export default {
     data(){
@@ -115,7 +114,7 @@ export default {
       shareFun(typeNumber,type){
         let title = this.article.title
         let description = "一起分享吧！";
-        let imgSrc = imgSrcLogo;
+        let imgSrc = 'https://oss.meibbc.com/BeautifyBreast/logo/logo.png';
         let hostUrl = "http://testuser.meibbc.com/bbc-personal/bbcdetail?id="+this.serveId;
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,typeNumber,"",activityId,type);
@@ -127,7 +126,7 @@ export default {
           for (let i=0;i<vars.length;i++) {
               let part = vars[i].split("=");
               if(part[0] == variable){
-                  this.serveId = part[1]
+                this.serveId = part[1]
               }
           }
       },

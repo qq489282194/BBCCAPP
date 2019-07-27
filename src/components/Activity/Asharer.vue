@@ -6,6 +6,7 @@
         <!-- slides -->
         <swiper-slide>
           <div class="slide slide1">
+            <Amusic></Amusic>
             <div class="nvxing"></div>
             <div class="joinus">加入我们</div>
             <div class="loading"></div>
@@ -23,10 +24,12 @@
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide2">
+            <Amusic></Amusic>
             <div class="biaoti"></div>
             <div class="wenzi">
               <span class="wenzi-con">城市经理项目是美胸汇打造女性健康美生态平台O2O服务的重要环节</span>
@@ -51,93 +54,78 @@
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide3">
+            <Amusic></Amusic>
             <div class="biaoti"></div>
             <div class="zhaomu">招募对象</div>
             <div class="zhiwei">
-              <div>产品经理</div>
-              <div>商务总监</div>
+              <div class="jingli">产品经理</div>
+              <div class="zongjian">商务总监</div>
+            </div>
+            <div class="wenzi">
+              <div class="huizhang"></div>
+              <ul>
+                <li>免费领城市经理身份及权益</li>
+                <li>免费领商务经理身份及权益</li>
+                <li>拓展商家入驻，完成服務交易即可获取提成</li>
+              </ul>
+            </div>
+            <div class="xianzhi">闲置商家资源+碎片化时间=一次拓展，持续收益，上不封顶</div>
+            <div class="biaoyu">
+              <div class="jianxie">成功 = 聚势</div>
+              <div class="neirong">一个专注于女性健康美的生态服务平台</div>
             </div>
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slide slide4">
+            <Amusic></Amusic>
+            <div class="wenzi">
+              <div class="biaoti">不会做？</div>
+              <div class="biaoti">怕做不好？</div>
+              <div class="biaoti">再看看？</div>
+              <div class="neirong">没关系，专业的培训团队，平台丰富内容支持</div>
+              <div class="neirong">没关系，全程引导，模式高收益、零风险</div>
+              <div class="neirong">对不起，机会不等人</div>
+            </div>
+            <div class="shenfen">
+              <div class="type1">前10000名铂金会员</div>
+              <div class="type2">免费获得商务总监身份</div>
+              <div class="type1">前300名俱乐部长</div>
+              <div class="type2">免费获得城市经理身份</div>
+            </div>
+            <div class="chatu"></div>
+            <div class="changyi">
+              <p>如果你想利用碎片化时间赚钱</p>
+              <p>如果你还热忱于女性健康传播事业</p>
+              <p>如果你有适合平台商家资源</p>
+            </div>
+            <div class="jiaru">请加入我们，传递梦想，共同创造价值</div>
+            <div class="biaoyu">
+              <div class="jianxie">成功 = 传递</div>
+              <div class="neirong">一个专注于女性健康美的生态服务平台</div>
+            </div>
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
+            <Arules></Arules>
           </div>
         </swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
+      <Abusiness></Abusiness>
     </div>
-    <!-- 我要参与 -->
-    <div class="join">
-      <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
-      <!-- <a href="javascript:;" class="joinBtn">我要参与</a> -->
-    </div>
-    <!-- 我的商家 -->
-    <div class="business">
-      <div class="bustit">我的商家</div>
-      <div class="bus_con">
-        <dl v-if="isShow">
-          <dd v-for="item in businessList" :key="item.phone">
-            <ul>
-              <li><img :src="item.icon" alt=""/><p>{{ item.username ? item.username : '1' }}</p><span>{{ item.createDate ? item.createDate : '1' }}</span></li>
-              <li>{{ item.phone ? item.phone : '1' }}</li>
-            </ul>
-          </dd>
-        </dl>
-        <p v-else class="noBusiness">暂无商家，请点击“我要参与”获取商家列表</p>
-      </div>
-      <div class="loadmore">
-        <van-button type="primary" size="small" @click="loadMore" :loading="isLoading" :disabled="isDisabled" v-if="isShow">点击展开更多</van-button>
-      </div>
-    </div>
-    <!-- 活动细则 -->
-    <div class="actrules">
-      <div class="rulestit">活动细则</div>
-      <ul class="rulescon">
-        <li>1.xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
-        <li>2.xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
-        <li>3.xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
-      </ul>
-    </div>
-    <!-- 分享 -->
-    <!-- <div class="common-shadow-modules" @click="isShare = false"  v-show="isShare">
-    </div>
-    <div class="footer-share-modules" v-show="isShare">
-      <div class="footer-title-modules">
-        <p>分享</p>
-      </div>
-      <ul class="clear-both">
-        <li @click="shareFun('weChat',1)">
-          <img src="../../assets/img/WeChat@2x.png"/>
-          <p>微信分享</p>
-        </li>
-        <li @click="shareFun('friendCircle',2)">
-          <img src="../../assets/img/CircleofFriends@2x.png"/>
-          <p>朋友圈分享</p>
-        </li>
-        <li @click="shareFun('qq',3)">
-          <img src="../../assets/img/QQ@2x.png"/>
-          <p>QQ分享</p>
-        </li>
-        <li @click="shareFun('sina',4)">
-          <img src="../../assets/img/weibo@2x.png"/>
-          <p>微博分享</p>
-        </li>
-      </ul>
-      <button @click="isShare = false" class="share-footer-button">取消</button> 
-    </div> -->
   </div>
 </template>
 
@@ -146,39 +134,144 @@ import store from '@/store'
 import * as ACT_API from '@/api/activity'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import Abusiness from '@/components/Activity/Abusiness'
+import Amusic from '@/components/Activity/Amusic'
+import Arules from '@/components/Activity/Arules'
 export default {
   data() {
+    let $ = this.$
     return {
-      businessList: [],
-      isLoading: false,
-      isDisabled: false,
       isShare: false,
-      isShow: true,
       shareUserId: '',
-      saleOrglistParams: {
-        name: "",
-        pageNum: 1,
-        pageSize: 3,
-        role: "",
-        userId: ""
-      },
       swiperOption: {
         direction: 'vertical',
         pagination: {
           el: '.swiper-pagination',
           bulletClass : 'my-bullet',
           bulletActiveClass: 'my-bullet-active'
+        },
+        on: {
+          // 轮播内容设置
+          slideChangeTransitionStart() {
+            $('.slide').eq(this.activeIndex).children().css('display', 'none')
+          },
+          slideChangeTransitionEnd() {
+            $('.amusic').fadeIn()
+            $('.amusic .logo').fadeIn()
+            $('.biaoyu').fadeIn()
+            $('.join').fadeIn()
+            $('.arules').fadeIn()
+            $('.renmai').removeClass('renmai_transform')
+            $('.pingtai').removeClass('pingtai_transform')
+            if (this.activeIndex == 0) {
+              $('.nvxing').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '6.45rem', height: '1.12rem', left: '.53rem', top: '.94rem'})
+              $('.joinus').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '1.9rem', height: '.76rem', left: '2.78rem', top: '2.92rem'})
+              $('.zuobian').stop()
+              .css({left: '-3rem', top: '5rem', display: 'block'})
+              .animate({left: '.26rem', top: '4.54rem'})
+              $('.youbian').stop()
+              .css({left: '100%', top: '3.2rem', display: 'block'})
+              .animate({left: '4.24rem', top: '3.58rem'})
+              $('.renmai').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '1.78rem', height: '1.16rem', left: '1.46rem', top: '3.3rem'})
+              .addClass('renmai_transform')
+              $('.pingtai').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '1.71rem', height: '1.17rem', left: '4.16rem', top: '4.84rem'})
+              .addClass('pingtai_transform')
+              $('.loading').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '4.75rem', height: '4.92rem', left: '1.34rem', top: '2.18rem'})
+              $('.logo').eq(1).stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '.75rem', height: '.75rem', left: '3.38rem', top: '4.21rem'})
+              $('.jiazhi').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '3.17rem', height: '.36rem', left: '2.17rem', top: '7.53rem'})
+            } else if (this.activeIndex == 1) {
+              $('.biaoti').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '5.09rem', height: '1.35rem',left: '1.09rem', top: '.44rem',}, () => {
+                $('.wenzi').fadeIn()
+              })
+            } else if (this.activeIndex == 2) {
+              $('.biaoti').stop()
+              .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+              .animate({width: '4.81rem', height: '1.24rem',left: '1.18rem', top: '.58rem',}, () => {
+                $('.zhaomu').stop()
+                .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+                .animate({width: '4.2rem', height: '.8rem', left: '1.65rem', top: '2.54rem'}, () => {
+                  $('.zhiwei').css({display: 'block'})
+                  $('.zhiwei div').eq(0).stop()
+                  .css({left: '-2.76rem', display: 'block'})
+                  .animate({left: '.93rem'})
+                  $('.zhiwei div').eq(1).stop()
+                  .css({left: '9.76rem', display: 'block'})
+                  .animate({left: '3.85rem'})
+                  $('.wenzi').fadeIn().css({overflow: 'hidden'})
+                  $('.wenzi ul li')
+                  .css({marginLeft: '6rem', whiteSpace: 'nowrap'})
+                  .eq(0).stop()
+                  .animate({marginLeft: '.29rem'}, () => {
+                    $('.wenzi ul li').eq(1).stop()
+                    .animate({marginLeft: '.29rem'}, () => {
+                      $('.wenzi ul li').eq(2).stop()
+                      .animate({marginLeft: '.29rem'}, () => {
+                        $('.xianzhi').fadeIn()
+                      })
+                    })
+                  })
+                })
+              })
+            } else if (this.activeIndex == 3) {
+              $('.wenzi').css({display: 'block'})
+              $('.wenzi div').css({left: '7.5rem', display: 'block'})
+              $('.wenzi .biaoti')
+              .css({top: '1.04rem'})
+              .eq(0).stop()
+              .animate({left: '1.3rem'}, () => {
+                $('.wenzi .biaoti').eq(1).stop()
+                .animate({left: '2.98rem'}, () => {
+                  $('.wenzi .biaoti').eq(2).stop()
+                  .animate({left: '4.97rem'}, () => {
+                    $('.wenzi .neirong').stop()
+                    .animate({left: '1.3rem'}, () => {
+                      $('.shenfen').fadeIn()
+                      $('.chatu').fadeIn()
+                      $('.shenfen .type1').stop()
+                      .css({marginLeft: '-6.68rem', whiteSpace: 'nowrap'})
+                      .animate({marginLeft: '.45rem'})
+                      $('.shenfen .type2').stop()
+                      .css({marginLeft: '6.68rem', whiteSpace: 'nowrap'})
+                      .animate({marginLeft: '2.43rem'}, () => {
+                        $('.changyi').fadeIn(() => {
+                          $('.jiaru').fadeIn()
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            }
+          }
         }
       }
     }
   },
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
+    Abusiness,
+    Amusic,
+    Arules
   },
   mounted() {
     this.getJoinUrl()
-    this.getBusinessData()
   },
   methods: {
     // 得到分享id
@@ -195,33 +288,6 @@ export default {
         })
         this.shareUserId = newUrlArr[newUrlArr.length - 1]
       })
-    },
-    // 得到商家列表
-    getBusinessData() {
-      this.isLoading = true
-      let params = {
-        ...this.saleOrglistParams,
-        userId: store.state.userId
-      }
-      ACT_API.getBusinessData(params).then(response => {
-        if (response.msg == '未获取到数据') {
-          this.isLoading = false
-          this.isShow = false
-        } else {
-          response.data.map((item) => {
-            this.businessList.push(item)
-            this.isLoading = false
-          })
-          if (response.data.length < 3) {
-            this.isDisabled = true
-          }
-        }
-      })
-    },
-    //点击加载更多
-    loadMore() {
-      this.saleOrglistParams.pageNum += 1
-      this.getBusinessData()
     },
     // 分享模块
     shareFun(type,typeNumber) {
@@ -266,6 +332,8 @@ export default {
 .swiper-container {width: 100%; height: 100%;}
 .swiper-slide {width: 100%; height: 100%;}
 .slide {width: 100%; height: 10.98rem; background: url('../../assets/img/activity/back.png') no-repeat center; background-size: cover; position: relative;}
+.renmai_transform {transform: rotate(360deg); transform-origin: 3.2rem 1.3rem; transition: all 2s linear;}
+.pingtai_transform {transform: rotate(360deg); transform-origin: -1.2rem -1.3rem; transition: all 2s linear;}
 /* slide1 */ 
 .slide1 .nvxing {position: absolute; background: url('../../assets/img/activity/banner1/zu12.png') no-repeat center; background-size: cover; width: 6.45rem; height: 1.12rem; left: .53rem; top: .94rem;}
 .slide1 .joinus {position: absolute; width: 1.9rem; height: .76rem; background: url('../../assets/img/activity/banner1/juxing.png') no-repeat center; background-size: cover; text-align: center; line-height: .76rem; left: 2.78rem; top: 2.92rem; font-size: .23rem; color: #fff;}
@@ -273,7 +341,7 @@ export default {
 .slide1 .youbian {position: absolute; width: 3.26rem; height: 2.29rem; background: url('../../assets/img/activity/banner1/youbian.png') no-repeat center; background-size: cover; left: 4.24rem; top: 3.58rem;}
 .slide1 .renmai {position: absolute; width: 1.78rem; height: 1.16rem; background: url('../../assets/img/activity/banner1/renmai.png') no-repeat center; background-size: cover; left: 1.46rem; top: 3.3rem;}
 .slide1 .pingtai {position: absolute; width: 1.71rem; height: 1.17rem; background: url('../../assets/img/activity/banner1/pingtai.png') no-repeat center; background-size: cover; left: 4.16rem; top: 4.84rem;}
-.slide1 .loading {position: absolute; width: 4.75rem; height: 4.92rem; background: url('../../assets/img/activity/banner1/loading.png') no-repeat center; background-size: cover; left: 1.34rem; top: 2.18rem;}
+.slide1 .loading {position: absolute; width: 4.75rem; height: 4.92rem; background: url('../../assets/img/activity/banner1/loading.png') no-repeat center; background-size: cover; left: 1.34rem; top: 2.18rem; animation: xuanzhuan 3s linear infinite;}
 .slide1 .logo {position: absolute; width: .75rem; height: .75rem; background: url('../../assets/img/activity/banner1/logo.png') no-repeat center; background-size: cover; left: 3.38rem; top: 4.21rem;}
 .slide1 .jiazhi {position: absolute; width: 3.17rem; height: .36rem; background: url('../../assets/img/activity/banner1/jiazhi.png') no-repeat center; background-size: cover; left: 2.17rem; top: 7.53rem;}
 .biaoyu {position: absolute; top: 8.31rem; color: #50C7FF; text-align: center; width: 100%;}
@@ -294,28 +362,35 @@ export default {
 /* slide3 */ 
 .slide3 .biaoti {position: absolute; width: 4.81rem; height: 1.24rem; background: url('../../assets/img/activity/banner3/biaoti.png') no-repeat center; background-size: contain; left: 1.18rem; top: .58rem;}
 .slide3 .zhaomu {position: absolute; width: 4.2rem; height: .8rem; background: url('../../assets/img/activity/banner3/zhaomu.png') no-repeat center; background-size: contain; left: 1.65rem; top: 2.54rem; color: #9EE4FF; font-size: .4rem; text-align: center; line-height: .8rem;}
-.slide3 .zhiwei div {position: absolute; width: 2.76rem; height: .66rem; background: url('../../assets/img/activity/banner3/zhiwei.png') no-repeat center; background-size: contain; top: 3.67rem; color: #00FFFF; font-size: .3rem;}
+.slide3 .zhiwei div {position: absolute; width: 2.76rem; height: .66rem; background: url('../../assets/img/activity/banner3/zhiwei.png') no-repeat center; background-size: contain; top: 3.67rem; color: #00FFFF; font-size: .3rem; text-align: center; line-height: .66rem;}
 .slide3 .zhiwei div:nth-child(1) {left: .93rem;}
 .slide3 .zhiwei div:nth-child(2) {left: 3.85rem;}
-/* slide4 */ .slide4 {}
+.slide3 .wenzi {position: absolute; width: 5.67rem; height: 1.99rem; left: .92rem; top: 4.79rem; background: url('../../assets/img/activity/banner3/wenzi.png') no-repeat center; background-size: cover;}
+.slide3 .wenzi .huizhang {position: absolute; width: 1.17rem; height: 1.34rem; left: 3.87rem; top: 0; background: url('../../assets/img/activity/banner3/huizhang.png') no-repeat center; background-size: contain;}
+.slide3 .wenzi ul li {font-size: .24rem; color: #50C7FF; margin-top: .2rem; margin-left: .29rem; margin-bottom: .29rem; background: url('../../assets/img/activity/banner3/tuoyuan1.png') no-repeat left center; padding-left: .25rem; background-size: .16rem;}
+.slide3 .wenzi ul li:nth-child(3) {background: url('../../assets/img/activity/banner3/tuoyuan2.png') no-repeat left center; font-size: .24rem; color: #9EE4FF; background-size: .18rem;}
+.slide3 .xianzhi {position: absolute; left: .79rem; top: 7.4rem; color: #50C7FF; font-size: .22rem;}
+/* slide4 */ 
+.slide4 .wenzi div {position: absolute;}
+.slide4 .wenzi .biaoti {color: #47CFEC; font-size: .3rem; top: 1.04rem;}
+.slide4 .wenzi .biaoti:nth-child(1) {left: 1.3rem;}
+.slide4 .wenzi .biaoti:nth-child(2) {left: 2.98rem;}
+.slide4 .wenzi .biaoti:nth-child(3) {left: 4.97rem;}
+.slide4 .wenzi .neirong {color: #50C7FF; font-size: .24rem; left: 1.3rem;}
+.slide4 .wenzi .neirong:nth-child(4) {color: #50C7FF; font-size: .24rem; top: 1.63rem;}
+.slide4 .wenzi .neirong:nth-child(5) {color: #50C7FF; font-size: .24rem; top: 2.06rem;}
+.slide4 .wenzi .neirong:nth-child(6) {color: #50C7FF; font-size: .24rem; top: 2.5rem;}
+.slide4 .shenfen {position: absolute; width: 6.68rem; height: 2.36rem; background: url('../../assets/img/activity/banner4/shenfen.png') no-repeat center; background-size: cover; left: .41rem; top: 3.16rem; padding-top: .2rem}
+.slide4 .shenfen .type1 {background: linear-gradient(-30deg, rgba(163,96,255,1) 60%, rgba(74,248,255,1) 100%); -webkit-background-clip: text; -webkit-text-fill-color:transparent;  font-size: .3rem; font-weight: bold; margin-left: .45rem; margin-bottom: .18rem;}
+.slide4 .shenfen .type2 {font-size: .26rem; color: #50C7FF; margin-left: 2.43rem; margin-bottom: .18rem;}
+.slide4 .chatu {position: absolute; width: 1.58rem; height: 2.67rem; background: url('../../assets/img/activity/banner4/chatu.png') no-repeat center; background-size: contain; left: 5.32rem; top: 2.76rem;}
+.slide4 .changyi {position: absolute; color: #50C7FF; font-size: .24rem; top: 6.03rem; text-align: center; width: 100%;}
+.slide4 .changyi p {margin-bottom: .1rem;}
+.slide4 .jiaru {font-size: .3rem; background:linear-gradient(-30deg,rgba(163,96,255,1) 25%, rgba(74,248,255,1) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; position: absolute; top: 7.45rem; left: 1.14rem; font-weight: bold;}
 
 /* 参与 */
 .join {position: absolute; top: 9.41rem; left: 2.72rem; z-index: 2;}
-.joinBtn {display: block; width: 2.08rem; height: 0.76rem; background: linear-gradient(0deg, rgba(81,234,236,1), rgba(89,67,197,1)); border-radius: .08rem; text-align: center; line-height: 0.76rem; font-size: .3rem; font-family: 'PingFang-SC-Medium'; color: #fff;}
-
-/* 商家 */
-.business {width: 100%; border-top: .02rem solid #bbb; padding-top: .2rem; margin-bottom: .36rem; color: #101010;}
-.bustit {margin: auto; font-size: .36rem; text-align: center; margin-bottom: .6rem;}
-.bus_con dd {margin-bottom: .2rem; position: relative; border-bottom: 1px solid #E5E5E5; padding-bottom: .2rem;}
-.bus_con dd li {font-size: 0.26rem; color: #333;}
-.bus_con dd li span {font-size: 0.22rem; color: #999;}
-.bus_con dd li:nth-child(1) {float: left; margin-left: 1.2rem;}
-.bus_con dd li:nth-child(1) p {font-size: 0.28rem; color: #333;}
-.bus_con dd li:nth-child(2) {float: right; margin-right: 0.2rem; line-height: .75rem;}
-.bus_con dd img {position: absolute; left: 0.2rem; width: .84rem; height: .84rem; float: left; border-radius: 50%;}
-.bus_con dd::after {content: ""; display: block; clear: both; overflow: hidden; visibility: hidden; height: 0;}
-.loadmore {text-align: center;}
-.noBusiness {text-align: center; font-size: .28rem; color: #999;}
+.joinBtn {display: block; width: 2.08rem; height: 0.76rem; background: linear-gradient(0deg, rgba(89,67,197,1), rgba(81,234,236,1)); border-radius: .08rem; text-align: center; line-height: 0.76rem; font-size: .3rem; font-family: 'PingFang-SC-Medium'; color: #fff;}
 
 /* 规则 */
 .actrules {width: 100%; border-top: .02rem solid #bbb; padding-top: .2rem; color: #101010;}

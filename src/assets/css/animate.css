@@ -1,0 +1,36 @@
+/* 动画 */
+
+/* 商家箭头上下移动 */
+@keyframes shangxia {
+  0% {top: 12.8rem;}
+  50% {top: 12.6rem;}
+  100% {top: 12.8rem;}
+}
+
+/* 音乐旋转 */
+@keyframes xuanzhuan {
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+
+/* 字体 */
+@font-face {
+  font-family: 'PingFang-SC-Bold';
+  src: url('../font/PingFangBold.ttf');
+}
+@font-face {
+  font-family: 'PingFang-SC-Medium';
+  src: url('../font/PingFangMedium.ttf');
+}
+@font-face {
+  font-family: 'PingFang-SC-Heavy';
+  src: url('../font/PingFangHeavy.ttf');
+}
+@font-face {
+  font-family: 'PingFang-SC-Light';
+  src: url('../font/PingFangLight.ttf');
+}
+@font-face {
+  font-family: 'PingFang-SC-Regular';
+  src: url('../font/PingFangRegular.ttf');
+}

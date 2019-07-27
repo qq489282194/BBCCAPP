@@ -49,7 +49,9 @@ export default {
 .rulescon {font-size: .28rem; line-height: .42rem; color: #333;}
 .rulescon li {margin-bottom: .30rem; padding-left: .61rem; padding-right: .37rem; position: relative;}
 .rulescon li::before {content: ""; display: block; width: .12rem; height: .14rem; position: absolute; left: .36rem; top: .13rem; background: url('../../assets/img/activity/rules1.png') no-repeat center; background-size: cover;}
-.rulescon li span:nth-child(1) {font-family: 'PingFang-SC-Bold'; font-weight: bold;}
-.rulescon li span:nth-child(2) {font-family: 'PingFang-SC-Medium';}
+.rulescon li span:nth-child(1) {font-weight: bold;}
+
+/* .rulescon li span:nth-child(1) {font-family: 'PingFang-SC-Bold'; font-weight: bold;}
+.rulescon li span:nth-child(2) {font-family: 'PingFang-SC-Medium';} */
 </style>
 

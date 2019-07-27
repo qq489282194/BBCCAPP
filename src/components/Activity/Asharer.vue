@@ -22,7 +22,7 @@
             </div>
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
-              <a href="javascript:;" class="joinBtn">我要参与</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要参与</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
-              <a href="javascript:;" class="joinBtn">我要参与</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要参与</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
-              <a href="javascript:;" class="joinBtn">我要参与</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要参与</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>

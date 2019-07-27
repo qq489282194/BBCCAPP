@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <!-- 分享者内容 -->
     <div class="sharer">
       <swiper :options="swiperOption" ref="mySwiper">
@@ -23,7 +23,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -45,7 +45,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -87,7 +87,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -118,7 +118,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -149,7 +149,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -160,13 +160,12 @@
       <AquickMark></AquickMark>
     </div>
     <!-- 电话弹窗 -->
-    <div class="shade" v-show="show" @click="show = false">
-      <div class="popup">
-        <p class="pop_tit">输入手机号码，完成身份认领即可开启商家拓展，后续我们也会为您提供更好的服务。</p>
-        <div class="phoneNum"><input type="text" placeholder="请输入手机号"></div>
-        <div class="phoneSms"><input type="text" placeholder="输入验证码"><span class="sendSms" @click="toClick && sendSms()" ref="sendSms">获取验证码</span></div>
-        <a href="javascript:;" class="confirm">确定</a>
-      </div>
+    <div class="popup" v-show="show">
+      <div class="closebtn" @click="show = false"></div>
+      <p class="pop_tit">输入手机号码，完成身份认领即可开启商家拓展，后续我们也会为您提供更好的服务。</p>
+      <div class="phoneNum"><input type="text" placeholder="请输入手机号" v-model="phone" ref="phoneNum"></div>
+      <div class="phoneSms"><input type="text" placeholder="输入验证码" v-model="sms"><span class="sendSms" @click="toClick && sendSms()" ref="sendSms">获取验证码</span></div>
+      <a href="javascript:;" class="confirm" @click="confirmMsg">确定</a>
     </div>
   </div>
 </template>
@@ -332,33 +331,42 @@ export default {
     },
     // 发送信息
     sendSms() {
-      let _this = this
-      let count = 60
-      let countDownTimer = setInterval(() => {
-        this.toClick = false
-        count -= 1
-        this.$refs.sendSms.innerHTML = `${count}s后重新获取`
-        if (count <= 0) {
-          clearInterval(countDownTimer)
-          this.toClick = true
-          this.$refs.sendSms.innerHTML = `获取验证码`
+      if (this.phone) {
+        this.$refs.phoneNum.style.borderColor = '#cfcfcf'
+        let _this = this
+        let count = 60
+        let countDownTimer = setInterval(() => {
+          _this.toClick = false
+          count -= 1
+          _this.$refs.sendSms.innerHTML = `${count}s后重新获取`
+          console.log(count)
+          if (count <= 0) {
+            clearInterval(countDownTimer)
+            _this.toClick = true
+            _this.$refs.sendSms.innerHTML = `获取验证码`
+          }
+        }, 1000)
+        let params = {
+          phone: this.phone
         }
-      }, 1000)
-      let params = {
-        phone: this.phone
+        ACT_API.sendSms(params).then(response => {
+          console.log('发送信息', response)
+        })
+      } else {
+        this.$refs.phoneNum.style.borderColor = '#f00'
       }
-      // ACT_API.sendSms(params).then(response => {
-      //   console.log('发送信息', response)
-      // })
     },
     // 确认信息
     confirmMsg() {
+      _this = this
       let params = {
         recive: this.phone,
         code: this.sms
       }
       ACT_API.checkCode(params).then(response => {
-        console.log('验证码', response)
+        if (response.status == 1) {
+          _this.show = false
+        }
       })
     },
     // 分享模块
@@ -464,12 +472,13 @@ export default {
 .joinBtn {display: block; width: 2.08rem; height: 0.76rem; background: linear-gradient(0deg, rgba(89,67,197,1), rgba(81,234,236,1)); border-radius: .08rem; text-align: center; line-height: 0.76rem; font-size: .3rem; font-family: 'PingFang-SC-Medium'; color: #fff; float: left; margin-right: .7rem;}
 
 /* 电话弹窗 */
-.shade {width: 100%; height: 100%; background: rgba(0,0,0,.4); position: fixed; top: 0; left: 0; z-index: 999;}
-.popup {width: 5.8rem; height: 5.76rem; border-radius: .2rem; background: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);}
+.popup {width: 5.8rem; height: 5.76rem; border-radius: .2rem; background: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1;}
+.popup .closebtn {position: absolute; width: .4rem; height: .4rem; left: 5.1rem; top: 0.4rem; background: url('../../assets/img/activity/close.png') no-repeat center; background-size: contain;}
 .pop_tit {font-size: .26rem; color: #333; font-family: 'PingFang-SC-Medium'; width: 5rem; margin: 0 auto; margin-top: 1.16rem; margin-bottom: 0.43rem; line-height: .42rem;}
-.popup div {width: 5.02rem; height: .7rem; border: .01rem solid #cfcfcf; margin: auto; margin-bottom: .3rem; border-radius: .1rem; position: relative;}
-.popup input {border: none; width: 100%; height: 100%; float: left; padding-left: .21rem;}
+.popup .phoneNum {width: 5.02rem; height: .7rem; margin: auto; margin-bottom: .3rem; position: relative;}
+.popup .phoneSms {width: 5.02rem; height: .7rem; margin: auto; margin-bottom: .3rem; position: relative;}
+.popup input {border: none; width: 100%; height: 100%; float: left; padding-left: .21rem; border: .01rem solid #cfcfcf; border-radius: .1rem;}
 .sendSms {position: absolute; font-size: .22rem; color: #F63B75; right: .21rem; top: .18rem;}
-.confirm {display: block; position: absolute; width: 2.3rem; height: .7rem; background:linear-gradient(0deg,rgba(81,234,236,1),rgba(89,67,197,1)); border-radius: .04rem; font-size: .32rem; color: #fff; text-align: center; line-height: .7rem; left: 1.75rem; bottom: 0.53rem;}
+.confirm {display: block; position: absolute; width: 2.3rem; height: .7rem; background:linear-gradient(0deg,rgba(89,67,197,1), rgba(81,234,236,1)); border-radius: .04rem; font-size: .32rem; color: #fff; text-align: center; line-height: .7rem; left: 1.75rem; bottom: 0.53rem;}
 </style>
 

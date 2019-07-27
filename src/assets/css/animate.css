@@ -14,7 +14,7 @@
 }
 
 /* 字体 */
-@font-face {
+/* @font-face {
   font-family: 'PingFang-SC-Bold';
   src: url('../font/PingFangBold.ttf');
 }
@@ -33,4 +33,4 @@
 @font-face {
   font-family: 'PingFang-SC-Regular';
   src: url('../font/PingFangRegular.ttf');
-}
+} */

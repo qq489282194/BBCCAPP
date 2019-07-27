@@ -122,7 +122,8 @@
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
-          <li @click="toActivity">
+          <li @click="MIXINToDetail('http://testuser.meibbc.com/bbc-personal/actindex/asharer','24')">
+            <i class="icon icon-integral"></i>
             <p>H5入口</p>
           </li>
           <!-- <li @click="MIXINToDetail('','39')">

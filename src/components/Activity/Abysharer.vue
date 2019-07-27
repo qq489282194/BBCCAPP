@@ -25,7 +25,7 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -47,7 +47,7 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -89,7 +89,7 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -120,7 +120,7 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -151,7 +151,7 @@
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
               <a href="javascript:;" class="joinBtn">我要分享</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <!-- Optional controls -->
@@ -182,7 +182,7 @@ export default {
     let $ = this.$
     return {
       show: false,
-      rulesShow: false,
+      rulesPage: 'abysharer',
       phone: '',
       errorMsg: '',
       errorSms: '',
@@ -194,8 +194,9 @@ export default {
       data_newUserId: '',
       toShareUrl: '',
       swiperOption: {
+        effect: 'fade',
         direction: 'vertical',
-        pagination: {
+        pagination: {  
           el: '.swiper-pagination',
           bulletClass : 'my-bullet',
           bulletActiveClass: 'my-bullet-active'
@@ -304,18 +305,19 @@ export default {
     AquickMark
   },
   mounted() {
-    // if (!localStorage.getItem('openid') && !localStorage.getItem('unionId')) {
-    //   this.toShareUrl = window.location.href
-    //   let oldUrl = window.location.search.slice(1)
-    //   this.oldUserId = oldUrl.split('=')[1]
-    //   this.$getShopAuthorize('Login', (res)=>{
-    //     console.log(res,'-----微信授权Login------')	
-    //   }, this.oldUserId)
-    // } else {
-    //   let urlStr = window.location.href
-    //   this.toShareUrl = urlStr.replace('/bbc-personal', '') + '?oldUserId=' + localStorage.getItem('oldUserId')
-    //   this.bindUserRelation()
-    // }
+    if (!localStorage.getItem('openid') && !localStorage.getItem('unionId')) {
+      this.toShareUrl = window.location.href
+      let oldUrl = window.location.search.slice(1)
+      this.oldUserId = oldUrl.split('=')[1]
+      this.$getShopAuthorize('Login', (res)=>{
+        console.log(res,'-----微信授权Login------')	
+      }, this.oldUserId)
+    } else {
+      let urlStr = window.location.href
+      this.toShareUrl = urlStr.replace('/bbc-personal', '') + '?oldUserId=' + localStorage.getItem('oldUserId')
+      this.initPageZero()
+      this.bindUserRelation()
+    }
   },
   methods: {
     // 绑定用户上下级关系
@@ -366,6 +368,39 @@ export default {
       // let hostUrl = this.article.shareUrl
       let activityId = "";
       this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
+    },
+    initPageZero() {
+      let $ = this.$
+      $('.slide').eq(this.activeIndex).children().css('display', 'none')
+      $('.nvxing').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '6.45rem', height: '1.12rem', left: '.53rem', top: '.94rem'})
+      $('.joinus').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '1.9rem', height: '.76rem', left: '2.78rem', top: '2.92rem'})
+      $('.zuobian').stop()
+      .css({left: '-3rem', top: '5rem', display: 'block'})
+      .animate({left: '.26rem', top: '4.54rem'})
+      $('.youbian').stop()
+      .css({left: '100%', top: '3.2rem', display: 'block'})
+      .animate({left: '4.24rem', top: '3.58rem'})
+      $('.renmai').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '1.78rem', height: '1.16rem', left: '1.46rem', top: '3.3rem'})
+      .addClass('renmai_transform')
+      $('.pingtai').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '1.71rem', height: '1.17rem', left: '4.16rem', top: '4.84rem'})
+      .addClass('pingtai_transform')
+      $('.loading').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '4.75rem', height: '4.92rem', left: '1.34rem', top: '2.18rem'})
+      $('.logo').eq(1).stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '.75rem', height: '.75rem', left: '3.38rem', top: '4.21rem'})
+      $('.ruzhu').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '4.97rem', height: '.36rem', left: '1.27rem', top: '7.53rem'})
     }
   }
 }

@@ -122,6 +122,9 @@
             <i class="icon icon-integral"></i>
             <p>积分</p>
           </li>
+          <li @click="toActivity">
+            <p>H5入口</p>
+          </li>
           <!-- <li @click="MIXINToDetail('','39')">
             <i class="icon icon-invite"></i>
             <p>邀请</p>
@@ -392,6 +395,9 @@
           this.photo_url = data[0].photo_url
         })
       },
+      toActivity() {
+        this.$router.push('/actindex/asharer')
+      }
     },
   }
 </script>

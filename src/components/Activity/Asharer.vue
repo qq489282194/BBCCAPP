@@ -24,7 +24,7 @@
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -40,11 +40,6 @@
             </div>
             <div class="piaofu" ref="piaofu">
               <div></div>
-              <!-- <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div> -->
             </div>
             <div class="biaoyu">
               <div class="jianxie">成功 = 度势</div>
@@ -54,7 +49,7 @@
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -83,7 +78,7 @@
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <swiper-slide>
@@ -118,7 +113,7 @@
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn">我要参与</a>
             </div>
-            <Arules></Arules>
+            <Arules :rulesPage="rulesPage"></Arules>
           </div>
         </swiper-slide>
         <!-- Optional controls -->
@@ -139,11 +134,14 @@ import Amusic from '@/components/Activity/Amusic'
 import Arules from '@/components/Activity/Arules'
 export default {
   data() {
+    let _this = this
     let $ = this.$
     return {
+      rulesPage: 'asharer',
       isShare: false,
       shareUserId: '',
       swiperOption: {
+        effect: 'fade',
         direction: 'vertical',
         pagination: {
           el: '.swiper-pagination',
@@ -198,6 +196,8 @@ export default {
               .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
               .animate({width: '5.09rem', height: '1.35rem',left: '1.09rem', top: '.44rem',}, () => {
                 $('.wenzi').fadeIn()
+                $('.piaofu').css({display: 'block'})
+                _this.piaofu()
               })
             } else if (this.activeIndex == 2) {
               $('.biaoti').stop()
@@ -272,6 +272,7 @@ export default {
   },
   mounted() {
     this.getJoinUrl()
+    this.initPageZero()
   },
   methods: {
     // 得到分享id
@@ -302,9 +303,8 @@ export default {
     piaofu() {
       var aDivs = this.$refs.piaofu.children
       for (var i = 0; i < aDivs.length; i++) {
-        aDivs[i].style.top = (6.3 + Math.random()) + 'rem'
-        console.log(aDivs[i].offsetTop)
-        aDivs[i].style.left = (Math.random() * window.innerWidth / 100) + 'rem'
+        aDivs[i].style.top = '6.5rem'
+        aDivs[i].style.left = '1.2rem'
         var speed = 5
         var _i = i
         // var piaofuTimer = setInterval(() => {
@@ -320,6 +320,39 @@ export default {
           // }
         // }, 2000)
       }
+    },
+    initPageZero() {
+      let $ = this.$
+      $('.slide').eq(this.activeIndex).children().css('display', 'none')
+      $('.nvxing').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '6.45rem', height: '1.12rem', left: '.53rem', top: '.94rem'})
+      $('.joinus').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '1.9rem', height: '.76rem', left: '2.78rem', top: '2.92rem'})
+      $('.zuobian').stop()
+      .css({left: '-3rem', top: '5rem', display: 'block'})
+      .animate({left: '.26rem', top: '4.54rem'})
+      $('.youbian').stop()
+      .css({left: '100%', top: '3.2rem', display: 'block'})
+      .animate({left: '4.24rem', top: '3.58rem'})
+      $('.renmai').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '1.78rem', height: '1.16rem', left: '1.46rem', top: '3.3rem'})
+      .addClass('renmai_transform')
+      $('.pingtai').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '1.71rem', height: '1.17rem', left: '4.16rem', top: '4.84rem'})
+      .addClass('pingtai_transform')
+      $('.loading').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '4.75rem', height: '4.92rem', left: '1.34rem', top: '2.18rem'})
+      $('.logo').eq(1).stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '.75rem', height: '.75rem', left: '3.38rem', top: '4.21rem'})
+      $('.jiazhi').stop()
+      .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
+      .animate({width: '3.17rem', height: '.36rem', left: '2.17rem', top: '7.53rem'})
     }
   }
 }

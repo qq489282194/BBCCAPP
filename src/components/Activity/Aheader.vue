@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">
+    <div class="title" v-show="headerShow">
       <van-icon name="arrow-left" @click="goBack" />
       <span v-text="title"></span>
     </div>
@@ -8,6 +8,7 @@
 </template>
 <script>
 export default {
+  props: ['headerShow'],
   data() {
     return {
       title: '活动详情'

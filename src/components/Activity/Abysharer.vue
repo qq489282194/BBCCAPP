@@ -23,7 +23,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="urlShow = true">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -36,7 +36,13 @@
               为女性网友提供一站式的曲线美产品及服务的专业垂直平台，以标准化的服务体系，口碑的消费参考为支撑。好玩、有趣、实用的女性平台。
             </div>
             <div class="piaofu">
-              <div></div>
+              <swiper :options="swiperOption1" ref="mySwiper1">
+                <swiper-slide><div class="p1"></div></swiper-slide>
+                <swiper-slide><div class="p2"></div></swiper-slide>
+                <swiper-slide><div class="p3"></div></swiper-slide>
+                <swiper-slide><div class="p4"></div></swiper-slide>
+                <swiper-slide><div class="p5"></div></swiper-slide>
+              </swiper>
             </div>
             <div class="biaoyu">
               <div class="jianxie">成功 = 度势</div>
@@ -45,7 +51,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="urlShow = true">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -87,7 +93,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="urlShow = true">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -118,7 +124,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="urlShow = true">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -149,7 +155,7 @@
             <div class="join">
               <!-- <van-button type="primary" size="small" @click="shareFun('weChat',1)">我要参与</van-button> -->
               <a href="javascript:;" class="joinBtn" @click="show = true">我要参与</a>
-              <a href="javascript:;" class="joinBtn" @click="shareFun('weChat',1)">我要分享</a>
+              <a href="javascript:;" class="joinBtn" @click="urlShow = true">我要分享</a>
             </div>
             <Arules :rulesPage="rulesPage"></Arules>
           </div>
@@ -157,8 +163,8 @@
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
-      <AquickMark></AquickMark>
     </div>
+    <AquickMark></AquickMark>
     <!-- 电话弹窗 -->
     <div class="popup" v-show="show">
       <div class="closebtn" @click="show = false"></div>
@@ -167,6 +173,17 @@
       <div class="phoneSms"><input type="text" placeholder="输入验证码" v-model="sms"><span class="sendSms" @click="toClick && sendSms()" ref="sendSms">获取验证码</span></div>
       <a href="javascript:;" class="confirm" @click="confirmMsg">确定</a>
     </div>
+    <!-- 复制链接 -->
+    <div class="copyUrl" v-show="urlShow">
+      <div class="closebtn" @click="urlShow = false"></div>
+      <div class="urltit">复制以下链接进行分享:</div>
+      <br>
+      <textarea class="urlcon" ref="urlcon">{{ toShareUrl }}</textarea>
+      <br>
+      <div class="urlbtn" @click="copyUrlContent">点击复制</div>
+    </div>
+    <!-- 提示框 -->
+    <div class="myalert" ref="myAlert" v-show="alertShow">您已经是***的下线</div>
   </div>
 </template>
 <script>
@@ -181,17 +198,25 @@ export default {
     let $ = this.$
     return {
       show: false,
+      alertShow: false,
+      urlShow: false,
       rulesPage: 'abysharer',
       phone: '',
       errorMsg: '',
       errorSms: '',
       sms: '',
       toClick: true,
-      // 微信授权信息
       oldUserId: '',
       data_oldUserId: '',
       data_newUserId: '',
       toShareUrl: '',
+      swiperOption1: {
+        autoplay: true,
+        delay: 1000,
+        disableOnInteraction: false,
+        loop: true,
+        slidesPerView : 1
+      },
       swiperOption: {
         effect: 'fade',
         direction: 'vertical',
@@ -249,7 +274,9 @@ export default {
               $('.biaoti').stop()
               .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
               .animate({width: '5.09rem', height: '1.35rem', left: '1.34rem', top: '.93rem'}, () => {
-                $('.wenzi').fadeIn()
+                $('.wenzi').fadeIn(() => {
+                  $('.piaofu').css({display: 'block'})
+                })
               })
             } else if (this.activeIndex == 2) {
               $('.biaoti').stop()
@@ -327,6 +354,7 @@ export default {
       this.data_newUserId = localStorage.getItem('userId')
       ACT_API.bindUserRelation(this.data_oldUserId, this.data_newUserId).then(response => {
         console.log('绑定关系是否成功', response.msg)
+        this.showAlert(response.msg)
       })
     },
     // 发送信息
@@ -339,7 +367,6 @@ export default {
           _this.toClick = false
           count -= 1
           _this.$refs.sendSms.innerHTML = `${count}s后重新获取`
-          console.log(count)
           if (count <= 0) {
             clearInterval(countDownTimer)
             _this.toClick = true
@@ -378,6 +405,22 @@ export default {
       // let hostUrl = this.article.shareUrl
       let activityId = "";
       this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
+    },
+    // 复制链接内容 
+    copyUrlContent() {
+      let urlcon = this.$refs.urlcon
+      urlcon.select()
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.urlShow = false
+    },
+    // 提示框操作
+    showAlert(text) {
+      this.$refs.myAlert.innerHTML = text
+      this.alertShow = true
+      let alertTimer = setTimeout(() => {
+        this.alertShow = false
+        clearTimeout(alertTimer)
+      }, 2000)
     },
     initPageZero() {
       let $ = this.$
@@ -441,8 +484,12 @@ export default {
 /* slide2 */
 .slide2 .biaoti {position: absolute; width: 5.09rem; height: 1.35rem; background: url('../../assets/img/activity/banner2/biaoti.png') no-repeat center; background-size: contain; left: 1.34rem; top: .93rem;}
 .slide2 .wenzi {position: absolute; width: 6.01rem; height: 2.17rem; background: url('../../assets/img/activity/banner2/wenzi2.png') no-repeat center; background-size: cover; left: .75rem; top: 2.48rem; text-align: left; padding: .3rem .35rem; line-height: .52rem; color: #84D8FF;}
-.slide2 .piaofu div {position: absolute; top: 5.19rem;}
-.slide2 .piaofu div:nth-child(1) {background: url('../../assets/img/activity/banner2/p_1.png') no-repeat center; width: 5.34rem; height: .71rem; background-size: cover;}
+.slide2 .piaofu {position: absolute; width: 100%; top: 5.2rem; left: 0;}
+.slide2 .piaofu .p1 {background: url('../../assets/img/activity/banner2/p_1.png') no-repeat center; width: 100%; height: .71rem; background-size: contain;}
+.slide2 .piaofu .p2 {background: url('../../assets/img/activity/banner2/p_2.png') no-repeat center; width: 100%; height: .71rem; background-size: contain;}
+.slide2 .piaofu .p3 {background: url('../../assets/img/activity/banner2/p_3.png') no-repeat center; width: 100%; height: .71rem; background-size: contain;}
+.slide2 .piaofu .p4 {background: url('../../assets/img/activity/banner2/p_4.png') no-repeat center; width: 100%; height: .71rem; background-size: contain;}
+.slide2 .piaofu .p5 {background: url('../../assets/img/activity/banner2/p_5.png') no-repeat center; width: 100%; height: .71rem; background-size: contain;}
 /* slide3 */
 .slide3 .biaoti {position: absolute; background: url('../../assets/img/activity/banner3/biaoti2.png') no-repeat center; background-size: cover; width: 3.38rem; height: 1.22rem; left: 2.26rem; top: 0.85rem;}
 .slide3 .wenzi {position: absolute; background: url('../../assets/img/activity/banner3/wenzi2.png') no-repeat center; background-size: cover; width: 6.17rem; height: 5.16rem; left: .67rem; top: 2.48rem; padding-top: .53rem; padding-left: .41rem;}
@@ -480,5 +527,14 @@ export default {
 .popup input {border: none; width: 100%; height: 100%; float: left; padding-left: .21rem; border: .01rem solid #cfcfcf; border-radius: .1rem;}
 .sendSms {position: absolute; font-size: .22rem; color: #F63B75; right: .21rem; top: .18rem;}
 .confirm {display: block; position: absolute; width: 2.3rem; height: .7rem; background:linear-gradient(0deg,rgba(89,67,197,1), rgba(81,234,236,1)); border-radius: .04rem; font-size: .32rem; color: #fff; text-align: center; line-height: .7rem; left: 1.75rem; bottom: 0.53rem;}
+
+/* 复制链接 */
+.copyUrl {width: 5.8rem; border-radius: .2rem; background: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1; padding: .1rem;}
+.copyUrl .closebtn {position: absolute; width: .4rem; height: .4rem; left: 5.1rem; top: 0.2rem; background: url('../../assets/img/activity/close.png') no-repeat center; background-size: contain;}
+.copyUrl .urlcon {width: 100%; border: .01rem solid #cfcfcf; padding: .1rem; border-radius: .2rem;}
+.copyUrl .urlbtn {width: 2.08rem; height: 0.36rem; background: linear-gradient(0deg, rgba(89,67,197,1), rgba(81,234,236,1)); border-radius: .08rem; text-align: center; line-height: 0.36rem; font-size: .2rem; font-family: 'PingFang-SC-Medium'; color: #fff; float: right;}
+
+/* 提示框 */
+.myalert {padding: .1rem; position: fixed; z-index: 999; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: .1rem; background: rgba(0, 0, 0, .4); color: #fff;}
 </style>
 

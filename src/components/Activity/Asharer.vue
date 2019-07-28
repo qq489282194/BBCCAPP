@@ -39,7 +39,13 @@
               <span class="wenzi-con">美胸汇铂金及以上会员，享全国个人招商入驻收益提成</span>
             </div>
             <div class="piaofu" ref="piaofu">
-              <div></div>
+              <swiper :options="swiperOption1" ref="mySwiper1">
+                <swiper-slide><div class="p1"></div></swiper-slide>
+                <swiper-slide><div class="p2"></div></swiper-slide>
+                <swiper-slide><div class="p3"></div></swiper-slide>
+                <swiper-slide><div class="p4"></div></swiper-slide>
+                <swiper-slide><div class="p5"></div></swiper-slide>
+              </swiper>
             </div>
             <div class="biaoyu">
               <div class="jianxie">成功 = 度势</div>
@@ -119,8 +125,8 @@
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
-      <Abusiness></Abusiness>
     </div>
+    <Abusiness></Abusiness>
   </div>
 </template>
 
@@ -140,6 +146,13 @@ export default {
       rulesPage: 'asharer',
       isShare: false,
       shareUserId: '',
+      swiperOption1: {
+        autoplay: true,
+        delay: 1000,
+        disableOnInteraction: false,
+        loop: true,
+        slidesPerView : 1
+      },
       swiperOption: {
         effect: 'fade',
         direction: 'vertical',
@@ -197,9 +210,10 @@ export default {
               $('.biaoti').stop()
               .css({width: 0, height: 0, left: '50%', top: '50%', display: 'block'})
               .animate({width: '5.09rem', height: '1.35rem',left: '1.09rem', top: '.44rem',}, () => {
-                $('.wenzi').fadeIn()
-                $('.piaofu').css({display: 'block'})
-                _this.piaofu()
+                $('.wenzi').fadeIn(() => {
+                  $('.piaofu').css({display: 'block'})
+                })
+                
               })
             } else if (this.activeIndex == 2) {
               $('.biaoti').stop()
@@ -302,27 +316,6 @@ export default {
       let activityId = "";
       this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
     },
-    piaofu() {
-      var aDivs = this.$refs.piaofu.children
-      for (var i = 0; i < aDivs.length; i++) {
-        aDivs[i].style.top = '6.5rem'
-        aDivs[i].style.left = '1.2rem'
-        var speed = 5
-        var _i = i
-        // var piaofuTimer = setInterval(() => {
-          // console.log(aDivs[_i].offsetLeft)
-          // var asd = (aDivs[_i].offsetLeft - speed) / 100 + 'rem'
-          // aDivs[_i].style.left = asd;
-          // console.log(asd)
-          // console.log(aDivs[_i].style.left)
-          // if (aDivs[_i].offsetLeft <= 0) {
-          //   console.log(aDivs[_i].offsetTop)
-          //   aDivs[_i].style.left = (window.innerWidth / 100) + 'rem'
-          //   aDivs[_i].style.top = 6.3 + Math.random() + 'rem'
-          // }
-        // }, 2000)
-      }
-    },
     initPageZero() {
       let $ = this.$
       $('.slide').eq(this.activeIndex).children().css('display', 'none')
@@ -388,12 +381,14 @@ export default {
 .slide2 .wenzi {position: absolute; width: 6.01rem; height: 3.93rem; background: url('../../assets/img/activity/banner2/wenzi.png') no-repeat center; background-size: cover; left: .75rem; top: 2.16rem; text-align: center; padding: .29rem .36rem; text-align: left;}
 .slide2 .wenzi-tit {color: #84D8FF; font-size: .24rem; font-weight: bold; line-height: .36rem; text-align: center; margin-top: .10rem;}
 .slide2 .wenzi-con {font-size: .22rem; color: #50C7FF; opacity: .6; line-height: .36rem;}
-.slide2 .piaofu div:nth-child(1) {position: absolute; background: url('../../assets/img/activity/banner2/p1.png') no-repeat center; background-size: contain; width: 2.26rem; height: .9rem; top: 6.3rem; left: 0;}
-.slide2 .piaofu div:nth-child(2) {position: absolute; background: url('../../assets/img/activity/banner2/p2.png') no-repeat center; background-size: contain; width: 2.8rem; height: .83rem; top: 6.3rem;}
-.slide2 .piaofu div:nth-child(3) {position: absolute; background: url('../../assets/img/activity/banner2/p3.png') no-repeat center; background-size: contain; width: 3.28rem; height: .81rem; top: 6.3rem;}
-.slide2 .piaofu div:nth-child(4) {position: absolute; background: url('../../assets/img/activity/banner2/p4.png') no-repeat center; background-size: contain; width: 5.38rem; height: .81rem; top: 6.3rem;}
-.slide2 .piaofu div:nth-child(5) {position: absolute; background: url('../../assets/img/activity/banner2/p5.png') no-repeat center; background-size: contain; width: 2.17rem; height: .91rem; top: 6.3rem;}
-.slide2 .piaofu div:nth-child(6) {position: absolute; background: url('../../assets/img/activity/banner2/p6.png') no-repeat center; background-size: contain; width: 2.38rem; height: .81rem; top: 6.3rem;}
+.slide2 .piaofu {position: absolute; width: 100%; top: 6.5rem; left: 0;}
+.slide2 .piaofu .swiper-wrapper {-webkit-transition-timing-function: linear; -moz-transition-timing-function: linear; -ms-transition-timing-function: linear; -o-transition-timing-function: linear; transition-timing-function: linear;}
+.slide2 .piaofu .p1 {background: url('../../assets/img/activity/banner2/p1.png') no-repeat center; background-size: contain; width: 100%; height: .9rem;}
+.slide2 .piaofu .p2 {background: url('../../assets/img/activity/banner2/p2.png') no-repeat center; background-size: contain; width: 100%; height: .83rem;}
+.slide2 .piaofu .p3 {background: url('../../assets/img/activity/banner2/p3.png') no-repeat center; background-size: contain; width: 100%; height: .81rem;}
+.slide2 .piaofu .p4 {background: url('../../assets/img/activity/banner2/p4.png') no-repeat center; background-size: contain; width: 100%; height: .81rem;}
+.slide2 .piaofu .p5 {background: url('../../assets/img/activity/banner2/p5.png') no-repeat center; background-size: contain; width: 100%; height: .91rem;}
+.slide2 .piaofu .p6 {background: url('../../assets/img/activity/banner2/p6.png') no-repeat center; background-size: contain; width: 100%; height: .81rem;}
 /* slide3 */ 
 .slide3 .biaoti {position: absolute; width: 4.81rem; height: 1.24rem; background: url('../../assets/img/activity/banner3/biaoti.png') no-repeat center; background-size: contain; left: 1.18rem; top: .58rem;}
 .slide3 .zhaomu {position: absolute; width: 4.2rem; height: .8rem; background: url('../../assets/img/activity/banner3/zhaomu.png') no-repeat center; background-size: contain; left: 1.65rem; top: 2.54rem; color: #9EE4FF; font-size: .4rem; text-align: center; line-height: .8rem;}
@@ -404,7 +399,7 @@ export default {
 .slide3 .wenzi .huizhang {position: absolute; width: 1.17rem; height: 1.34rem; left: 3.87rem; top: 0; background: url('../../assets/img/activity/banner3/huizhang.png') no-repeat center; background-size: contain;}
 .slide3 .wenzi ul li {font-size: .24rem; color: #50C7FF; margin-top: .2rem; margin-left: .29rem; margin-bottom: .29rem; background: url('../../assets/img/activity/banner3/tuoyuan1.png') no-repeat left center; padding-left: .25rem; background-size: .16rem;}
 .slide3 .wenzi ul li:nth-child(3) {background: url('../../assets/img/activity/banner3/tuoyuan2.png') no-repeat left center; font-size: .24rem; color: #9EE4FF; background-size: .18rem;}
-.slide3 .xianzhi {position: absolute; left: .79rem; top: 7.4rem; color: #50C7FF; font-size: .22rem;}
+.slide3 .xianzhi {position: absolute; top: 7.4rem; color: #50C7FF; font-size: .22rem; width: 100%; text-align: center;}
 /* slide4 */ 
 .slide4 .wenzi div {position: absolute;}
 .slide4 .wenzi .biaoti {color: #47CFEC; font-size: .3rem; top: 1.04rem;}

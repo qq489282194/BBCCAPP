@@ -1,6 +1,6 @@
 <template>
-  <div class="aindex">
-    <Aheader></Aheader>
+  <div class="aindex" ref="aindex">
+    <Aheader :headerShow="headerShow"></Aheader>
     <router-view></router-view>
   </div>
 </template>
@@ -8,14 +8,22 @@
 import Aheader from './Aheader'
 export default {
   data() {
-    return {}
+    return {
+      headerShow: true
+    }
   },
   components: {
     Aheader
+  },
+  mounted() {
+    if (location.href.indexOf('abysharer') != -1) {
+      this.headerShow = false
+      this.$refs.aindex.style.paddingTop = 0
+    }
   }
 }
 </script>
 <style lang="css" scoped>
-.aindex {padding-top: 1.1rem; width: 100%; height: 100%; overflow: hidden;}
+.aindex {padding-top: 1.1rem; width: 100%; height: 100%;}
 </style>
 

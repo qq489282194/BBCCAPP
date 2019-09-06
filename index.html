@@ -4,15 +4,19 @@
   <meta charset="utf-8">
   <meta name ="viewport" content ="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=yes"/>
   <title>美胸汇</title>
   <script>
+    var html = document.documentElement;
+    var dpr = window.devicePixelRatio;
+    var scale = 1/dpr;
     //屏幕适应
     (function (win, doc) {
       if (!win.addEventListener) return;
       function setFont() {
-        var html = document.documentElement;
         var k = 750;
         html.style.fontSize = html.clientWidth / k * 100 + "px";
+        // html.style.fontSize = (1/Math.floor(dpr)) * 100 + "px";
       }
       setFont();
       setTimeout(function () {
@@ -30,7 +34,7 @@
   function gotoBack() {
     window.JsToJava.finishWeb();
   }
-
+  // console.log(1111, window.wxjs_is_wkwebview)
   function reloadWeb() {
     window.location.reload();
   }

@@ -81,17 +81,29 @@
     },
     methods:{
       loadCmi(){
-        USER_API.queryCmShare(this.userId).then(data => {
+        USER_API.getShareFriendInfo(this.userId).then(data => {
           if(data){
             this.dataList = data;
           }
         })
       },
+      addFriend(){
+        let params = {
+          shareUserId : this.userId
+        }
+        USER_API.addShareFriend(params).then(data => {
+          if(data){
+            this.loadCmi()
+          }
+        })
+      },
       shareFun(type,typeNumber){
+        this.addFriend()
         let title = "分享赚C米！大家都在玩！";
         let description = "一起分享吧！";
         let imgSrc = 'https://oss.meibbc.com/BeautifyBreast/logo/logo.png';
-        let hostUrl ="http://app.meibbc.com/BeautifyBreast/app/registerv2/register.html?userId="+this.userId;
+        // let hostUrl ="http://app.meibbc.com/BeautifyBreast/app/registerv2/register.html?userId="+this.userId;
+        let hostUrl ="http://tapp.meibbc.com/BeautifyBreast/app/registerv2/register.html?userId="+this.userId;
         let activityId = "";
         this._system_shareTo(title,description,imgSrc,hostUrl,"",activityId,type);
       },

@@ -1,78 +1,38 @@
 <template>
   <div class="haowuList">
-    <div class="two-goods-cell">
-      <div class="two-goods-cell-img">
-        <img v-lazy="url" :src="url" alt="">
-      </div>
-      <div class="two-goods-cell-bottoms">
-        <div class="price-tags">
-          <span>￥<span class="price">789</span></span>
-          <span style="color: #999;">10人付款</span>
+    <ul>
+      <li v-for="item in goodsList" :key="item.goods_id" @click="MIXINToDetailShops(item.goods_id,'0','5')">
+        <div class="haowuImg"><img :src="item.thumbnail" alt=""></div>
+        <div class="haowuCon">
+          <div class="title">{{ item.name }}</div>
+          <div class="num">月销量{{ item.buy_count }}</div>
+          <div class="price">￥<span>{{ item.price.toFixed(2) }}</span><span>￥{{ item.mkt_price }}</span><span></span></div>
         </div>
-        <!-- <div class="buy-btn" @click.stop="toBuy(item.goods_id)">立即购买</div> -->
-        <div class="buy-btn">立即购买</div>
-      </div>
-    </div>
-    <div class="two-goods-cell">
-      <div class="two-goods-cell-img">
-        <img v-lazy="url" :src="url" alt="">
-      </div>
-      <div class="two-goods-cell-bottoms">
-        <div class="price-tags">
-          <span>￥<span class="price">789</span></span>
-          <span style="color: #999;">10人付款</span>
-        </div>
-        <!-- <div class="buy-btn" @click.stop="toBuy(item.goods_id)">立即购买</div> -->
-        <div class="buy-btn">立即购买</div>
-      </div>
-    </div>
-    <div class="two-goods-cell">
-      <div class="two-goods-cell-img">
-        <img v-lazy="url" :src="url" alt="">
-      </div>
-      <div class="two-goods-cell-bottoms">
-        <div class="price-tags">
-          <span>￥<span class="price">789</span></span>
-          <span style="color: #999;">10人付款</span>
-        </div>
-        <!-- <div class="buy-btn" @click.stop="toBuy(item.goods_id)">立即购买</div> -->
-        <div class="buy-btn">立即购买</div>
-      </div>
-    </div>
-    
+      </li>
+    </ul>
   </div>
 </template>
 <script>
 export default {
+  props: ['goodsList'],
   data() {
     return {
-      url: require('../../assets/img/mymember/swiper-one.png')
+
     }
   }
 }
 </script>
 <style lang="css" scoped>
-.haowuList {display: flex; padding-left: 5%;}
-.two-goods-cell{width: 32%; background: #fff;  margin-right: .375rem; margin-bottom: .375rem;
- box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden;}
-.two-goods-cell:nth-child(3n){margin-right: 0;}
-.two-goods-cell-img{
-  width: 100%; flex: 1;
-}
-.two-goods-cell img{ width: 100%; height: 100%;}
-.two-goods-cell-bottoms{ flex: 1; height: 50%; padding: .275rem; box-sizing: border-box;}
-.two-goods-cell-bottoms p { font-size: 11px; color: #242424; display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
-overflow: hidden; margin-bottom:6%; height: 1.875rem;}
-.two-goods-cell-bottoms .price-tags { display: flex; font-size: 9px; margin-bottom: 6%; display: flex;
-justify-content: space-between; align-items: center;}
-.buy-btn{ width: 100%; height: .4rem; background: #FF2F5D; text-align: center; line-height: .4rem; font-size: .2rem; color: #fff; border-radius: .3125rem;}
-.two-goods-cell-bottoms .price-tags span{ color: #FF2F5D;}
-.price-tags .price span{ font-size: 14px;}
-.two-goods-more{ text-align: center; height: 1.875rem;line-height: 1.875rem;  font-size: .875rem;
- background: #fff; border-radius: .3125rem; color: #242424;}
- .two-goods-nomore {text-align: center; height: 1.875rem; line-height: 1.875rem; color: #fff;  font-size: .875rem;}
-.activity_name{ background: linear-gradient( #ff0337,#f65f1c); padding: 0 3px;
- box-sizing: border-box; border-radius: 3px; color: #fff;}
+.haowuList {padding: 0 .24rem;}
+.haowuList li {border-bottom: .01rem solid #E6E7E8; padding: .31rem 0;}
+.haowuList li::after {content: ""; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden;}
+.haowuImg {width: 1.88rem; height: 1.88rem; border-radius: .1rem; float: left; margin-right: .26rem;}
+.haowuImg img {width: 100%; height: 100%;}
+.haowuCon {float: left; width: 4.5rem}
+.haowuCon .title {font-size: .28rem; color: #03D7B1; margin-bottom: .25rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;}
+.haowuCon .num {font-size: .22rem; color: #163354; margin-bottom: .25rem;}
+.haowuCon .price {font-size: .27rem; color: #163354;}
+.haowuCon .price span:nth-child(1) {font-size: .48rem; color: #03D7B1; margin-right: .2rem;}
+.haowuCon .price span:nth-child(2) {text-decoration: line-through;}
+.haowuCon .price span:nth-child(3) {display: inline-block; width: .42rem; height: .38rem; background: url('../../assets/img/upgrade/gouwuche1.png') no-repeat center; background-size: cover;float: right;margin-top: .2rem;}
 </style>

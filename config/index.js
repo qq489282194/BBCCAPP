@@ -18,7 +18,7 @@ module.exports = {
     proxyTable: {
       '/bbc-information':{
         // target:'http://user.meibbc.com/',
-        // target:'http://testuser.meibbc.com/dev/',
+        // target:'http://napp.meibbc.com/dev/',
         // target:'http://192.168.0.41:8081/dev/',
         // test 以下
         // target:'http://nfz.meibbc.com',
@@ -29,9 +29,11 @@ module.exports = {
         }
       },
       '/bbc':{
+        // target:'http://napp.meibbc.com/',
+        // 正式
         // target:'http://user.meibbc.com/',
         // 预发布
-        // target:'http://papp.meibbc.com/dev/',
+        // target:'http://papp.meibbc.com/',
         // 测试
         target:'http://testuser.meibbc.com/dev/',
         // target:'http://192.168.0.41:8081/dev/',
@@ -44,6 +46,8 @@ module.exports = {
       },
       '/meibbcapp':{
         // 以下test
+        // target:'http://napp.meibbc.com/',
+        // 正式
         // 预发布
         // target:'http://papp.meibbc.com/',
         // 测试
@@ -56,6 +60,8 @@ module.exports = {
       },
       '/message':{
         // 以下test
+        // target:'http://napp.meibbc.com/',
+        // 正式
         // 预发布
         // target:'http://papp.meibbc.com/',
         // 测试
@@ -67,6 +73,19 @@ module.exports = {
           '^/message':''
         }
       },
+
+
+      '/bbc-tapp':{
+        // 以下test
+        // target:'http://tapp.meibbc.com/',
+        target:'http://appmini.meibbc.com/',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/bbc-tapp':''
+        }
+      },
+
+
       '/cmi-other':{
         // test以下
         // target:'http://120.79.144.227:8050/',
@@ -80,21 +99,22 @@ module.exports = {
         pathRewrite:{
           '^/cmi-other':''
         }
-      },
-      
+      },      
       '/api':{
         target: 'http://192.168.0.26:8081/api',
         changeOrigin: true,
         pathRewrite:{
           '^/api': ''
         }
-      }
+      },
     },
 
     // Various Dev Server settings
     // host: '192.168.0.55', // can be overwritten by process.env.HOST
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    // host: '192.168.0.113', // can be overwritten by process.env.HOST
+    host: '192.168.0.96', // can be overwritten by process.env.HOST
+    // host: 'localhost', // can be overwritten by process.env.HOST
+    port: "2001", // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -123,6 +143,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../bbc-personal'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/bbc-personal/',
+    // assetsPublicPath: './',
 
     /**
      * Source Maps

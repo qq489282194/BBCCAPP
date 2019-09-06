@@ -28,7 +28,7 @@
           <p style="margin-top: .4rem">{{giveForm.cmNum}}<img src="../../assets/img/cmi/cmi.png"/></p>
           <p class="text-tip"><span>转赠给</span><span>{{niceName}}</span></p>
           <p class="text-tip"><span>时间</span><span>{{time}}</span></p>
-          <button @click="toBcckSecond('cmi-index')" class="give-button">完成</button>
+          <button @click="toBcckSecond('cmi-newindex1')" class="give-button">完成</button>
         </div>
 
       </div>

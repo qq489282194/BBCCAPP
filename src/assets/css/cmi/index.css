@@ -3,7 +3,7 @@ header{background: url("../../img/cmi/header.png");background-size: 100% 100%}
 display: block;margin-right: .35rem;margin-top: .2rem;float: right}
 .cmi-header-modules{height: 4.44rem;position: relative;z-index: 0;background: url("../../img/cmi/header-top.png");
   background-size: 100% 100%;position: relative}
-.bbc-index{background-color: #F2F2F2}
+.bbc-index{background-color: #F2F2F2;}
 .sign-modules{position: absolute;left: 0;right: 0;margin: auto;width: 1.9rem;height: 1.9rem;background-color: rgba(255,184,199,.8);
   border-radius: 50%;z-index: 1;top: .57rem}
 .sign-in-button{position: absolute;left: 0;right: 0;margin: auto;width: 1.7rem;height: 1.7rem;background-color: white;
@@ -20,11 +20,12 @@ margin-top: -1.5rem}
 .datetime-modules li .active.ago .datetime-radius{opacity: .3}
 .datetime-modules li .active:after{background: url("../../img/cmi/checkin.png");background-size: 100% 100%;width: .2rem;height: .2rem;
 content: "";display: block;position: absolute;right: .2rem;top: .35rem}
-.cmi-common-modules{width: 6.86rem;margin: auto;background: white;border-radius: 10px;}
+.cmi-common-modules{width: 6.86rem;margin: auto;background: white;border-radius: 10px; position: relative;}
 .cmi-common-modules .cmi-common-title{color: #333333;font-size: .32rem;padding: .25rem 0;width: calc(100% - .6rem);
   border-bottom: 1px solid #E5E5E5;margin: 0 .3rem;padding-left: .2rem;position: relative}
 .cmi-common-modules .cmi-common-title:after{display: block;content: "";background-color: #30DB8E;width: .1rem;height: .1rem;
 border-radius: 50%;left: 0;position: absolute;top: 0;bottom: 0;margin: auto}
+.cmi-common-modules ul {margin-left: .46rem;}
 .cmi-common-modules ul li{float: left;width: calc(100% /4);text-align: center;padding-bottom: .43rem;margin-top: .28rem}
 .cmi-common-modules ul li img{width: .65rem;height: .65rem;display: block;margin: auto}
 .cmi-common-modules ul li p{text-align: center;color: #666666;font-size: .24rem;margin-top: .21rem}

@@ -3,12 +3,14 @@ import axios from "axios"
 import store from "@/store/index"
 
 const service = axios.create({
-  baseURL:  "http://testuser.meibbc.com/dev",
+  baseURL:  "/bbc",
+  // baseURL:  "http://testuser.meibbc.com/dev",
   // 预发布
   // baseURL:  "http://papp.meibbc.com/",
   // 测试
   // baseURL:  "http://tapp.meibbc.com/",
   // baseURL:  "http://39.108.143.243:8787",
+  // baseURL:  "http://192.168.0.26:7002",
   timeout: 15000,
 })
 
@@ -16,8 +18,9 @@ const service = axios.create({
 service.interceptors.request.use(function (config) {
   // let token = sessionStorage.getItem("token");
   let token = store.state.token
+  let serverVersion = store.state.serverVersion
   config.headers.common['Authorization'] = token;
-  config.headers.common['serverVersion'] = 2;
+  config.headers.common['serverVersion'] = serverVersion;
   // 在发送请求之前做些什么
   return config;
 }, function (error) {

@@ -8,10 +8,10 @@ header{width: 0}
 .header-top .sign p{display: inline-block}
 .header-top .sign p:nth-child(1){padding-top:.08rem;position:absolute;top:-.1rem;left:-.56rem;height: .7rem;width: .7rem;border-radius: 50%;background: linear-gradient(#FFF6E0,#FFF0CA);text-align: center;line-height: .7rem;margin-right: -.2rem;}
 .header-top .sign p:nth-child(2){height: .5rem;background: linear-gradient(#FFF6E0,#FFF0CA);line-height: .5rem;padding: 0 .16rem;color: #F52839;font-size: .22rem;}
-.header-message{float: left;margin-left: .34rem;margin-top: .38rem;}
+.header-message{float: left;margin-left: .34rem;margin-top: .1rem;}
 .header-message p{display: inline-block;font-size: .4rem;font-weight: bold;color: white;margin-bottom: .1rem;margin-right: .1rem;}
-.header-message span{width: 1.2rem;height: .32rem;line-height: .32rem;text-align: center;background-color: white;
-border-radius: 16px;color: black;font-size: .24rem;display: inline-block}
+.header-message span{width: 1.2rem;height: .32rem;line-height: .32rem;text-align: center;background-color: #D7475C;
+border-radius: 16px;color: white;font-size: .24rem;display: block;}
 .header-message .progress{border: 2px solid white;border-radius: .2rem;position: relative;}
 .header-modules a{margin-right: .24rem}
 .header-modules .header{height:.52rem;}
@@ -24,14 +24,14 @@ border-radius: 16px;color: black;font-size: .24rem;display: inline-block}
 .header-bottom li p:nth-child(2){font-size: .26rem}
 /* .header-bottom li+li:after{width: 1px;height: .22rem;background-color: white;position: absolute;left: 0;top: .3rem;content: ""} */
 .menu-modules{position: absolute;top: 3.9rem;border-bottom:none;}
-.menu-modules ul{width: 6.8rem;}
+.menu-modules ul{width: 6.8rem;margin-left: -.3rem;}
 .menu-modules li{float: left;text-align: center;width: calc(100% / 5);}
-.menu-modules li i{display: block;}
+/* .menu-modules li i{display: block;} */
 .menu-modules li img{width: .7rem;height: .7rem;display: block;margin: auto;}
-.menu-modules li p{text-align: left;margin-top: .12rem;margin-bottom: .4rem;color: #666666;font-size: .26rem}
+.menu-modules li p{text-align: center;margin-top: .12rem;margin-bottom: .4rem;color: #666666;font-size: .26rem}
 .menu-modules-bottom{margin-bottom: 0}
 .banner-modules{width: 7.02rem;display: block;margin: auto;
-  background-size: 100% 100%;margin-top: .74rem}
+  background-size: 100% 100%;margin-top: .94rem}
 .integral-modules{}
 .integral-modules>p{font-size: .34rem;font-weight: bold;color: #333}
 .integral-modules .numdata li p:nth-child(2){font-size: .44rem;font-weight: 400;color: #484F78;font-weight: Medium;}
@@ -84,11 +84,14 @@ height: .1rem;background-color: #FC2C10}
 .icon-after-sales { width: .6rem; height: .6rem; background: url("../../img/personal/yuyue_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-shop { width: .6rem; height: .6rem; background: url("../../img/home/icon/shop.png");background-size: 100% 100% }
 .icon-information { width: .6rem; height: .6rem; background: url("../../img/personal/shoucang_grzx_icon@2x.png");background-size: 100% 100% }
+.icon-shangjiayaoyue { width: .6rem; height: .6rem; background: url("../../img/personal/shangjiayaoyue_icon@2x.png");background-size: 100% 100% }
 .icon-integral { width: .6rem; height: .6rem; background: url("../../img/personal/jifen_grzx_icon@3x.png");background-size: 100% 100% }
 .icon-praise { width: .6rem; height: .6rem; background: url("../../img/personal/zanguo_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-answers { width: .6rem; height: .6rem; background: url("../../img/personal/wenda_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-footprint { width: .6rem; height: .6rem; background: url("../../img/personal/zuji_grzx_icon@2x.png");background-size: 100% 100% }
-.icon-invite { width: .6rem; height: .6rem; background: url("../../img/personal/yaoqing_grzx_icon@2x.png");background-size: 100% 100% }
+.icon-invite { width: .6rem; height: .6rem; background: url("../../img/personal/yaoqinggeren-icon@2x@3x.png");background-size: 100% 100% }
+.icon-shangjia { width: .6rem; height: .6rem; background: url("../../img/personal/yaoyueshangjia-icon@3x.png");background-size: 100% 100% }
+.icon-shouyi { width: .6rem; height: .6rem; background: url("../../img/personal/shouyizhongxin-icon@3x.png");background-size: 100% 100% }
 .icon-deserve { width: .6rem; height: .6rem; background: url("../../img/personal/zhidetui_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-member { width: .6rem; height: .6rem; background: url("../../img/personal/wodehuiyuan_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-cmishop { width: .6rem; height: .6rem; background: url("../../img/personal/Cmishangcheng_grzx_icon@2x.png");background-size: 100% 100% }
@@ -100,7 +103,10 @@ height: .1rem;background-color: #FC2C10}
 .icon-control { width: .6rem; height: .6rem; background: url("../../img/personal/kongzhiqi_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-service { width: .6rem; height: .6rem; background: url("../../img/personal/kefu_grzx_icon@2x.png");background-size: 100% 100% }
 .icon-after { width: .6rem; height: .6rem; background: url("../../img/personal/shouhou_grzx_icon@2x.png");background-size: 100% 100% }
-.icon-vip { width: .32rem; height: .32rem; background: url("../../img/personal/pthy_grzx_icon@3x.png");background-size: 100% 100% }
+.icon-role1 { width: .42rem; height: .42rem; background: url("../../img/personal/role1.png");background-size: 100% 100%;float: right;margin-top: .04rem; }
+.icon-role2 { width: .42rem; height: .42rem; background: url("../../img/personal/role2.png");background-size: 100% 100%;float: right;margin-top: .04rem; }
+.icon-role3 { width: .42rem; height: .42rem; background: url("../../img/personal/role3.png");background-size: 100% 100%;float: right;margin-top: .04rem; }
+.icon-role4 { width: .42rem; height: .42rem; background: url("../../img/personal/role4.png");background-size: 100% 100%;float: right;margin-top: .04rem; }
 .icon-gift { width: .5rem; height: .5rem; background: url("../../img/personal/qiandao_grzx_icon@3x.png");background-size: 100% 100% }
 .icon-money { width: .6rem; height: .6rem; background: url("../../img/personal/qianbao_grzx_icon@3x.png");background-size: 100% 100% }
 

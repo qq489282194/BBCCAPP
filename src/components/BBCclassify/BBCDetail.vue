@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div class="nav">
+    <div class='nav'>
         <ul>
-            <li @click="backRouter()">
+            <li @click="closeHtml()">
                 <i class="icon-back"></i>
             </li>
+            <!-- <topcomom></topcomom> -->
             <li @click="isShare = true">
                 <i class="icon-share"></i>
             </li>
         </ul>
     </div>
-    <div class="detail-header">
+    
+    <div class='detail-header'>
       <p class="title" v-html="article.title"></p>
     </div>
     <div class="look">
@@ -18,7 +20,7 @@
       <i class="icon-browse"></i>
       <span v-html="article.readCount">0</span>
     </div>
-    <div class="detail-main" v-html="article.content">
+    <div v-if="article.content" class="detail-main" v-html="article.content">
       <!-- <p>💢说到美容仪，现在家里至少十几个了吧，但都不是自己买的，你们猜猜都是哪来的？😎哈哈，认真看今天的贴子，老规矩在互动里抽一个宝宝送个美容仪🎁给你！我这么喜欢送东西，上辈子肯定是个男人，宠死我家女人的那种，愿嫁的举手🙋，</p>
       <p>💢先说正题啊，大部分宝宝其实分不清各种仪器，每次问我“Luna和Refa哪个好用？”“Tripollar和雅萌我应该买哪一个呀？”我真的不知怎么回答！不同年龄、不同肤质、不同问题、不同的经济能力..........</p>
       <p>💢但家用美容仪以保养预防为主，效果不可能像医院的项目立竿见影，但对皮肤无损伤，较安全。</p>
@@ -39,7 +41,10 @@
       <p>💌黄金棒没有任何科技含量，不用浪费钱。</p>
       <p>来吧！做我的女人美容仪我送你！这后宫佳丽三千，要好好想想选哪个？快来让我爱上你！</p> -->
     </div>
-
+    <div v-else class="plaimg">
+      <img src="../../assets/img/perch.png" alt="">
+      <!-- <img src="../../assets/img/perch.png" alt=""> -->
+    </div>
     <div class="common-shadow-modules" @click="isShare = false"  v-show="isShare">
     </div>
     <div class="footer-share-modules" v-show="isShare">
@@ -73,6 +78,7 @@
 
 import * as USER_API from '@/api/user'
 import { debug } from 'util'
+import topcomom from '@/components/common/Topcomomnew'
 
 export default {
     data(){
@@ -87,13 +93,19 @@ export default {
                 title: "",
                 updateTime: ""
             },
+            ipx:0,
             isShare:false,
         }
+    },
+    components: {
+        topcomom
     },
     mounted(){
         // 获取服务ID
         this.getQueryVariable('serveId')
+        // this.widthHeight()
         this.loadPostUserByUserid()
+        
     },
     methods:{
         // 获取文章
@@ -130,17 +142,31 @@ export default {
               }
           }
       },
+      // 兼容ipx刘海屏
+      widthHeight(){
+        let wd = window.screen.width
+        let hg = window.screen.height
+        if(hg/wd > 2.16){
+          this.ipx = 1
+        }else{
+          this.ipx = 0
+        }
+        // console.log(this.ipx,wd,hg)
+      }
     }
 }
 </script>
 
 
 <style type="text/scss" scoped>
-.nav{height: 1.28rem;border-bottom: .01rem solid #CFCFCF;position: fixed;top: 0;left: 0;right: 0;background: white;z-index: 9;}
+/* .nav{height: 1.28rem;border-bottom: .01rem solid #CFCFCF;position: fixed;top: 0;left: 0;right: 0;background: white;z-index: 9;} */
+.nav{height: 1.28rem;border-bottom: .01rem solid #CFCFCF;background: white;z-index: 9;}
+.nav-ipx{height: 1.28rem;border-bottom: .01rem solid #CFCFCF;position: fixed;top: -.88rem;left: 0;right: 0;background: white;z-index: 9;}
 .nav ul li:nth-child(1){float: left;margin-left: .32rem;margin-top: .72rem;}
 .nav ul li:nth-child(2){float: right;margin-right: .24rem;margin-top: .62rem;}
-.detail-header{margin-top: 1.52rem;}
-.detail-header .title{font-size: .36rem;color: #333333;margin-left: .24rem;margin-top: .26rem;}
+/* .detail-header{margin-top: 1.52rem;} */
+.detail-header-ipx{margin-top: .64rem;}
+.title{font-size: .36rem;color: #333333;margin-left: .24rem;margin-top: .26rem;}
 .look{font-size: .26rem;color: #999999;position: relative; margin: .04rem 0 .04rem .24rem;}
 .look img{width: .32rem;height: .32rem;display: inline-block;}
 .look span{color: #999999;font-size: .26rem;position: absolute;left: .44rem;top: -.02rem;}

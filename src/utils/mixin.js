@@ -25,6 +25,7 @@ export default {
       }
       return dateTime;
     },
+   
     MIXINYearMonthDate(index,type){
       if(index == undefined || index == null){
         index = 0;
@@ -81,17 +82,62 @@ export default {
         window.webkit.messageHandlers.toDetail.postMessage(params)
       }
     },
-    MIXINGetLocation(){
+    MIXINToDetailShops(id,type,member_goods_type){
       var u = navigator.userAgent, app = navigator.appVersion;
       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      // let params = phone
+      let params = {"modelId":id,"type":type,"member_goods_type":member_goods_type};
       if(isAndroid){
-        window.JsToJava.getLocation();
+        params = JSON.stringify(params)
+        window.JsToJava.toDetail(params);
       }else{
-        window.webkit.messageHandlers.getLocation.postMessage()
+        window.webkit.messageHandlers.toDetail.postMessage(params)
       }
     },
+    MIXINToDetailPersonal(type,userId,userName,userIcon){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = {"type":type,"userId":userId,"userName":userName,"userIcon":userIcon};
+      if(isAndroid){
+        console.log('跳个人空间',params)
+        params = JSON.stringify(params)
+        window.JsToJava.toDetail(params);
+      }else{
+        window.webkit.messageHandlers.toDetail.postMessage(params)
+      }
+    },
+    // MIXINGetLocation(cb){
+    //   var u = navigator.userAgent, app = navigator.appVersion;
+    //   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+    //   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    //   // let params = phone
+    //   if(isAndroid){
+    //     // window.JsToJava.getLocation();
+    //     // let location = window.JsToJava.getLocation()
+    //     // cb&&cb(location)
+    //     let location = window.JsToJava.getLocation()
+    //     cb&&cb(location)
+    //   }else{
+    //     // {}必传
+    //     window.webkit.messageHandlers.getLocation.postMessage({})
+    //   }
+    // },
+
+    MIXINGetLocation() {
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if(isAndroid){
+        window.JsToJava.getLocation();
+        // let location = window.JsToJava.getLocation()
+        // cb&&cb(location)
+      }else{
+        window.webkit.messageHandlers.getLocation.postMessage({});
+      }
+    },
+    
+    
     MIXINSendCallPhone(phone){
       var u = navigator.userAgent, app = navigator.appVersion;
       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
@@ -124,6 +170,18 @@ export default {
         window.JsToJava.goToShopAppointment(params);
       }else{
         window.webkit.messageHandlers.goToShopAppointment.postMessage(params)
+      }
+    },
+    MIXINopenMapNavi(slat,slon,sname,dlat,dlon,dname){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = {"slat":slat,"slon":slon,"sname":sname,"dlat":dlat,"dlon":dlon,"dname":dname};
+      if(isAndroid){
+        params = JSON.stringify(params)
+        window.JsToJava.openMapNavi(params);
+      }else{
+        window.webkit.messageHandlers.openMapNavi.postMessage(params)
       }
     },
     MIXINToTest(id,type){
@@ -199,8 +257,8 @@ export default {
       if(isAndroid){
         window.JsToJava.back();
       }else{
-        // this.$router.back(-1)
-        window.webkit.messageHandlers.finishWeb.postMessage({});
+        this.$router.back(-1)
+        // window.webkit.messageHandlers.finishWeb.postMessage({});
       }
       // this.$router.go(-1)
     },
@@ -215,6 +273,18 @@ export default {
         window.JsToJava.back();
       }else{
         this.$router.push({"name":name});
+      }
+    },
+    MIXINToDetailShop(id,type,member_goods_type){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      let params = {"modelId":id,"type":type,"member_goods_type":member_goods_type};
+      if(isAndroid){
+        params = JSON.stringify(params)
+        window.JsToJava.toTest(params);
+      }else{
+        window.webkit.messageHandlers.toTest.postMessage(params)
       }
     },
     GetUrlParam(paraName){
@@ -236,6 +306,16 @@ export default {
       }
       else {
         return "";
+      }
+    },
+    getVersion() {
+      var u = navigator.userAgent, app = navigator.appVersion;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if(isAndroid){
+        store.commit("changeVersion",window.JsToJava.getVersion());
+      }else{
+        window.webkit.messageHandlers.getVersion.postMessage({});
       }
     },
   }

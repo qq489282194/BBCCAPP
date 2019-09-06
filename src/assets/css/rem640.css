@@ -17,7 +17,8 @@ a{color: inherit;
 input,select,textarea{-webkit-appearance: none;}
 body {-webkit-overflow-scrolling: touch;}
 html{height: 100%}
-body,#app,#login{height:100%}
+/* body,#app,#login{height:100%} */
+#login{height:100%}
 .lCenter{left: 50%; -webkit-transform:translateX(-50%);position:absolute;}
 .lcenter{left: 50%; -webkit-transform:translateX(-50%);position:absolute;}
 .vCenter{top: 50%; -webkit-transform:translateY(-50%);position:absolute;}
@@ -32,13 +33,22 @@ body,#app,#login{height:100%}
 .tac{
     text-align: center;}
 
-*{box-sizing: border-box;-webkit-tap-highlight-color:transparent;}
+* {
+box-sizing: border-box;
+-webkit-tap-highlight-color:transparent;
+-webkit-touch-callout:all;
+-webkit-user-select:all;
+-khtml-user-select:all;
+-moz-user-select:all;
+-ms-user-select:all;
+user-select:all;
+}
 img{-webkit-touch-callout:none;-webkit-user-select: none;-moz-user-select: none;-webkit-user-select:none;-o-user-select:none;user-select:none;}
 button{border: none;outline: none}
 
 input{outline: none}
 
-body{color: #303030}
+body{color: #303030;}
 
 footer:after,.record-modules-div ul:after,.packer-ul li a:after,.deposit-cash-modules:after,.deposit-location-modules li:after,
 .deposit-location-content:after,.deposit-detail li:after,.share-modules-div ul:after,.bottom-list-modules:after,.key-input:after{clear: both;display: block;content: "";}

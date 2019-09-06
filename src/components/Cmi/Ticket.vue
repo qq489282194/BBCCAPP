@@ -151,13 +151,14 @@
         console.log(this.path)
         this.dialogType = 0
         //1、cmi任务进来的，跳转至梦想官主页
-        if(this.path == 'cmi-index'){
-          // window.location.href = 'http://bbccmxgshop.meibbc.com/#/Featuredgood'
-          window.location.href ='http://appmini.meibbc.com/bbccmxgshop/#/Featuredgood'
-          // window.location.href = "http://testh5shop.meibbc.com/#/Featuredgood"
-        } else{
-          this.$router.go(-1)
-        }
+        window.location.href ='http://appmini.meibbc.com/bbccmxgshop/#/Featuredgood'
+        // if(this.path == 'cmi-index'){
+        //   // window.location.href = 'http://bbccmxgshop.meibbc.com/#/Featuredgood'
+        //   window.location.href ='http://appmini.meibbc.com/bbccmxgshop/#/Featuredgood'
+        //   // window.location.href = "http://testh5shop.meibbc.com/#/Featuredgood"
+        // } else{
+        //   this.$router.go(-1)
+        // }
         //2、我的主页
         // if(this.dreamPath == 'home') {
         //   this.$router.go(-1)

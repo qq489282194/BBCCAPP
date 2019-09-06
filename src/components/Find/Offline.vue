@@ -16,12 +16,12 @@
     @change="onChange" 
     :width='375' 
     :autoplay="2000" 
-    style="overflow:hidden;height:5rem;" 
+    style="height:5rem;margin-bottom: .28rem;" 
     :loop="true" 
     v-if="shopDetail.shop_banner"
     >
         <van-swipe-item v-for="item in img_urls" :key="item.index" style="display:inline-block;">
-            <img :src="item" alt="" style="height:5rem;">
+            <img :src="item" alt="" style="height:5rem;width:110%;">
         </van-swipe-item>
         <div class="imgNum" slot="indicator" v-if="img_urls">
             {{ current + 1 }}/{{img_urls.length}}
@@ -31,12 +31,12 @@
     <van-swipe 
     @change="onChange" 
     :width='375' 
-    style="overflow:hidden;height:5rem;" 
+    style="height:5rem;margin-bottom: .28rem;" 
     :loop="false" 
     v-else
     >
         <van-swipe-item style="display:inline-block;">
-            <img src="../../assets/img/perch.png" alt="" style="height:5rem;">
+            <img src="../../assets/img/perch.png" alt="" style="height:5rem;width:110%;">
         </van-swipe-item>
         <div class="imgNum" slot="indicator">
             {{ current + 1 }}/{{1}}
@@ -46,40 +46,30 @@
     <!-- <p class="backroute">&lt;</p> -->
     <i class="icon-back backroute" @click="backRouter()"></i>
 
-    <div class="shop">
-        <div class="shop-title">
+    <div class="shopData">
+        <img v-if="shopDetail.shop_logo" :src="shopDetail.shop_logo" alt="">
+        <i v-else class="icon icon-user"></i>
+        <div>
+            <p class="title" v-if="shopDetail.shop_name" v-html="shopDetail.shop_name">奈瑞儿美颜顶级豪华塑身旗舰店（东圃店）</p>
+        </div>
+        <!-- <p class="wire"></p> -->
+    </div>
+
+    <!-- <div class="ofshop">
+        <div class="ofshop-title">
             <div class="head">
                 <img v-if="shopDetail.shop_logo" :src="shopDetail.shop_logo" alt="">
                 <i v-else class="icon icon-user"></i>
             </div>
             <div>
                 <p class="title" v-if="shopDetail.shop_name" v-html="shopDetail.shop_name">奈瑞儿美颜顶级豪华塑身旗舰店（东圃店）</p>
-                <!-- <ul>
-                    <li style="margin-bottom:.3rem;">{{shopDetail.fans}}万粉丝</li>
-                    <li>共{{shopDetail.recomment_count}}位网友推荐</li>
-                </ul> -->
             </div>
-            <!-- <p class="attention" v-if="shopDetail.is_attention == 0" @click="getFocusSave()">+关注</p>
-            <p class="oldattention" v-else>已关注</p> -->
             <p style="clear:both"></p>
         </div>
-        <!-- <div class="rate ml26">
-          <i class="icon icon-ystar" v-for="item in shopDetail.allRate" :key="item.index"></i>
-          <i class="icon icon-star" v-if="greyRate"></i>
-          <i class="icon icon-bstar" v-for="item in shopDetail.minusRate" :key="item.index"></i>
-          <span class="grade">{{shopDetail.shop_score}}</span>
-          <div class="evaluate mr26">
-              <a href="#evaluate">
-                  <span>{{shopDetail.comment_count}}条评价 <i class="icon icon-right"></i></span>
-              </a>
-              <i></i>
-          </div>
-        </div> -->
         <div class="alltap ml26">
-            <!-- <span class="tap" v-for="item in shopDetail.service_labels" :key="item.index" v-html="item">高大上 18</span> -->
         </div>
         <p class="wire"></p>
-    </div>
+    </div> -->
 
     <div class="all">
         <div class="time ml26 mr26">
@@ -91,7 +81,7 @@
         <div class="message ml26 mr26">
             <div>
                 <!-- <p class="shop" v-html="shopDetail.shop_name">肤俊堂皮肤修复中心</p> -->
-                <p class="site" v-if="shopDetail.address" v-html="shopDetail.address">中山大道西1138号合生骏景广场A座1527室</p>
+                <p class="site" v-if="shopDetail.address" v-html="shopDetail.address" @click="MIXINopenMapNavi(site.lat,site.lon,site.locationDescribe,shopDetail.latitude,shopDetail.longitude,shopDetail.address)">中山大道西1138号合生骏景广场A座1527室</p>
                 <p class="rice" v-if="shopDetail.distance">
                     <!-- <img src="../../assets/img/offline/site.png" alt=""> -->
                     <i class="icon icon-site"></i>
@@ -174,6 +164,7 @@ export default {
         }
     },
     mounted(){
+        
         window.setLocation = this.setLocation
         this.MIXINGetLocation()
         // 获取店铺ID
@@ -219,7 +210,7 @@ export default {
                     this.img_urls = data.banner
                     this.phone = this.shopDetail.mobile
                     // debugger
-                    // console.log(this.phone)
+                    // console.log(data,'002')
                 }
             });
         },
@@ -249,7 +240,7 @@ export default {
         // 获取经纬度坐标
         setLocation(location) {
             // console.log('iso---location')
-            // console.log(location)
+            // console.log(location,'001')
             // console.log(typeof location)
             this.site = JSON.parse(location)
             this.getShopDetail()
@@ -264,25 +255,29 @@ export default {
 <style scoped>
 .nut-swiper{height: 5rem;}
 /* 店名模块 */
-.shop{margin-top: .28rem;}
-.shop .shop-title{margin: 0 .26rem;}
-.shop .shop-title .head{height: .88rem;width: .88rem;margin-right: .18rem;display: inline-block;border-radius: .44rem;}
-.shop .shop-title img{width: .88rem;height: .88rem;border-radius: 50%;}
-.shop .shop-title .title{font-size: .3rem;color: #2B2B2B;font-weight: bold;display: inline-block;}
-.shop .shop-title div{float: left;}
-.shop .shop-title p:nth-child(1){width: 5.8rem;}
-.shop .shop-title .attention{height: .46rem;background: #F63B75;border-radius: .24rem;float: right;padding: 0 .2rem;color: white;line-height: .46rem;margin-top: .2rem}
-.shop .shop-title .oldattention{height: .46rem;border-radius: .24rem;float: right;padding: 0 .2rem;color: #999999;line-height: .46rem;margin-top: .2rem;border: 1px solid #999999;}
-.shop .shop-title ul{margin-top: .03rem;}
-.shop .shop-title ul li{float: left;font-size: .24rem;color: #999999;}
-.shop .shop-title ul li:nth-child(1){margin-right: .3rem;}
-.shop .rate{margin-top: .24rem;margin-bottom: .26rem;}
-.shop .rate img{height: .32rem;width: .32rem;float: left;}
-.shop .rate .evaluate{float: right;}
-.shop .alltap{clear: both;margin-bottom: .28rem;}
-.shop .tap{height: .45rem;font-size: .26rem;color: #333333;padding: 0 .25rem;background: rgba(246, 59, 117, 0.1);border-radius: .22rem;line-height: .45rem;display: inline-block;margin-right: .2rem;}
-.shop .grade{display: inline-block;font-size: .32rem;color: #FF5858;font-weight: bold;margin-left: .06rem;}
+/* .shop{margin-top: .28rem;} */
+.ofshop .ofshop-title{padding: 0 .26rem;}
+.ofshop .ofshop-title .head{height: .88rem;width: .88rem;margin-right: .18rem;display: inline-block;border-radius: .44rem;}
+.ofshop .ofshop-title img{width: .88rem;height: .88rem;border-radius: 50%;}
+.ofshop .ofshop-title .title{font-size: .3rem;color: #2B2B2B;font-weight: bold;display: inline-block;}
+.ofshop .ofshop-title div{float: left;height: .88rem;line-height: .88rem;}
+.ofshop .ofshop-title p:nth-child(1){width: 5.8rem;line-height: 1;}
+.ofshop .ofshop-title .attention{height: .46rem;background: #F63B75;border-radius: .24rem;float: right;padding: 0 .2rem;color: white;line-height: .46rem;margin-top: .2rem}
+.ofshop .ofshop-title .oldattention{height: .46rem;border-radius: .24rem;float: right;padding: 0 .2rem;color: #999999;line-height: .46rem;margin-top: .2rem;border: 1px solid #999999;}
+.ofshop .ofshop-title ul{margin-top: .03rem;}
+.ofshop .ofshop-title ul li{float: left;font-size: .24rem;color: #999999;}
+.ofshop .ofshop-title ul li:nth-child(1){margin-right: .3rem;}
+.ofshop .rate{margin-top: .24rem;margin-bottom: .26rem;}
+.ofshop .rate img{height: .32rem;width: .32rem;float: left;}
+.ofshop .rate .evaluate{float: right;}
+.ofshop .alltap{margin-bottom: .28rem;}
+.ofshop .tap{height: .45rem;font-size: .26rem;color: #333333;padding: 0 .25rem;background: rgba(246, 59, 117, 0.1);border-radius: .22rem;line-height: .45rem;display: inline-block;margin-right: .2rem;}
+.ofshop .grade{display: inline-block;font-size: .32rem;color: #FF5858;font-weight: bold;margin-left: .06rem;}
 
+.shopData{padding: 0 .26rem .24rem .26rem;display: flex;border-bottom: .14rem solid #f2f2f2;}
+.shopData img{width: .88rem;height: .88rem;border-radius: 50%;float: left;}
+.shopData div{height: .88rem;line-height: .88rem;width: 5.8rem;margin-left: .18rem;}
+.shopData div p{font-size: .3rem;color: #2B2B2B;font-weight: bold;display: inline-block;line-height: 1;}
 
 .all .time{height: .76rem;border-bottom: 1px solid #E5E5E5;color: #333333;line-height: .76rem;position: relative;}
 .all .time .title{font-size: .3rem;font-weight: bold;display: inline-block;}

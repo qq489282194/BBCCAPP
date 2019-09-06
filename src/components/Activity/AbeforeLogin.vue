@@ -18,11 +18,15 @@ export default {
 			openid: '',
 			unionId: '',
 			oldUserId: '',
+			headimgurl: '',
+			phone: '',
+			code: '',
+			state: ''
 		}
 	},
 	created() {
 
-	},
+	},  
 	mounted() {
 		let urlStr = window.location.href.split('?')[1]
 		if (urlStr) {
@@ -35,6 +39,7 @@ export default {
 				arr.push(obj)
 			})
 			console.log(arr)
+
 			arr.forEach(item => {
 				if (item.openId) {
 					this.openid = item.openId
@@ -42,19 +47,34 @@ export default {
 					this.unionId = item.unionId
 				} else if (item.oldUserId) {
 					this.oldUserId = item.oldUserId
-				} else if (item.userId) {
-					this.userId = item.userId
 				}
 			})
-			
-			localStorage.setItem('openid', this.openid)	
-			localStorage.setItem('unionId', this.unionId)
-			localStorage.setItem('userId', this.userId)
-			localStorage.setItem('oldUserId', this.oldUserId)
 
-			this.$router.replace({
-				path: '/actindex/abysharer'
-			})
+			if (!this.openid && !this.unionId) {
+				console.log('拿到code', arr)
+
+				localStorage.setItem('openid', this.openid)	
+				localStorage.setItem('unionId', this.unionId)
+
+				let params = {
+					code: this.code,
+					state: this.state
+				}
+
+				ACT_API.getUserMsg(params).then(res => {
+					console.log(res)
+				})
+			} else {
+				console.log('获取重定向信息', arr)
+				localStorage.setItem('openid', this.openid)	
+				localStorage.setItem('unionId', this.unionId)
+				localStorage.setItem('oldUserId', this.oldUserId)
+				this.getWxLoding(this.unionId)
+
+				// _this.$router.replace({
+				// 	path: '/abysharer'
+				// })
+			}
 			// if(!localStorage.getItem('token')){
 			// 	this.getWxLoding(this.unionId,this.path,this.goods_id)
 			// }else{
@@ -78,13 +98,27 @@ export default {
 	},
 	methods: {
 		getWxLoding(unionId, path) {
+			let _this = this
 			let data = {
 				typeid: 2,
 				id: unionId,
 				registrationid: ''
 			}
-			ACT_API.threeLogin(data).then(response => {
-				console.log(response)
+			ACT_API.threeLogin(data).then((res) => {
+				console.log(res)
+				if (res.status == 1) {
+					let userid = res.data.userid
+					localStorage.setItem('wxUserId', userid)
+					// this.getToken(userid, path)
+					// _this.$router.replace({
+					// 	path: '/abysharer'
+					// })
+					window.location.href=`http://testuser.meibbc.com/bbc-personal/abysharer`
+					// window.location.href=`http://localhost:2001/abysharer`
+				} else {
+					// this.$toast(res.data.message);
+					console.log(res.data.message)
+				}
 			})
 			// this.$http({
 			// 	method: 'post',
@@ -100,54 +134,58 @@ export default {
 			// 		console.log(res.data, 56565)
 			// 		let userid = res.data.data.userid
 			// 		localStorage.setItem('wxUserId', userid)
-			// 		this.getToken(userid, path)
+			// 		// this.getToken(userid, path)
 			// 	} else {
 			// 		this.$toast(res.data.message);
 			// 	}
 			// })
 		},
 		// getToken(userid, path) {
-		// 	let that = this
-		// 	this.$http({
-		// 		method: 'post',
-		// 		url: `${this.GLOBAL.baseURL}passport/mobileClientThirdLogin`,
-		// 		headers: {
-		// 			ContentType: 'application/x-www-form-urlencoded',
-		// 		},
-		// 		params: {
-		// 			userid
+			// let that = this
+			// let params = {userid}
+			// ACT_API.getToken(params).then(res => {
+				// console.log(res)
+			// })
+			// this.$http({
+			// 	method: 'post',
+			// 	url: `${this.GLOBAL.baseURL}passport/mobileClientThirdLogin`,
+			// 	headers: {
+			// 		ContentType: 'application/x-www-form-urlencoded',
+			// 	},
+			// 	params: {
+			// 		userid
 					
-		// 		}
-		// 	}).then(res => {
-		// 		console.log(res)
-		// 		var uid = res.data.uid
-		// 		var access_token = res.data.access_token
-		// 		console.log("ddddd__+" + access_token)
-		// 		localStorage.setItem("token", access_token)
-		// 		sessionStorage.setItem('uid', uid)
-		// 		that.isBind(path)
-		// 		// that.$toast('登录成功')
-		// 		// if(path == 'Login'){
-		// 		// 	setTimeout(function(){
-		// 		// 		that.$router.push({
-		// 		// 			path:'/Home'
-		// 		// 		})
-		// 		// 	},1000)
-		// 		// }else if (this.path == 'Productdetails') {
-		// 		// 	that.$router.push({
-		// 		// 		path: this.path,
-		// 		// 		query: {
-		// 		// 			goods_id: this.goods_id
-		// 		// 		}
-		// 		// 	});
-		// 		// } else{
-		// 		// 	setTimeout(function(){
-		// 		// 		that.$router.push({
-		// 		// 			name:this.path,
-		// 		// 		});
-		// 		// 	},1000)
-		// 		// }
-		// 	})
+			// 	}
+			// }).then(res => {
+			// 	console.log(res)
+			// 	var uid = res.data.uid
+			// 	var access_token = res.data.access_token
+			// 	console.log("ddddd__+" + access_token)
+			// 	localStorage.setItem("token", access_token)
+			// 	sessionStorage.setItem('uid', uid)
+			// 	that.isBind(path)
+				// that.$toast('登录成功')
+				// if(path == 'Login'){
+				// 	setTimeout(function(){
+				// 		that.$router.push({
+				// 			path:'/Home'
+				// 		})
+				// 	},1000)
+				// }else if (this.path == 'Productdetails') {
+				// 	that.$router.push({
+				// 		path: this.path,
+				// 		query: {
+				// 			goods_id: this.goods_id
+				// 		}
+				// 	});
+				// } else{
+				// 	setTimeout(function(){
+				// 		that.$router.push({
+				// 			name:this.path,
+				// 		});
+				// 	},1000)
+				// }
+			// })
 		// },
 		// //是否绑定手机号码
 		// isBind(path) {

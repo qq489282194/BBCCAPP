@@ -6,6 +6,7 @@ import store from "@/store/index"
 const service = axios.create({
   baseURL:  '/bbc',
   // baseURL:  "http://testuser.meibbc.com/dev",
+  // baseURL:  "http://192.168.0.26:7002",
   timeout: 15000,
 })
 
@@ -15,8 +16,10 @@ axios.defaults.withCredentials = false;
 service.interceptors.request.use(function (config) {
   // let token = sessionStorage.getItem("token");
   let token = store.state.token
+  let serverVersion = store.state.serverVersion
   config.headers.common['Authorization'] = token;
-  config.headers.common['serverVersion'] = 2;
+  config.headers.common['serverVersion'] = serverVersion;
+  config.headers.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
   // 在发送请求之前做些什么
   return config;
 }, function (error) {

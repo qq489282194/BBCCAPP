@@ -7,11 +7,19 @@ vue.use(Vuex);
 const state = {
   userId:"",
   token:"",
+  serverVersion:"",
+  version: '',
   giveForm:{
     cmNum:0,
     phone:"",
     sendPeopleId:"",
     payPassword: ""
+  }
+}
+
+const getters = {
+  serverVersion: (state) => {
+    return state.serverVersion
   }
 }
 
@@ -24,11 +32,15 @@ const mutations = {
   },
   changeGiveForm(state,form){
     state.giveForm = form;
+  },
+  changeVersion(state, version) {
+    state.version = version;
   }
 }
 
 const store = new Vuex.Store({
   state,
+  getters,
   mutations
 })
 

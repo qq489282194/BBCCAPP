@@ -19,8 +19,15 @@
       window['setToken'] = function(token){
         store.commit('changeToken',token)
       };
+
       this.MIXINUserId();
       this.MIXINGetToken();
+
+      // this.getVersion();
+      // window['setVersion'] = function(version) {
+      //   console.log('ios', version)
+      //   store.commit("changeVersion",version);
+      // };
     },
     mounted(){
     },

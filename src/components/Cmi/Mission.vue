@@ -32,6 +32,11 @@
           <img v-if="item.cmTaskId == 7" src="../../assets/img/cmi/8.png"/>
           <img v-if="item.cmTaskId == 11" src="../../assets/img/cmi/18.png"/>
           <img v-if="item.cmTaskId == 12" src="../../assets/img/cmi/17.png"/>
+          <img v-if="item.cmTaskId == 14" src="../../assets/img/cmi/shequ.png"/>
+          <img v-if="item.cmTaskId == 15" src="../../assets/img/cmi/shequ.png"/>
+          <img v-if="item.cmTaskId == 16" src="../../assets/img/cmi/shequ.png"/>
+          <img v-if="item.cmTaskId == 17" src="../../assets/img/cmi/shequ.png"/>
+          <img v-if="item.cmTaskId == 18" src="../../assets/img/cmi/shequ.png"/>
           <div class="mission-message">
             <p>{{item.name}}
               <span style="color: #CFCFCF;font-size: .3rem" v-if="item.cmTaskId == 3">(每日10次)</span>
@@ -48,6 +53,11 @@
           <button v-if="(item.cmTaskId == 7 && item.isShow == 2) || (item.cmTaskId == 7 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'29')">去赚C米</button>
           <button v-if="(item.cmTaskId == 11 && item.isShow == 2) || (item.cmTaskId == 11 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
           <button v-if="(item.cmTaskId == 12 && item.isShow == 2) || (item.cmTaskId == 12 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
+          <button v-if="(item.cmTaskId == 14 && item.isShow == 2) || (item.cmTaskId == 14 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
+          <button v-if="(item.cmTaskId == 15 && item.isShow == 2) || (item.cmTaskId == 15 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
+          <button v-if="(item.cmTaskId == 16 && item.isShow == 2) || (item.cmTaskId == 16 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
+          <button v-if="(item.cmTaskId == 17 && item.isShow == 2) || (item.cmTaskId == 17 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
+          <button v-if="(item.cmTaskId == 18 && item.isShow == 2) || (item.cmTaskId == 18 && item.isShow == 1)" @click="MIXINToDetail(item.cmTaskId,'25')">去赚C米</button>
           <button @click="getCmiFun(item.cmTaskId,item.name,item.integral)" v-if="item.isShow == 1 && item.cmTaskId == 1">领取奖励</button>
           <button style="background-color: #E5E5E5;color: white" v-if="item.isShow == 0">明天再来</button>
           <!--<button style="background-color: #E5E5E5;color: white" v-else-if="item.isShow == 1 && item.cmTaskId!=1">明天再来</button>-->

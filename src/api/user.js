@@ -3,6 +3,9 @@ import request1 from "../utils/request1"
 import request2 from "../utils/request2"
 import request4 from "../utils/request4"
 import request5 from "../utils/request5"
+import request6 from "../utils/request6"
+import request7 from "../utils/request7"
+import request9 from "../utils/request9"
 import qs from "qs";
 
 export function findUserByUserid(params) {
@@ -256,6 +259,22 @@ export function queryCmShare(params) {
   })
 }
 
+export function getShareFriendInfo(userId) {
+  return request({
+    url:`/api/v1/cmShare/getShareFriendInfo/${userId}`,
+    method:"get",
+  })
+}
+
+export function addShareFriend(params) {
+  return request({
+    url:`/api/v1/cmShare/addShareFriend`,
+    method:"post",
+    params
+  })
+}
+
+
 export function getUser(params) {
   return request({
     url:"api/v1/user/getUser",
@@ -294,4 +313,138 @@ export function checkPayPwd(params) {
     method:"post"
   })
 }
+// 我的邀请列表-收益
+export function findMyInfo(serverId) {
+  return request4({
+    url:`/shops/findMyInfo?user_id=${serverId}`,
+    method:"get",
+  })
+}
+// 我的邀请列表-收益
+export function regions() {
+  return request4({
+    url:`/buyer/regions/depth/3`,
+    method:"get"
+  })
+}
+// 我的邀请列表-下级好友列表
+export function findSaleorgPersonalList(params) {
+  return request4({
+    url:`/shops/findSaleorgPersonalList`,
+    method:"get",
+    params
+  })
+}
+// 我的邀请列表-下级商家列表
+export function findShopSaleorgList(params) {
+  return request4({
+    url:`/shops/findShopSaleorgList`,
+    method:"get",
+    params
+  })
+}
+// 查询用户积分信息
+export function getIntegralByUserId(params) {
+  return request9({
+    url:`/getIntegralByUserId`,
+    method:"get",
+    params
+  })
+}
+//积分转增
+export function give(params) {
+  return request9({
+    url:"/give",
+    method:"post",
+    data:params
+  })
+}
+//积分转增
+export function listGiveLog(params) {
+  return request9({
+    url:"/listGiveLog",
+    method:"post",
+    data:params
+  })
+}
 
+// 商家收益
+export function findUserProfitList(params){
+  return request4({
+    url:`/shops/findUserProfitList`,
+    method:"get",
+    params
+  })
+}
+
+// 新商家邀请
+// 商家收益
+export function findUserProfitInfo(params){
+  return request4({
+    url:`/shops/findUserProfitInfo`,
+    method:"get",
+    params
+  })
+}
+// 可邀约商家列表
+export function getInvitableList(params){
+  return request4({
+    url:`/shops/getInvitableList`,
+    method:"get",
+    params
+  })
+}
+
+
+// 钱包 收益明细
+export function getFindUserProfitList(params){
+  return request4({
+    url:`/shops/findUserProfitList`,
+    method:"get",
+    params
+  })
+}
+
+
+// 查询用户积分信息
+export function checkHasPayPassword(user_id) {
+  return request9({
+    url: `/api/v1/user/checkHasPayPassword/${user_id}`,
+    method: "get"
+  })
+}
+
+// 检查是否有支付密码
+export function checkHasPayPwd(user_id){
+  return request9({
+    url:  `api/v1/user/checkHasPayPassword/${user_id}`,
+    method: "get"
+  })
+}
+
+// 获取分享图片
+export function getSharerPic(params) {
+  return request({
+    url: '/pic',
+    method: 'get',
+    params
+  })
+}
+
+// 获取海报相关信息
+export function getHaiBaoMsg(params) {
+  return request({
+    url: '/share/pic',
+    method: 'get',
+    params
+  })
+}
+
+// 修改邀请好友海报文案
+export function updateUserV1(params) {
+  return request({
+    url: '/api/v1/user/updateUserV1',
+    method: 'post',
+    params
+  })
+}

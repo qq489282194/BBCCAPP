@@ -4,6 +4,9 @@ import store from "@/store/index"
 
 const service = axios.create({
   baseURL:  "/message",
+  // 正式
+  // baseURL:  "http://napp.meibbc.com/",
+  // baseURL:  "http://testuser.meibbc.com/",
   // 预发布
   // baseURL:  "http://papp.meibbc.com/",
   // 测试
@@ -16,8 +19,9 @@ const service = axios.create({
 service.interceptors.request.use(function (config) {
   // let token = sessionStorage.getItem("token");
   let token = store.state.token
+  let serverVersion = store.state.serverVersion
   config.headers.common['Authorization'] = token;
-  config.headers.common['serverVersion'] = 2;
+  config.headers.common['serverVersion'] = serverVersion;
   // 在发送请求之前做些什么
   return config;
 }, function (error) {

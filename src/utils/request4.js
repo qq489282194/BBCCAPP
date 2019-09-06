@@ -7,6 +7,7 @@ const service = axios.create({
   // baseURL:  "http://192.168.0.225:7002",
   // baseURL:  "http://xcxapibuyer.meibbc.com/",
   // 测试
+  // baseURL: 'http://192.168.0.26:7002', // 汤
   baseURL:  "http://testxcxapibuyer.meibbc.com/",
   timeout: 15000,
 })
@@ -15,8 +16,9 @@ const service = axios.create({
 service.interceptors.request.use(function (config) {
   // let token = sessionStorage.getItem("token");
   let token = store.state.token
+  let serverVersion = store.state.serverVersion
   config.headers.common['Authorization'] = token;
-  config.headers.common['serverVersion'] = 2;
+  config.headers.common['serverVersion'] = serverVersion;
   // 在发送请求之前做些什么
   return config;
 }, function (error) {
@@ -27,6 +29,8 @@ service.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 service.interceptors.response.use(function (response) {
+  // console.log('-----data')
+  // console.log(response)
   let status = response.data.code;
   let row = response.data.data;
   if(status == 200){
@@ -37,7 +41,12 @@ service.interceptors.response.use(function (response) {
     row = false;
   }
   // 对响应数据做点什么
-  return row;
+  if(row){
+    return row;
+  }else{
+    return response.data
+  }
+  
 }, function (error) {
   // 对响应错误做点什么
   return Promise.reject(error);

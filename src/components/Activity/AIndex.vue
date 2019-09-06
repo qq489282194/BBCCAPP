@@ -15,11 +15,13 @@ export default {
   components: {
     Aheader
   },
-  mounted() {
+  beforeCreate() {
     if (location.href.indexOf('abysharer') != -1) {
       this.headerShow = false
       this.$refs.aindex.style.paddingTop = 0
     }
+  },
+  mounted() {
   }
 }
 </script>

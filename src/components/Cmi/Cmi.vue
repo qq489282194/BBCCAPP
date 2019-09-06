@@ -17,6 +17,7 @@
       // },1000)
       window['setUserId'] = function(userId){
         store.commit('changeUserId',userId)
+        // console.log(userId)
       };
       this.MIXINUserId();
     },
